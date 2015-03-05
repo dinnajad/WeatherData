@@ -1,0 +1,54 @@
+
+username frostVakt
+lösen komin
+
+Decimal Degrees = Degrees + minutes/60 + seconds/3600
+
+kåge
+N 64° 50' 8''	E 20° 59' 4''
+
+lat64.8355
+long20.59
+
+
+
+
+
+http://api.geonames.org/countrySubdivision?lat=64.8355&lng=20.59&username=frostVakt
+
+<geonames>
+<countrySubdivision>
+<countryCode>SE</countryCode>
+<countryName>Sweden</countryName>
+<adminCode1>23</adminCode1>
+<adminName1>Västerbotten</adminName1>
+<code type="FIPS10-4">23</code>
+<code type="ISO3166-2">AC</code>
+<distance>0.0</distance>
+</countrySubdivision>
+</geonames>
+
+
+
+http://api.geonames.org/findNearbyPlaceName?lat=64.8355&lng=20.59&username=frostVakt
+
+<geonames>
+<geoname>
+<toponymName>Kåge</toponymName>
+<name>Kåge</name>
+<lat>64.83571</lat>
+<lng>20.98453</lng>
+<geonameId>605428</geonameId>
+<countryCode>SE</countryCode>
+<countryName>Sweden</countryName>
+<fcl>P</fcl>
+<fcode>PPL</fcode>
+<distance>0.02378</distance>
+</geoname>
+</geonames>
+
+getGeoname for id ( bättre för att få tag på region osv för en plats
+http://api.geonames.org/get?geonameId=1&username=demo. 
+
+exempel för textsearch
+http://api.geonames.org/search?name_startsWith=KåG&maxRows=10&username=frostVakt

@@ -1,20 +1,25 @@
 package karro.spike.weatherdataspike;
 
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 
 public class WeatherFrameFragment extends Fragment {
-
+	//EditText mEditText;
+	GridView mTopGridView;
 	GridView mGridView;
+	ArrayList<GeonamesPosition> mPositionItems;
+	ArrayList<YrWetherData> mItems;
+	
 	/***
 	 * called from the OS when creating the fragment. 
 	 * Initialise essentials here
@@ -25,6 +30,8 @@ public class WeatherFrameFragment extends Fragment {
 		
 		setRetainInstance(true);
 		new FetchItemsTask().execute();
+		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
+		//new FetchPositionTask.execute();
 	}
 	
 	/***
@@ -33,27 +40,67 @@ public class WeatherFrameFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View v= inflater.inflate(R.layout.fragment_main, container,false);
-		
-		mGridView = (GridView) v.findViewById(R.id.gridView);
-		
+		//mEditText = (EditText) v.findViewById(R.id.editText1);
+		mTopGridView= (GridView) v.findViewById(R.id.gridView_top);
+		mGridView = (GridView) v.findViewById(R.id.gridView_bottom);
+		setUpAdapter();
+		setUpAdapterTop();
 	return v;
 	}
 
-	private class FetchItemsTask extends AsyncTask<Void,Void,Void>{
+	private void setUpAdapter() {
+		if ( getActivity() == null || mGridView == null )return;
+		if(mItems!=null){
+			mGridView.setAdapter(new ArrayAdapter<YrWetherData>(getActivity(), android.R.layout.simple_gallery_item,mItems));
+			
+		}else{
+			mGridView.setAdapter(null);
+		}
+		
+	}
+	
+	private void setUpAdapterTop() {
+		if ( getActivity() == null || mTopGridView == null )return;
+		if(mPositionItems!=null){
+			mTopGridView.setAdapter(new ArrayAdapter<GeonamesPosition>(getActivity(), android.R.layout.simple_gallery_item,mPositionItems));
+			
+		}else{
+			mTopGridView.setAdapter(null);
+		}
+		
+	}
+	
+	
+	private class FetchPositionTask extends AsyncTask<Void,Void,ArrayList<GeonamesPosition>>{
 
 		@Override
-		protected Void doInBackground(Void... params) {
-			
-			new YrFetcher().fetchItems();
+		protected ArrayList<GeonamesPosition> doInBackground(Void... params) {
+			return new GeonamesFetcher().fetchItems();
+		}
 		
-			/*
-		try{
-			String result = new YrFetcher().getUrl("http://www.google.com");
-			Log.i("WWFragment " , "Fetched contents of URL:" +result);
-		} catch (IOException ioe){
-			Log.e("WWfragment ", "Failed to fetch URL: ", ioe);
-		}*/
-		return null;
+		@Override
+		protected void onPostExecute(ArrayList<GeonamesPosition> positions){
+			mPositionItems = positions;
+			setUpAdapterTop();
+		}
+		
+	}
+
+		
+
+	private class FetchItemsTask extends AsyncTask<Void,Void,ArrayList<YrWetherData>>{
+
+		@Override
+		protected ArrayList<YrWetherData> doInBackground(Void... params) {
+			//new GeonamesFetcher().fetchItems(); 
+			return new YrFetcher().fetchItems();		
+		}
+		
+		@Override
+		protected void onPostExecute(ArrayList<YrWetherData> items){
+			
+			mItems = items;
+			setUpAdapter();
 		}
 		
 	}
