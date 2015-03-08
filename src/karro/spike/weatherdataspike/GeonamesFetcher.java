@@ -86,6 +86,11 @@ public class GeonamesFetcher  extends DataFetcher{
 	throws XmlPullParserException, IOException{
 		ArrayList<GeonamesPosition> positions = new ArrayList<GeonamesPosition>();
 		int eventType = parser.next();		
+		//TODO  ta bort fejkdata item
+		GeonamesPosition fejkDataItem = new GeonamesPosition();
+		fejkDataItem.setCountryName("SWEDEN fejk");
+		fejkDataItem.setName(USERNAME);
+		positions.add(fejkDataItem);
 		
 		while (eventType != XmlPullParser.END_DOCUMENT){
 			
@@ -128,42 +133,57 @@ public class GeonamesFetcher  extends DataFetcher{
 		while (eventType != XmlPullParser.END_TAG && eventType !=XmlPullParser.END_DOCUMENT) {
 			Log.i(TAG, ":" + name);
 			if(eventType == XmlPullParser.START_TAG){
-				switch(name){
-				case XML_NAME://do something
-					String positionName=  parser.getAttributeValue(null, XML_NAME);
-					dataItem.setName(positionName);
+				switch(name){ //den stannar här blir aldrig annat än geoname
+				case XML_START_TAG:
+					Log.i(TAG, "case:" + name);
+					skipTag(parser);
+					break;
+				case "toponymName":
+					Log.i(TAG, "case:" + name);
 					break;
 					
-				case XML_LAT:
+				case XML_NAME://do something
+					String positionName=  parser.getAttributeValue(null, XML_NAME);
+					dataItem.setName("positionName");
+					Log.i(TAG, "case:" + name+ "PositionName: "+ positionName);
+					break;
+					
+			/*	case XML_LAT:
 					String lat =  parser.getAttributeValue(null, XML_LAT);
-					dataItem.setLat(lat);
+					dataItem.setLat("lat");
+					Log.i(TAG, "case:" + name);
 					break;
 					
 				case XML_LNG:
 					String lng = parser.getAttributeValue(null, XML_LNG);
-					dataItem.setLng(lng);
-					break;
+					dataItem.setLng("lng");
+					Log.i(TAG, "case:" + name);
+					break;*/
 					
 				case XML_GEOID:
 					String id = parser.getAttributeValue(null, XML_GEOID);
-					dataItem.setGeonameId(id);
+					dataItem.setGeonameId("id");
+					Log.i(TAG, "case:" + name);
 					break;
 					
 				case XML_COUNTRY:
 					String country = parser.getAttributeValue(null, XML_COUNTRY);
-					dataItem.setCountryName(country);
+					dataItem.setCountryName("country");
+					Log.i(TAG, "case:" + name);
 					break;
 					
 				case XML_REGION:
 					String region = parser.getAttributeValue(null, XML_REGION);
-					dataItem.setRegion(region);
+					dataItem.setRegion("storregion");
+					Log.i(TAG, "case:" + name);
 					break;
 				
 				default: //Skip tag
 					//eventType= skipTag(parser);
 					break;									
 				}
-			}
+			}else
+				Log.i(TAG, "ELSE:" + name);
 			
 			/*eventType = parser.nextTag();
 			name = parser.getName();
@@ -183,8 +203,9 @@ public class GeonamesFetcher  extends DataFetcher{
 		int counter = 0;
 		
 		while(eventType != XmlPullParser.START_TAG){
-			String name = parser.getName();			
-			Log.i(TAG, "default="  + name + " , skipping"+ " eventtype = "+ eventType + "Count:"+ counter);
+			String name = parser.getName();	
+			String text = parser.getText();
+			Log.i(TAG, "default="  + name + " , skipping"+ " eventtype = "+ parser.TYPES[eventType] + ", Text: " + text + ", Count:"+ counter);
 			eventType = parser.next();
 			counter++;
 			if(eventType == XmlPullParser.END_DOCUMENT)

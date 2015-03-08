@@ -27,11 +27,14 @@ public class WeatherFrameFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+		//TODO remove comment
+		/*
 		setRetainInstance(true);
 		new FetchItemsTask().execute();
 		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
-		//new FetchPositionTask.execute();
+		//new FetchPositionTask.execute();*/
+		SimpleGeonomeFetcher fetcher = new SimpleGeonomeFetcher();
+		mPositionItems = fetcher.fetchPositions();
 	}
 	
 	/***
@@ -75,7 +78,7 @@ public class WeatherFrameFragment extends Fragment {
 
 		@Override
 		protected ArrayList<GeonamesPosition> doInBackground(Void... params) {
-			return new GeonamesFetcher().fetchItems();
+			return new SimpleGeonomeFetcher().fetchItems();
 		}
 		
 		@Override
