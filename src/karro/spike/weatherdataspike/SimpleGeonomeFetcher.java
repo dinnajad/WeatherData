@@ -19,8 +19,8 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 	private static final String USERNAME = "frostVakt";
 	
 	public ArrayList<GeonamesPosition> fetchItems(){
-		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
-		//return fetchItems(605428);
+		//return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
+		return fetchItems(605428);
 	}
 	
 	/***
@@ -80,8 +80,9 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 			Log.i(TAG,"	recieved xml:" + xmlString);
 			
 			Serializer serializer = new Persister();
-			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
-			
+			//positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
+			GeonamesPosition position= serializer.read(GeonamesPosition.class, xmlString);
+			positions.add(position);
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} catch (XmlPullParserException xppe) {
