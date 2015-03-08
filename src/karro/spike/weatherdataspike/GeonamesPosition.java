@@ -11,7 +11,7 @@ import android.util.Log;
  * @author Karro
  *
  */
-@Root(strict=false)
+@Root(name="geoname", strict=false)
 public class GeonamesPosition {
 	private static final String TAG = "GeonamesPosition";
 	

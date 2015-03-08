@@ -27,14 +27,15 @@ public class WeatherFrameFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		//TODO remove comment
-		/*
+		
 		setRetainInstance(true);
 		new FetchItemsTask().execute();
 		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
-		//new FetchPositionTask.execute();*/
-		SimpleGeonomeFetcher fetcher = new SimpleGeonomeFetcher();
-		mPositionItems = fetcher.fetchPositions();
+		//new FetchPositionTask.execute();
+		
+		//shortcut som hoppar över trådning och hämtning av data från webservice
+		//SimpleGeonomeFetcher fetcher = new SimpleGeonomeFetcher();
+		//mPositionItems = fetcher.fetchPositions();
 	}
 	
 	/***

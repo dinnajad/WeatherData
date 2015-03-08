@@ -13,9 +13,9 @@ import org.simpleframework.xml.*;
  *
  */
 @Root(strict=false)
-public class GeonamesPositionList {
+public class Geonames {
 
-	@ElementList(name="geonames")
+	@ElementList(name="geonames", inline=true)
 	private List<GeonamesPosition> list;
 
 	/**

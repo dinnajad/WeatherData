@@ -7,29 +7,20 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.xmlpull.v1.XmlPullParserException;
 
-import android.R.xml;
 import android.net.Uri;
 import android.util.Log;
 
 public class SimpleGeonomeFetcher extends DataFetcher{
 	private static final String TAG = "GeonamesFetcher";
+	
 	private static final String PLACE_STARTPOINT = "http://api.geonames.org/findNearbyPlaceName?";
-	private static final String REGION_STARTPOINT = "http://api.geonames.org/countrySubdivision?";
+	private static final String GEOID_STARTPOINT ="http://api.geonames.org/get?";
+	
 	private static final String USERNAME = "frostVakt";
 	
-	
-	private static final String XML_START_TAG = "geoname";
-	
-	private static final String XML_NAME = "name";
-	private static final String XML_LAT = "lat";
-	private static final String XML_LNG = "lng";
-	private static final String XML_GEOID = "geonameId";
-	private static final String XML_COUNTRY = "countryName";
-	private static final String XML_REGION = "adminName1";
-	
 	public ArrayList<GeonamesPosition> fetchItems(){
-		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE
-		
+		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
+		//return fetchItems(605428);
 	}
 	
 	/***
@@ -38,7 +29,7 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 	 * @param longitude
 	 */
 	public ArrayList<GeonamesPosition> fetchItems(float latitude, float longitude){
-		GeonamesPositionList positions= new GeonamesPositionList();
+		ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
 		// convert float to string
 		String lat = Float.toString(latitude);
 		String lng = Float.toString(longitude);
@@ -55,9 +46,9 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 			
 			//Reader reader = new StringReader(xmlString);// kanske inte nödvändigt finns en read dom tar string direkt
 			Serializer serializer = new Persister();
-			GeonamesPosition position= serializer.read(GeonamesPosition.class, xmlString);
+			//GeonamesPosition position= serializer.read(GeonamesPosition.class, xmlString);
 			//positions.add();
-			
+			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} catch (XmlPullParserException xppe) {
@@ -68,15 +59,45 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 			Log.e(TAG, "Failed  to parse items, general exception", e);
 		}
 		
-		return positions.toArrayList();
+		return positions;
 	}
 	
+	/***
+	 * Hämtar positionsdata utifrån geonameId
+	 * @param geoId
+	 * @return
+	 */
+	public ArrayList<GeonamesPosition> fetchItems(int geoId){
+		ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
+				
+		try{
+			String url = Uri.parse(GEOID_STARTPOINT).buildUpon()
+					.appendQueryParameter("geonameId", "605428")
+					.appendQueryParameter("username", USERNAME)
+					.build().toString();
+			Log.i(TAG,"querystring: " + url);
+			String xmlString = getUrl(url);
+			Log.i(TAG,"	recieved xml:" + xmlString);
+			
+			Serializer serializer = new Persister();
+			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
+			
+		}catch ( IOException ioe){
+			Log.e(TAG, "Failed  to fetch items", ioe);
+		} catch (XmlPullParserException xppe) {
+			Log.e(TAG, "Failed  to parse items", xppe);
+		} catch (Exception e) {
+			Log.e(TAG, "Failed  to parse items, general exception", e);
+		}
+		
+		return positions;
+	}
 	/***
 	 * 
 	 * @return
 	 */
 	public  ArrayList<GeonamesPosition> fetchPositions(){
-		String xmlString ="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+		/*String xmlString ="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
 				
 				+ "<geoname>"
 				+ "<toponymName>Kåge</toponymName>"
@@ -109,17 +130,45 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 				//+ "<south>64.83121</south>"
 				//+ "</bbox>"
 				+ "</geoname>"
-				;
+				;*/
 
+		String xmlString ="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
+				+ "<geonames>"
+				+ "<geoname>"
+				+ "<toponymName>Kåge</toponymName>"
+				+ "<name>Kåge</name>"
+				+ "<lat>64.83571</lat>"
+				+ "<lng>20.98453</lng>"
+				+ "<geonameId>605428</geonameId>"
+				+ "<countryCode>SE</countryCode>"
+				+ "<countryName>Sweden</countryName>"
+				+ "<fcl>P</fcl>"
+				+ "<fcode>PPL</fcode>"
+				+ "<adminName1>Västerbotten</adminName1>"
+				+ "</geoname>"
+				+ "<geoname>"
+				+ "<toponymName>Kåge</toponymName>"
+				+ "<name>Kåge</name>"
+				+ "<lat>64.83571</lat>"
+				+ "<lng>20.98453</lng>"
+				+ "<geonameId>605428</geonameId>"
+				+ "<countryCode>SE</countryCode>"
+				+ "<countryName>Sweden</countryName>"
+				+ "<fcl>P</fcl>"
+				+ "<fcode>PPL</fcode>"
+				+ "<adminName1>Västerbotten</adminName1>"
+				+ "</geoname>"
+				+ "</geonames>";
+		
 		Log.i(TAG,"	recieved xml:" + xmlString);
 		//GeonamesPositionList positions= new GeonamesPositionList();
 		ArrayList<GeonamesPosition> positions = new ArrayList<GeonamesPosition>();
 		GeonamesPosition position;
 		Serializer serializer = new Persister();
 		try{
-		//positions =((GeonamesPositionList) serializer.read(GeonamesPositionList.class, xmlString)).toArrayList();
-		position= serializer.read(GeonamesPosition.class, xmlString);
-		positions.add(position);
+		positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
+		//position= serializer.read(GeonamesPosition.class, xmlString);
+		//positions.add(position);
 	}catch ( IOException ioe){
 		Log.e(TAG, "Failed  to fetch items", ioe);
 	} catch (XmlPullParserException xppe) {
@@ -130,8 +179,6 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 		Log.e(TAG, "Failed  to parse items, general exception", e);
 	}
 
-		return positions;
-		
+		return positions;		
 	}
-
 }
