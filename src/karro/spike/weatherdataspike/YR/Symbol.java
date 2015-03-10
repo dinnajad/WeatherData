@@ -4,11 +4,13 @@
 package karro.spike.weatherdataspike.YR;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Root;
 
 /**
  * @author Karro
  *
  */
+@Root(strict=false)
 public class Symbol {
 
 	@Attribute(name="numberEx")

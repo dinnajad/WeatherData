@@ -11,12 +11,22 @@ import org.simpleframework.xml.Attribute;
  */
 public class Temperature {
 
+	
 	@Attribute(name = "value")
 	private String mTemperature;
 	
 	@Attribute( name="unit")
 	private String unit;
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Temperature [mTemperature=" + mTemperature + ", unit=" + unit
+				+ "]";
+	}
+
 	/**
 	 * @return the temperature
 	 */

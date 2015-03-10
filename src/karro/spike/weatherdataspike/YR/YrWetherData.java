@@ -10,7 +10,7 @@ import org.simpleframework.xml.Root;
 public class YrWetherData {
 	
 	
-	@Attribute
+	
 	private String mId;
 	
 	@Attribute(name="from")
@@ -32,13 +32,20 @@ public class YrWetherData {
 	@Element(name="windSpeed")
 	private WindSpeed mWindSpeed;
 	
-	@Element(name="Pressure")
+	@Element(name="pressure")
 	private Pressure mPressure;
 	
 	@Element(name="symbol")
-	private String mSymbol;// symbol numberEx
+	private Symbol mSymbol;// symbol numberEx
 	
-	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "YrWetherData [mTime=" + mTime + ", mEndTime=" + mEndTime
+				+ ", mTemperature=" + mTemperature + "]";
+	}
 	
 	/**
 	 * @return the id
@@ -155,16 +162,13 @@ public class YrWetherData {
 		mPressure = pressure;
 	}
 
-	public String toString(){
-		//TODO make better string Representation
-		return mTime + ": " + mTemperature;
-	}
+	
 
-	public String getSymbol() {
+	public Symbol getSymbol() {
 		return mSymbol;
 	}
 
-	public void setSymbol(String symbol) {
+	public void setSymbol(Symbol symbol) {
 		mSymbol = symbol;
 	}
 

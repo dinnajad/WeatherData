@@ -1,7 +1,7 @@
 /**
  * 
  */
-package karro.spike.weatherdataspike;
+package Geonames;
 
 import org.simpleframework.xml.*;
 

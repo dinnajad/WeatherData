@@ -106,7 +106,7 @@ public class YrFetcher extends DataFetcher {
 
 	private void parseSymbol(XmlPullParser parser, YrWetherData dataItem) {
 		String symbol = parser.getAttributeValue(null, "numberEx");
-		dataItem.setSymbol(symbol);
+		//dataItem.setSymbol(symbol);
 	}
 
 	/**

@@ -1,7 +1,9 @@
-package karro.spike.weatherdataspike;
+package Geonames;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import karro.spike.weatherdataspike.DataFetcher;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -147,6 +149,7 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 				+ "<fcode>PPL</fcode>"
 				+ "<adminName1>Västerbotten</adminName1>"
 				+ "</geoname>"
+				
 				+ "<geoname>"
 				+ "<toponymName>Kåge</toponymName>"
 				+ "<name>Kåge</name>"

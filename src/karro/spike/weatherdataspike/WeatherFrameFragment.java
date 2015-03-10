@@ -3,7 +3,10 @@ package karro.spike.weatherdataspike;
 
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrWetherData;
+import Geonames.GeonamesPosition;
+import Geonames.SimpleGeonomeFetcher;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -98,7 +101,7 @@ public class WeatherFrameFragment extends Fragment {
 		@Override
 		protected ArrayList<YrWetherData> doInBackground(Void... params) {
 			//new GeonamesFetcher().fetchItems(); 
-			return new YrFetcher().fetchItems();		
+			return new SimpleYrFetcher().fetchItems();		
 		}
 		
 		@Override
