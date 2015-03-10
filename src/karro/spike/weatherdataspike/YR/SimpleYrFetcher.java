@@ -36,7 +36,7 @@ public class SimpleYrFetcher extends DataFetcher {
 	private static final String XML_PRESSURE = "pressure";
 	
 	public ArrayList<YrWetherData> fetchItems(){
-		return fejkImplementation();
+		return realImplementation();
 	}
 
 	/**
@@ -44,7 +44,8 @@ public class SimpleYrFetcher extends DataFetcher {
 	 */
 	private ArrayList<YrWetherData> realImplementation() {
 		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
-		Forecast forecast=null;
+		WeatherData wdata=null;
+		//Forecast forecast=null;
 		try{
 			String url = Uri.parse(KÅGE).buildUpon().build().toString();
 		
@@ -53,7 +54,7 @@ public class SimpleYrFetcher extends DataFetcher {
 		
 		Serializer serializer= new Persister();
 		
-		forecast =serializer.read(Forecast.class, xmlString);
+		wdata =serializer.read(WeatherData.class, xmlString);
 		
 		
 		}catch ( IOException ioe){
@@ -64,7 +65,7 @@ public class SimpleYrFetcher extends DataFetcher {
 			Log.e(TAG, "Failed  to parse items", e);
 		}
 		
-		items.addAll(forecast.getList());
+		items.addAll(wdata.getForeCast().getList());
 		return items;
 	}
 	

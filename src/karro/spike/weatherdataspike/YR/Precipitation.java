@@ -4,23 +4,23 @@
 package karro.spike.weatherdataspike.YR;
 
 import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Root;
 
 /**
  * @author Karro
  *
  */
+@Root(strict=false)
 public class Precipitation {
 
-	//@Attribute( name="precipitation")
-	;
 	
-	@Attribute(name="maxvalue")
+	@Attribute(name="maxvalue",required=false)
 	private String mMaxValue;
 	
-	@Attribute(name="minvalue")
+	@Attribute(name="minvalue",required=false)
 	private String mMinvalue;
 	
-	@Attribute(name="value")
+	@Attribute(name="value",required=true)
 	private String mValue;
 
 	/**
