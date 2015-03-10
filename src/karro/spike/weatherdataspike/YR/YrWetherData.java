@@ -1,14 +1,41 @@
-package karro.spike.weatherdataspike;
+package karro.spike.weatherdataspike.YR;
 
+import org.simpleframework.xml.Attribute;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
+
+
+@Root(strict=false, name="time")
 public class YrWetherData {
+	
+	
+	@Attribute
 	private String mId;
+	
+	@Attribute(name="from")
 	private String  mTime;
+	
+	@Attribute(name="to")
 	private String  mEndTime;
-	private String mTemperature;
-	private String mPrecipitation;
-	private String mWindDirection;
-	private String mWindSpeed;
-	private String mPressure;
+	
+	
+	@Element(name="temperature")// hur tar man ut ett attribut på ett element? nästade objekt
+	private Temperature mTemperature;
+	
+	@Element(name="precipitation")
+	private Precipitation mPrecipitation;
+
+	@Element(name="windDirection")
+	private WindDirection mWindDirection;
+
+	@Element(name="windSpeed")
+	private WindSpeed mWindSpeed;
+	
+	@Element(name="Pressure")
+	private Pressure mPressure;
+	
+	@Element(name="symbol")
 	private String mSymbol;// symbol numberEx
 	
 	
@@ -45,14 +72,14 @@ public class YrWetherData {
 	/**
 	 * @return the temperature
 	 */
-	public String getTemperature() {
+	public Temperature getTemperature() {
 		return mTemperature;
 	}
 
 	/**
 	 * @param temperature the temperature to set
 	 */
-	public void setTemperature(String temperature) {
+	public void setTemperature(Temperature temperature) {
 		mTemperature = temperature;
 	}
 
@@ -75,56 +102,56 @@ public class YrWetherData {
 	/**
 	 * @return the precipitation
 	 */
-	public String getPrecipitation() {
+	public Precipitation getPrecipitation() {
 		return mPrecipitation;
 	}
 
 	/**
 	 * @param precipitation the precipitation to set
 	 */
-	public void setPrecipitation(String precipitation) {
+	public void setPrecipitation(Precipitation precipitation) {
 		mPrecipitation = precipitation;
 	}
 
 	/**
 	 * @return the windDirection
 	 */
-	public String getWindDirection() {
+	public WindDirection getWindDirection() {
 		return mWindDirection;
 	}
 
 	/**
 	 * @param windDirection the windDirection to set
 	 */
-	public void setWindDirection(String windDirection) {
+	public void setWindDirection(WindDirection windDirection) {
 		mWindDirection = windDirection;
 	}
 
 	/**
 	 * @return the windSpeed
 	 */
-	public String getWindSpeed() {
+	public WindSpeed getWindSpeed() {
 		return mWindSpeed;
 	}
 
 	/**
 	 * @param windSpeed the windSpeed to set
 	 */
-	public void setWindSpeed(String windSpeed) {
+	public void setWindSpeed(WindSpeed windSpeed) {
 		mWindSpeed = windSpeed;
 	}
 
 	/**
 	 * @return the pressure
 	 */
-	public String getPressure() {
+	public Pressure getPressure() {
 		return mPressure;
 	}
 
 	/**
 	 * @param pressure the pressure to set
 	 */
-	public void setPressure(String pressure) {
+	public void setPressure(Pressure pressure) {
 		mPressure = pressure;
 	}
 

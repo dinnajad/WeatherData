@@ -39,7 +39,7 @@ public class GeonamesPosition {
 	*/
 	@Override
 	public String toString(){
-		return countryName+"/"+name+"/ region: "+ region;
+		return countryName+"/"+region+"/"+name;
 		
 	}
 	/**

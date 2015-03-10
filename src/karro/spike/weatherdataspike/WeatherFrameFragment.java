@@ -3,6 +3,7 @@ package karro.spike.weatherdataspike;
 
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.YR.YrWetherData;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;

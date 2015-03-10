@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.YR.YrWetherData;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -115,7 +117,7 @@ public class YrFetcher extends DataFetcher {
 		String temperature= parser.getAttributeValue(null, "value");
 		
 		//stoppa in strängarna i ett dataItem
-		dataItem.setTemperature(temperature);
+		//dataItem.setTemperature(temperature);
 		Log.i(TAG, "temperature parsed:" + temperature);
 	}
 
