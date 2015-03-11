@@ -1,17 +1,19 @@
 /**
  * 
  */
-package karro.spike.weatherdataspike;
+package deprecated;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.DataFetcher;
+import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-import Geonames.GeonamesPosition;
 import android.net.Uri;
 import android.util.Log;
 

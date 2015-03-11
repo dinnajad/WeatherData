@@ -1,9 +1,10 @@
-package karro.spike.weatherdataspike;
+package deprecated;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.DataFetcher;
 import karro.spike.weatherdataspike.YR.YrWetherData;
 
 import org.xmlpull.v1.XmlPullParser;

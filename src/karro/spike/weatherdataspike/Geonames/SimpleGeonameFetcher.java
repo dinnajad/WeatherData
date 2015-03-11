@@ -1,4 +1,4 @@
-package Geonames;
+package karro.spike.weatherdataspike.Geonames;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,16 +9,21 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import android.net.Uri;
 import android.util.Log;
 
-public class SimpleGeonomeFetcher extends DataFetcher{
+public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String TAG = "GeonamesFetcher";
+	
 	
 	private static final String PLACE_STARTPOINT = "http://api.geonames.org/findNearbyPlaceName?";
 	private static final String GEOID_STARTPOINT ="http://api.geonames.org/get?";
 	
 	private static final String USERNAME = "frostVakt";
+	
+	private LatLng position; 
 	
 	public ArrayList<GeonamesPosition> fetchItems(){
 		//return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
@@ -45,19 +50,16 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 			String xmlString = getUrl(url);
 			Log.i(TAG,"	recieved xml:" + xmlString);
 			
-			
-			//Reader reader = new StringReader(xmlString);// kanske inte nödvändigt finns en read dom tar string direkt
 			Serializer serializer = new Persister();
-			//GeonamesPosition position= serializer.read(GeonamesPosition.class, xmlString);
-			//positions.add();
+			
 			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} catch (XmlPullParserException xppe) {
 			Log.e(TAG, "Failed  to parse items", xppe);
-			//xppe.printStackTrace();
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			Log.e(TAG, "Failed  to parse items, general exception", e);
 		}
 		
@@ -177,9 +179,9 @@ public class SimpleGeonomeFetcher extends DataFetcher{
 		Log.e(TAG, "Failed  to fetch items", ioe);
 	} catch (XmlPullParserException xppe) {
 		Log.e(TAG, "Failed  to parse items", xppe);
-		//xppe.printStackTrace();
+		
 	} catch (Exception e) {
-		// TODO Auto-generated catch block
+		
 		Log.e(TAG, "Failed  to parse items, general exception", e);
 	}
 

@@ -3,10 +3,11 @@ package karro.spike.weatherdataspike;
 
 import java.util.ArrayList;
 
+import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
+import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrWetherData;
-import Geonames.GeonamesPosition;
-import Geonames.SimpleGeonomeFetcher;
 import android.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -83,7 +84,7 @@ public class WeatherFrameFragment extends Fragment {
 
 		@Override
 		protected ArrayList<GeonamesPosition> doInBackground(Void... params) {
-			return new SimpleGeonomeFetcher().fetchItems();
+			return new SimpleGeonameFetcher().fetchItems();
 		}
 		
 		@Override
