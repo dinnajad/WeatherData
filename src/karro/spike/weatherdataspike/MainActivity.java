@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import android.os.Build;
 import karro.spike.weatherdata.R;
 
@@ -35,7 +36,7 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -45,7 +46,12 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 			return true;
+		}else if(id==R.id.action_alarm){
+			Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
+		}else if(id==R.id.action_search){
+			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}
