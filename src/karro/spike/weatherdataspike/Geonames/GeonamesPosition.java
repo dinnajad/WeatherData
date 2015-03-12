@@ -90,6 +90,8 @@ public class GeonamesPosition {
 	public void setRegion(String region) {
 		this.region = region;
 	}
+	
+	//TODO return the LatLng in some way
 	/**
 	 * @return the lat
 	 *//*

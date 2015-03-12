@@ -8,7 +8,7 @@ ca 2,5h följa tutorial och anpassa till yrdata
 onsdag 4/3
 8,42-9,20		forts. parse xml
 9,45-10,00
-14,30-16,34		parse xml
+4,30-16,34		parse xml
 16,34-	17		geonames
 
 Torsdag 5/3
@@ -31,8 +31,15 @@ tisdag
 22,20-23,15		parsa Yrdata
 
 onsdag
-8,45-11,38			rename app, install GooglePlay services
-11,38-14,40				test develop maps in separate App
-15-15,25			Rapport
+8,45-11,38	3h		rename app, install GooglePlay services
+11,38-14,40	 3h		test develop maps in separate App
+15-15,25	0,25h	Rapport
+15,25-16,52	1,5h	layout weatherDayfragment
+17,45-19,25	2,3h	Layout, planering
+19,35-	20,30	1h	layout, planering
+21,00-21,30	0,5h
+21,40-22,40	1h		period Fragment
+22,40-	23,20 0,6h		AlarmFragment
 
-15,25-
+torsdag
+9,59-				actionBar för att komma till ställ alarmmenyn
