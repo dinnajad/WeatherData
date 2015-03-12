@@ -38,8 +38,7 @@ public class WeatherFrameFragment extends Fragment {
 		new FetchItemsTask().execute();
 		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
 		
-		Intent i = new Intent(getActivity(),PollService.class);
-		getActivity().startService(i);
+		
 		//new FetchPositionTask.execute();
 		
 		//shortcut som hoppar över trådning och hämtning av data från webservice

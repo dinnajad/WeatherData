@@ -44,8 +44,7 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Intent i = new Intent(getActivity(),PollService.class);
-		getActivity().startService(i);
+		
 	}
 
 	/***

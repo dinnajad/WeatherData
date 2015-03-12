@@ -22,6 +22,11 @@
           android:showAsAction="never" />
     
     <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_toggle_poll"
+          android:title="@string/action_toggle_poll"
+          android:showAsAction="never" />
+    
+    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
           android:showAsAction="never" />

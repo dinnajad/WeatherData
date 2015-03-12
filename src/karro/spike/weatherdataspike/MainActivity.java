@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.os.Build;
 import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.model.PollService;
 
 public class MainActivity extends Activity {
 
@@ -62,8 +63,11 @@ public class MainActivity extends Activity {
 			//skapa ny aktivitet
 			Intent alarm = new Intent(this,AlarmListActivity.class);
 			startActivity(alarm);
-			
-			
+		}else if(id==R.id.action_toggle_poll){
+			Toast.makeText(getApplicationContext(), "toggle poll", Toast.LENGTH_LONG).show();
+			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
+			PollService.setServiceAlarm(this, shouldStartAlarm);
+		//TODO eventually make item update text see page 477 			
 		}else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 			//TODO proper Search implementation

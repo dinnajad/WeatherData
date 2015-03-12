@@ -6,6 +6,10 @@
     <string name="action_alarm">Alarm</string>
     <string name="action_myAlarms">Mina Alarm</string>
     <string name="action_search">Sök</string>
+    <string name="action_toggle_poll">Automatisk uppdatering</string>
+    
+    
+    
     <string name="max_temperature">Högsta temperatur: </string>
     <string name="min_temperature">Lägsta Temperatur: </string>
     <string name="temperature">Temperatur: </string>
@@ -16,7 +20,7 @@
     <string name="is">är</string>
     <string name="and">och</string>
     <string name="title_activity_alarm_list">AlarmListActivity</string>
-    <string name="hello_world">Hello world!</string>
+    
 
     <string-array name="parameters">
         <item name="temp">Temperaturen</item>
