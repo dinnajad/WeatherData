@@ -11,6 +11,7 @@ import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 /**
@@ -18,8 +19,7 @@ import android.view.MenuItem;
  *
  */
 public class AlarmActivity extends Activity {
-
-		//TODO add implementation
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,8 +38,8 @@ public class AlarmActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		getMenuInflater().inflate(R.menu.main_activity_actions, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -49,7 +49,12 @@ public class AlarmActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 			return true;
+		}else if(id==R.id.action_alarm){
+			Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
+		}else if(id==R.id.action_search){
+			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 		}
 		return super.onOptionsItemSelected(item);
 	}

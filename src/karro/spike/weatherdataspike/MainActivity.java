@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.os.Build;
+import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
 
 public class MainActivity extends Activity {
@@ -46,12 +48,25 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			//TODO proper settings Implementation
 			Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 			return true;
+			
 		}else if(id==R.id.action_alarm){
 			Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
+			//skapa ny aktivitet
+			Intent alarm = new Intent(this,AlarmActivity.class);
+			startActivity(alarm);
+		}else if(id==R.id.action_my_alarms){
+			Toast.makeText(getApplicationContext(), "Mina Alarm", Toast.LENGTH_LONG).show();
+			//skapa ny aktivitet
+			Intent alarm = new Intent(this,AlarmListActivity.class);
+			startActivity(alarm);
+			
+			
 		}else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
+			//TODO proper Search implementation
 		}
 		return super.onOptionsItemSelected(item);
 	}
