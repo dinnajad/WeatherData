@@ -3,7 +3,7 @@
  */
 package karro.spike.weatherdata;
 
-import karro.spike.weatherdataspike.Alarm;
+import karro.spike.weatherdataspike.model.Alarm;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

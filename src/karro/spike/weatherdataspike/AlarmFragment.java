@@ -3,9 +3,8 @@
  */
 package karro.spike.weatherdataspike;
 
-import com.google.android.gms.internal.ok;
-
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.model.Alarm;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -68,10 +67,14 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO skapa alarm, Spara undan alla värden,stäng fönstret
-				
-				
-				
+				// skapa alarm, Spara undan alla värden,stäng fönstret
+				Alarm alarm = new Alarm();
+				alarm.setParameter(selectedParameter);
+				alarm.setLogicOperator(selectedLogic);
+				alarm.setLimit(limit1.getText().toString());
+				alarm.setLimit2(limit2.getText().toString());		
+				//TODO spara undan Alarmet i lista nånstans
+				getActivity().finish();
 			}
 		});
 	}
@@ -111,8 +114,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	
         String selected = (String) parent.getItemAtPosition(position);
         if(parent.equals(mParameterSpinner)){
-        	selectedParameter = selected;
-        	
+        	selectedParameter = selected;        	
         }else{
         	selectedLogic = selected;
         }		

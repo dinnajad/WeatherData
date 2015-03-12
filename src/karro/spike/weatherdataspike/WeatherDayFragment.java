@@ -8,7 +8,10 @@ import java.util.Date;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.YR.YrWetherData;
+import karro.spike.weatherdataspike.model.OneDayWeatherData;
+import karro.spike.weatherdataspike.model.PollService;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +44,8 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		Intent i = new Intent(getActivity(),PollService.class);
+		getActivity().startService(i);
 	}
 
 	/***

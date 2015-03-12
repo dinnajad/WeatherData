@@ -8,14 +8,15 @@ import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrWetherData;
+import karro.spike.weatherdataspike.model.PollService;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.GridView;
 
 public class WeatherFrameFragment extends Fragment {
@@ -36,6 +37,9 @@ public class WeatherFrameFragment extends Fragment {
 		setRetainInstance(true);
 		new FetchItemsTask().execute();
 		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
+		
+		Intent i = new Intent(getActivity(),PollService.class);
+		getActivity().startService(i);
 		//new FetchPositionTask.execute();
 		
 		//shortcut som hoppar över trådning och hämtning av data från webservice
