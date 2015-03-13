@@ -44,6 +44,7 @@ public class PollService extends IntentService {
 		
 		if(storage==null){
 			storage = new ForecastKeeper();
+			
 			}
 		
 		storage.saveForecast(new SimpleYrFetcher().fetchForecast());

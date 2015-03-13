@@ -62,8 +62,8 @@ public class PeriodWeatherFragment extends Fragment {
 		mWindDirTextView = (TextView) v.findViewById(R.id.windDirTextView);
 		mWindSpeedTextview = (TextView) v.findViewById(R.id.windSpeedTextView);
 		
-		mfromTimeTextView.setText(data.getTime());
-		mToTimeTextView.setText(data.getEndTime());
+		//mfromTimeTextView.setText(data.getTime());
+		//mToTimeTextView.setText(data.getEndTime());
 		mTemperatureTextView.setText(data.getTemperature().getTemperature());
 		mPrecipitationTextView.setText(data.getPrecipitation().getValue());
 		

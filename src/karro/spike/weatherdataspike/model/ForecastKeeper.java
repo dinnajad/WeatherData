@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import karro.spike.weatherdataspike.YR.Forecast;
 
@@ -36,6 +37,7 @@ private static final String TAG = "ForecastKeeper";
 	public ForecastKeeper(){
 		forecasts = new ArrayList<Forecast>();
 		alarms = new ArrayList<Alarm>();//TODO make them get saved ones too
+		alarms.addAll(fejkDataItems());
 	}
 
 	public boolean saveForecast(Forecast fc){
@@ -44,6 +46,7 @@ private static final String TAG = "ForecastKeeper";
 		forecasts.add(fc);
 		currentForecast = fc;
 		Log.v(TAG, "forecast saved"+ currentForecast);
+		
 		return true;				
 	}
 
@@ -51,7 +54,11 @@ private static final String TAG = "ForecastKeeper";
 	public void AddAlarm(Alarm alarm){
 		alarms.add(alarm);
 	}
-
+	
+	public OneDayWeatherData getTodaysWeather() {
+		return ForecastTransformer.getTodaysWeather(currentForecast);		
+	}
+	
 	/***
 	 * Persists this class to xml file
 	 * @param context
@@ -65,6 +72,7 @@ private static final String TAG = "ForecastKeeper";
 		try {
 			fileOut = context.openFileOutput(fileName, Context.MODE_PRIVATE);	
 			serializer.write(this, fileOut);
+			Log.v(TAG, "save complete");
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
@@ -141,4 +149,12 @@ private static final String TAG = "ForecastKeeper";
 		this.alarms = alarms;
 	}
 
+	private ArrayList< Alarm> fejkDataItems() {
+		
+		Alarm ett= new Alarm("temperature","under","3","-11");
+		ArrayList<Alarm> alarms = new ArrayList<Alarm>();
+		alarms.add(ett);
+		
+		return alarms;
+	}	
 }

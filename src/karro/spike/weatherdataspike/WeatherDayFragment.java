@@ -3,15 +3,12 @@
  */
 package karro.spike.weatherdataspike;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdataspike.YR.YrWetherData;
+import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
-import karro.spike.weatherdataspike.model.PollService;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +24,7 @@ public class WeatherDayFragment extends Fragment {
 	@SuppressWarnings("unused")//for use in any log messages
 	private static final String TAG= "WeatherDayFragment";
 
+	private ForecastKeeper storage;
 	private TextView mPlaceTextview;
 	private TextView mDayTextView;
 	private TextView mMaxTempTextview;
@@ -34,8 +32,8 @@ public class WeatherDayFragment extends Fragment {
 
 	private ImageView mImageView;
 
-	private OneDayWeatherData data; 
-	private Boolean isExtended =true;
+	private OneDayWeatherData mData; 
+	private Boolean isExtended = true;
 
 	/***
 	 * called from the OS when creating the fragment. 
@@ -44,7 +42,7 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+		storage=((MainActivity) getActivity()).getStorage();
 	}
 
 	/***
@@ -61,37 +59,54 @@ public class WeatherDayFragment extends Fragment {
 		mMinTextView = (TextView) v.findViewById(R.id.minTempTextView);
 
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
-		if(data == null){
-			data= new OneDayWeatherData();
-			data.setDay(new Date());
-			data.setMaxTemperature(100);
-			data.setMintemperature(-100);
-			data.setPlace("Himlen");
+		if(mData == null){
+			fejkData();
 		}
 
+		//TODO check that nothing is null
+		Date date= mData.getDay();
+		if(date==null)date= new Date();
+		String day =date.toString();//TODO use Calendar to get Date		
+		String max= mData.getMaxTemperatureString();
+		String min =mData.getMinTemperatureString();
 
-		mDayTextView.setText(data.getDay().toString());//TODO use Calendar to get Date
-		mMaxTempTextview.setText(data.getMaxTemperatureString());
-		mMinTextView.setText(data.getMinTemperatureString());
+		if(day==null)day= new Date().toString();		
+		if(max==null) max= "";		
+		if(min==null)min="";
+
+		mDayTextView.setText(day);
+		mMinTextView.setText(min);
+		mMaxTempTextview.setText(max);
 
 		if(isExtended){
-			mPlaceTextview.setText(data.getPlace());
+			mPlaceTextview.setText(mData.getPlace());
 			mPlaceTextview.setEnabled(true);
 			mPlaceTextview.setVisibility(View.VISIBLE);
-			setPicture();
-			}else{
-				mPlaceTextview.setEnabled(false);
-				mPlaceTextview.setVisibility(View.GONE);
-				mImageView.setEnabled(false);
-				mImageView.setVisibility(android.view.View.GONE);
-			}
+			//setPicture();
+		}else{
+			mPlaceTextview.setEnabled(false);
+			mPlaceTextview.setVisibility(View.GONE);
+			mImageView.setEnabled(false);
+			mImageView.setVisibility(android.view.View.GONE);
+		}
 		//TODO if(orientation=landscape)
-		
+
 		return v;
 	}
 
+	/**
+	 * 
+	 */
+	private void fejkData() {
+		mData= new OneDayWeatherData();
+		mData.setDay(new Date());
+		mData.setMaxTemperature(100);
+		mData.setMintemperature(-100);
+		mData.setPlace("Himlen");
+	}
+
 	private void setPicture(){
-		if(data.getMintemperature()<=0){//TODO make limit flexible
+		if(mData.getMintemperature()<=0){//TODO make limit flexible
 			//mImageView.setImageResource(R.drawable.frost_pic);
 			mImageView.setVisibility(android.view.View.VISIBLE);		
 		}else 
@@ -99,11 +114,11 @@ public class WeatherDayFragment extends Fragment {
 	}
 
 	public OneDayWeatherData getData() {
-		return data;
+		return mData;
 	}
 
 	public void setData(OneDayWeatherData data) {
-		this.data = data;
+		this.mData = data;
 	}
 
 }

@@ -3,18 +3,26 @@
  */
 package karro.spike.weatherdataspike.model;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**Holds all information about an alarm
  * @author Karro
  *
  */
+@Root(strict=false)
 public class Alarm {
 
 	/***
 	 * parameter is if it is temperature, wind, rain etc.
 	 */
+	@Element
 	private String parameter;
+	@Element
 	private String logicOperator;
+	@Element
 	private String limit;//TODO börjar med String sen får vi ändra till det numeriska som passar bäst
+	@Element
 	private String limit2;
 	
 	public Alarm(String parameter, String logicOperator, String limit,

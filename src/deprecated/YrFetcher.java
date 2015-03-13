@@ -13,7 +13,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.net.Uri;
 import android.util.Log;
-
+@Deprecated
 public class YrFetcher extends DataFetcher {
 	private static final String TAG = "YrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/forecast.xml";
@@ -130,8 +130,8 @@ public class YrFetcher extends DataFetcher {
 	private String parseTime(XmlPullParser parser ,YrWetherData dataItem) {
 		String time = parser.getAttributeValue(null,"from");
 		String timeTo = parser.getAttributeValue(null,"to");
-		dataItem.setTime(time);
-		dataItem.setEndTime(timeTo);
+		//dataItem.setTime(time);
+		//dataItem.setEndTime(timeTo);
 		return time;
 	}
 	

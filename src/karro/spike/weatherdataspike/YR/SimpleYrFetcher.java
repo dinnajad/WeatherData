@@ -27,38 +27,37 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private static final String TAG = "YrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/forecast.xml";
-		
+
 	public Forecast fetchForecast(){
 		return realImplementation();
 	}
 	public ArrayList<YrWetherData> fetchItems(){
 		return realImplementation1();
 	}
-	
+
 	private ArrayList<YrWetherData> realImplementation1() {
 		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
 		items.addAll( realImplementation().getList());
 		return items;
 	}
-	
+
 	/**
 	 * @return
 	 */
 	private Forecast realImplementation() {
-		
+
 		WeatherData wdata=null;
 		//Forecast forecast=null;
 		try{
 			String url = Uri.parse(KÅGE).buildUpon().build().toString();//TODO use savedPosition instead of hardcoded
-		
-		String xmlString =getUrl(url);
-		Log.i(TAG,"XMLsträng från YR:"+ xmlString);
-		
-		Serializer serializer= new Persister();
-		
-		wdata =serializer.read(WeatherData.class, xmlString);
-		
-		
+
+			String xmlString =getUrl(url);
+			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
+			Log.i(TAG,"XMLsträng från YR: hämtad");
+			
+			Serializer serializer= new Persister();		
+			wdata =serializer.read(WeatherData.class, xmlString);
+
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} /*catch (XmlPullParserException e) {
@@ -66,10 +65,10 @@ public class SimpleYrFetcher extends DataFetcher {
 		}*/ catch (Exception e) {
 			Log.e(TAG, "Failed  to parse items", e);
 		}
-		
+
 		return wdata.getForeCast();
 	}
-	
+
 	/**
 	 * @return
 	 */
@@ -102,13 +101,13 @@ public class SimpleYrFetcher extends DataFetcher {
 					+        "<pressure unit=\"hPa\" value=\"999.3\" />" + "\r\n"
 					+      "</time>"
 					+		"</tabular>" +"</forecast>" +"</weatherdata>";
-		Log.i(TAG,"XMLsträng från fejk:"+ xmlString);
-		
-		Serializer serializer= new Persister();
-		
-		wdata =serializer.read(WeatherData.class, xmlString);
-		//items
-		
+			Log.i(TAG,"XMLsträng från fejk:"+ xmlString);
+
+			Serializer serializer= new Persister();
+
+			wdata =serializer.read(WeatherData.class, xmlString);
+			//items
+
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} /*catch (XmlPullParserException e) {
@@ -116,12 +115,12 @@ public class SimpleYrFetcher extends DataFetcher {
 		}*/ catch (Exception e) {
 			Log.e(TAG, "Failed  to parse items", e);
 		}
-		
+
 		Log.e(TAG,"parse Success : "+ wdata);
 		items.addAll(wdata.getForeCast().getList());
 		return items;
 	}
-	
+
 
 
 }

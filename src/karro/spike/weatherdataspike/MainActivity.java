@@ -15,10 +15,14 @@ import android.widget.Toast;
 import android.os.Build;
 import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.model.ForecastKeeper;
+import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import karro.spike.weatherdataspike.model.PollService;
 
 public class MainActivity extends Activity {
-
+	protected static final String FORE_CAST_XML = "ForeCast.xml";
+	private ForecastKeeper storage;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,6 +37,13 @@ public class MainActivity extends Activity {
 		.add(R.id.fragmentContainer, fragment)
 		.commit();
 		}
+		//Läs in data från fil
+		setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
+		OneDayWeatherData data = storage.getTodaysWeather();
+		//Ladda fragmentet med data
+		WeatherDayFragment odwd = (WeatherDayFragment)fragment;
+		odwd.setData(data);
+		
 	}
 
 	@Override
@@ -73,6 +84,14 @@ public class MainActivity extends Activity {
 			//TODO proper Search implementation
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	public ForecastKeeper getStorage() {
+		return storage;
+	}
+
+	public void setStorage(ForecastKeeper storage) {
+		this.storage = storage;
 	}
 }	
 
