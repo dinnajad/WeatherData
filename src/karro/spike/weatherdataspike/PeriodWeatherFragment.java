@@ -4,8 +4,8 @@
 package karro.spike.weatherdataspike;
 
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.YR.IWeatherData;
 import karro.spike.weatherdataspike.YR.WindDirection;
-import karro.spike.weatherdataspike.YR.YrWetherData;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,7 +28,7 @@ public class PeriodWeatherFragment extends Fragment {
 	private TextView mWindDirTextView;
 	private ImageView mSymbolImageView;
 		
-	private YrWetherData data;
+	private IWeatherData data;
 	
 	/***
 	 * called from the OS when creating the fragment. 

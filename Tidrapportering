@@ -24,11 +24,11 @@ tot: 16,45h
 
 
 tisdag
-9,45-10,06	0,3	Grafisk representation för position/ GooglePlayServide show map
+9,45-10,06	0,3		Grafisk representation för position/ GooglePlayServide show map
 12.17-12,35	0,3		Märka upp YRdata ing
-20,00-20,20	0,3	Skapa YRDataobjekt
--21,20		1h	parsa YRDAta
-22,20-23,15	1h	parsa Yrdata
+20,00-20,20	0,3		Skapa YRDataobjekt
+-21,20		1h		parsa YRDAta
+22,20-23,15	1h		parsa Yrdata
 dagtot:3h
 onsdag
 8,45-11,38	3h		rename app, install GooglePlay services
@@ -39,18 +39,19 @@ onsdag
 19,35-	20,30	1h	layout, planering
 21,00-21,30	0,5h
 21,40-22,40	1h		period Fragment
-22,40-	23,20 0,6h		AlarmFragment
+22,40-	23,20 0,6h	AlarmFragment
 dagtot: 13h25
 torsdag
 9,59-10,23			actionBar för att komma till ställ alarmmenyn
 12,22-13,53
 14,14-14,30
-1500-17,40				spinners, Service
+1500-17,40			spinners, Service
 18,15-19			PollServiice
 20,30-2141			Spara till xml
 
 fredag
-9,30-10,12				spara till xml	
-13,12-		13,30
+9,30-10,12			spara till xml	
+13,12-13,30
 14-14,49			parsa date
-15-					datesEqual
+15-16,15			datesEqual, findWeatherDataForDate
+19,40-

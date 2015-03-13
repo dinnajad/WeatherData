@@ -52,8 +52,8 @@ public class SimpleYrFetcher extends DataFetcher {
 			String url = Uri.parse(KÅGE).buildUpon().build().toString();//TODO use savedPosition instead of hardcoded
 
 			String xmlString =getUrl(url);
-			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
-			Log.i(TAG,"XMLsträng från YR: hämtad");
+			Log.i(TAG,"XMLsträng från YR:"+ xmlString);
+			//Log.i(TAG,"XMLsträng från YR: hämtad");
 			
 			Serializer serializer= new Persister();		
 			wdata =serializer.read(WeatherData.class, xmlString);

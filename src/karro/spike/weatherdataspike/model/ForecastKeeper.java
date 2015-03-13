@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import karro.spike.weatherdataspike.YR.Forecast;
+import karro.spike.weatherdataspike.YR.IWeatherData;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -27,23 +28,26 @@ import android.util.Log;
 @Root(strict=false)
 public class ForecastKeeper {
 private static final String TAG = "ForecastKeeper";
-	@ElementList
-	private ArrayList<Forecast> forecasts;
+	//@ElementList
+	//private ArrayList<Forecast> forecasts; //TODO varför har jag denna?
 	@Element
 	private  Forecast currentForecast;
 	@ElementList
 	private ArrayList<Alarm> alarms;//TODO should this be in this class at all?
-
+ 
+	private ArrayList<OneDayWeatherData> dataPerDay ;
+	
 	public ForecastKeeper(){
-		forecasts = new ArrayList<Forecast>();
+		//forecasts = new ArrayList<Forecast>();
 		alarms = new ArrayList<Alarm>();//TODO make them get saved ones too
 		alarms.addAll(fejkDataItems());
+		
 	}
 
 	public boolean saveForecast(Forecast fc){
 		if(fc == null)return false;
 
-		forecasts.add(fc);
+		//forecasts.add(fc);
 		currentForecast = fc;
 		Log.v(TAG, "forecast saved"+ currentForecast);
 		
@@ -53,11 +57,17 @@ private static final String TAG = "ForecastKeeper";
 
 	public void AddAlarm(Alarm alarm){
 		alarms.add(alarm);
+		//TODO kolla att alarmet inte redan finns
 	}
 	
 	public OneDayWeatherData getTodaysWeather() {
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}
+	
+	public void groupDataPerDay() {
+		ArrayList<IWeatherData> lista = new ArrayList<IWeatherData>( currentForecast.getList());
+		dataPerDay= ForecastTransformer.groupWeatherDataForDate(lista);		
+	}	
 	
 	/***
 	 * Persists this class to xml file
@@ -104,19 +114,19 @@ private static final String TAG = "ForecastKeeper";
 	}
 	/**
 	 * @return the forecasts
-	 */
+	 *//*
 	public ArrayList<Forecast> getForecasts() {
 		return forecasts;
 	}
 
 
-	/**
+	*//**
 	 * @param forecasts the forecasts to set
-	 */
+	 *//*
 	public void setForecasts(ArrayList<Forecast> forecasts) {
 		this.forecasts = forecasts;
 	}
-
+*/
 
 	/**
 	 * @return the currentForecast
@@ -156,5 +166,15 @@ private static final String TAG = "ForecastKeeper";
 		alarms.add(ett);
 		
 		return alarms;
-	}	
+	}
+
+	public ArrayList<OneDayWeatherData> getDataPerDay() {
+		return dataPerDay;
+	}
+
+	public void setDataPerDay(ArrayList<OneDayWeatherData> dataPerDay) {
+		this.dataPerDay = dataPerDay;
+	}
+
+	
 }

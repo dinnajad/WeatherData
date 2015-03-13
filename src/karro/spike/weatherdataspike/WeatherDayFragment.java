@@ -64,17 +64,15 @@ public class WeatherDayFragment extends Fragment {
 		}
 
 		//TODO check that nothing is null
-		Date date= mData.getDay();
-		if(date==null)date= new Date();
-		String day =date.toString();//TODO use Calendar to get Date		
+		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
 		String min =mData.getMinTemperatureString();
 
-		if(day==null)day= new Date().toString();		
+		if(date==null)date=" ";		
 		if(max==null) max= "";		
 		if(min==null)min="";
 
-		mDayTextView.setText(day);
+		mDayTextView.setText(date);
 		mMinTextView.setText(min);
 		mMaxTempTextview.setText(max);
 

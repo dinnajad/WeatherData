@@ -40,7 +40,7 @@ public class PollService extends IntentService {
 		}
 		
 		storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
-		//hämta väderdata //TODO lägg till för alla sparade positioner och spara datat nånstans
+		
 		
 		if(storage==null){
 			storage = new ForecastKeeper();
@@ -49,6 +49,7 @@ public class PollService extends IntentService {
 		
 		storage.saveForecast(new SimpleYrFetcher().fetchForecast());
 		storage.saveToPersistanse(getApplicationContext(), fileName);
+		storage.groupDataPerDay();
 	}
 	
 	public static void setServiceAlarm(Context context, boolean isOn){

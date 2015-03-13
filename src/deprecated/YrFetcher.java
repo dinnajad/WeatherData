@@ -5,6 +5,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.DataFetcher;
+import karro.spike.weatherdataspike.YR.IWeatherData;
 import karro.spike.weatherdataspike.YR.YrWetherData;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -105,7 +106,7 @@ public class YrFetcher extends DataFetcher {
 		
 	}
 
-	private void parseSymbol(XmlPullParser parser, YrWetherData dataItem) {
+	private void parseSymbol(XmlPullParser parser, IWeatherData dataItem) {
 		String symbol = parser.getAttributeValue(null, "numberEx");
 		//dataItem.setSymbol(symbol);
 	}
@@ -114,7 +115,7 @@ public class YrFetcher extends DataFetcher {
 	 * @param parser
 	 * @param dataItem
 	 */
-	private void parseTemperature(XmlPullParser parser, YrWetherData dataItem) {
+	private void parseTemperature(XmlPullParser parser, IWeatherData dataItem) {
 		String temperature= parser.getAttributeValue(null, "value");
 		
 		//stoppa in strängarna i ett dataItem
@@ -127,7 +128,7 @@ public class YrFetcher extends DataFetcher {
 	 * @param parser
 	 * @return
 	 */
-	private String parseTime(XmlPullParser parser ,YrWetherData dataItem) {
+	private String parseTime(XmlPullParser parser ,IWeatherData dataItem) {
 		String time = parser.getAttributeValue(null,"from");
 		String timeTo = parser.getAttributeValue(null,"to");
 		//dataItem.setTime(time);

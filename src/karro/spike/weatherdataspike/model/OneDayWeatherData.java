@@ -3,7 +3,12 @@
  */
 package karro.spike.weatherdataspike.model;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import karro.spike.weatherdataspike.YR.IWeatherData;
 
 /**
  * @author Karro
@@ -13,13 +18,38 @@ public class OneDayWeatherData {
 
 	private String place;
 	private Date day;
+
+	private float mMaxTemperature = -300;
+	private float mMinTemperature = Float.MAX_VALUE;
+
+	private ArrayList<IWeatherData> mIWeatherData ;
+
+	public void AddIWeatherData(IWeatherData IWeatherData)
+	{
+		if(mIWeatherData==null)mIWeatherData = new ArrayList<IWeatherData>();
+		mIWeatherData.add(IWeatherData);
+		CalculateData();
+	}
 	
-	private float mMaxTemperature= 100;
-	private float mMinTemperature= 100;
-	
-	
-	
-	
+	/***
+	 * Calculated the aggregated data from the items in the List
+	 */
+	public void CalculateData(){
+		day= mIWeatherData.get(0).getTime();
+		
+		
+		for(int i = 0; i < mIWeatherData.size(); i++) {
+			IWeatherData item = mIWeatherData.get(i);
+			float temp = item.getFloatTemperature();
+			//check if temp is min or max this day
+			temp = item.getFloatTemperature();
+			
+			mMaxTemperature = Math.max(mMaxTemperature, temp);
+			mMinTemperature = Math.min(mMinTemperature, temp);			
+		}
+	}
+
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -29,7 +59,7 @@ public class OneDayWeatherData {
 				+ ", maxTemperature=" + mMaxTemperature + ", mintemperature="
 				+ mMinTemperature + "]";
 	}
-	
+
 	/**
 	 * @return the place
 	 */
@@ -60,7 +90,7 @@ public class OneDayWeatherData {
 	public float getMaxTemperature() {
 		return mMaxTemperature;
 	}
-	
+
 	/***
 	 * 
 	 * @return the maxTemperature
@@ -80,7 +110,7 @@ public class OneDayWeatherData {
 	public float getMintemperature() {
 		return mMinTemperature;
 	}
-	
+
 	public String getMinTemperatureString(){
 		return Float.toString(mMinTemperature);
 	}
@@ -90,6 +120,13 @@ public class OneDayWeatherData {
 	public void setMintemperature(float mintemperature) {
 		this.mMinTemperature = mintemperature;
 	}
-	
-	
+
+	public String getDayString() {
+		if(day==null)return " ";
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(day);
+		return day.toString(); //TODO nicer time format
+	}
+
+
 }

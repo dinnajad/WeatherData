@@ -4,7 +4,6 @@
 package karro.spike.weatherdataspike.YR;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementUnion;
 import org.simpleframework.xml.Root;
 
 /**
@@ -12,7 +11,7 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false, name="weatherdata")
-public class WeatherData {
+public class WeatherData {//TODO rename
 
 	@Element(name="forecast")
 	private Forecast mForeCast;
