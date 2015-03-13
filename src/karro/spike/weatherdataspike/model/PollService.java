@@ -20,6 +20,8 @@ public class PollService extends IntentService {
 
 	private static final String TAG = "PollService";
 	private static final long POLL_INTERVAL = 1000 * 15 ; //15 sec
+	private ForecastKeeper storage; 
+	private String fileName = "ForeCast.xml";
 	
 	public PollService(){
 	 super(TAG);	
@@ -37,8 +39,15 @@ public class PollService extends IntentService {
 			return;
 		}
 		
+		storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
 		//hämta väderdata //TODO lägg till för alla sparade positioner och spara datat nånstans
-		new SimpleYrFetcher().fetchItems();
+		
+		if(storage==null){
+			storage = new ForecastKeeper();
+			}
+		
+		storage.saveForecast(new SimpleYrFetcher().fetchForecast());
+		storage.saveToPersistanse(getApplicationContext(), fileName);
 	}
 	
 	public static void setServiceAlarm(Context context, boolean isOn){

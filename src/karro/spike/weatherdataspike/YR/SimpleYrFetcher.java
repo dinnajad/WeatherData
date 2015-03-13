@@ -27,27 +27,29 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private static final String TAG = "YrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/forecast.xml";
-	private static final String XML_TAG = "time";
-	private static final String XML_TEMP = "temperature";
-	private static final String XML_SYMBOL = "symbol";
-	private static final String XML_PRECIPITATION = "precipitation";
-	private static final String XML_WIND_DIR = "windDirection";
-	private static final String XML_WINDSPEED = "windSpeed";
-	private static final String XML_PRESSURE = "pressure";
-	
-	public ArrayList<YrWetherData> fetchItems(){
+		
+	public Forecast fetchForecast(){
 		return realImplementation();
 	}
-
+	public ArrayList<YrWetherData> fetchItems(){
+		return realImplementation1();
+	}
+	
+	private ArrayList<YrWetherData> realImplementation1() {
+		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
+		items.addAll( realImplementation().getList());
+		return items;
+	}
+	
 	/**
 	 * @return
 	 */
-	private ArrayList<YrWetherData> realImplementation() {
-		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
+	private Forecast realImplementation() {
+		
 		WeatherData wdata=null;
 		//Forecast forecast=null;
 		try{
-			String url = Uri.parse(KÅGE).buildUpon().build().toString();
+			String url = Uri.parse(KÅGE).buildUpon().build().toString();//TODO use savedPosition instead of hardcoded
 		
 		String xmlString =getUrl(url);
 		Log.i(TAG,"XMLsträng från YR:"+ xmlString);
@@ -65,8 +67,7 @@ public class SimpleYrFetcher extends DataFetcher {
 			Log.e(TAG, "Failed  to parse items", e);
 		}
 		
-		items.addAll(wdata.getForeCast().getList());
-		return items;
+		return wdata.getForeCast();
 	}
 	
 	/**
