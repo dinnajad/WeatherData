@@ -42,16 +42,20 @@ onsdag
 22,40-	23,20 0,6h	AlarmFragment
 dagtot: 13h25
 torsdag
-9,59-10,23			actionBar för att komma till ställ alarmmenyn
-12,22-13,53
-14,14-14,30
-1500-17,40			spinners, Service
-18,15-19			PollServiice
-20,30-2141			Spara till xml
-
+9,59-10,23	0,3h		actionBar för att komma till ställ alarmmenyn
+12,22-13,53	1,5h
+14,14-14,30	0,25h
+1500-17,40	2,6h		spinners, Service
+18,15-19	0,75h		PollServiice
+20,30-2141	1h		Spara till xml
+dagtot: 6,4h
 fredag
-9,30-10,12			spara till xml	
-13,12-13,30
-14-14,49			parsa date
-15-16,15			datesEqual, findWeatherDataForDate
-19,40-
+9,30-10,12	0,75		spara till xml	
+13,12-13,30	0,25
+14-14,49	0,75		parsa date
+15-16,15	1,25		datesEqual, findWeatherDataForDate
+19,40 okpncentrerat+ sövning
+21-24		3h	
+dagtot:	6h
+Lördag förmiddag okoncentrerade korta sessioner
+13,26-

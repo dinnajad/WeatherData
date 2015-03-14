@@ -61,6 +61,9 @@ private static final String TAG = "ForecastKeeper";
 	}
 	
 	public OneDayWeatherData getTodaysWeather() {
+		if(currentForecast==null){
+			
+		}
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}
 	
@@ -96,8 +99,9 @@ private static final String TAG = "ForecastKeeper";
 	 * @param context
 	 * @param fileName
 	 * @return an instance of forecastKeeper or null if something went wrong in reading file
+	 * @throws FileNotFoundException 
 	 */
-	public static ForecastKeeper readFromFile(Context context, String fileName){
+	public static ForecastKeeper readFromFile(Context context, String fileName) throws FileNotFoundException{
 		Serializer serializer= new Persister();
 		FileInputStream fileIn;
 		ForecastKeeper keeper =null;
@@ -105,8 +109,8 @@ private static final String TAG = "ForecastKeeper";
 				fileIn = context.openFileInput(fileName);
 				keeper = serializer.read(ForecastKeeper.class, fileIn);
 			} catch (FileNotFoundException fnfe) {
-				//TODO handle
 				Log.e(TAG, fnfe.getMessage());
+				throw  fnfe;
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
 			}	

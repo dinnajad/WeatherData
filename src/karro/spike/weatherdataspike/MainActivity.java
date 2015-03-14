@@ -1,11 +1,14 @@
 package karro.spike.weatherdataspike;
 
+import java.io.FileNotFoundException;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import android.os.Build;
 import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import karro.spike.weatherdataspike.model.PollService;
@@ -38,11 +42,28 @@ public class MainActivity extends Activity {
 		.commit();
 		}
 		//Läs in data från fil
-		setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
+		try {
+			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
+		} catch (FileNotFoundException e) {
+						
+		}
+		if(storage==null){
+			//starta Pollservice och låt den köra hämtningen en gång
+				Intent i = new Intent(getApplicationContext(), PollService.class);
+				try {
+					setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
+				} catch (FileNotFoundException fe) {
+					Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
+					if(storage==null){
+					storage = new ForecastKeeper();
+					}
+				}
+			}else{
 		OneDayWeatherData data = storage.getTodaysWeather();
 		//Ladda fragmentet med data
 		WeatherDayFragment odwd = (WeatherDayFragment)fragment;
 		odwd.setData(data);
+		}
 		
 	}
 
@@ -75,9 +96,10 @@ public class MainActivity extends Activity {
 			Intent alarm = new Intent(this,AlarmListActivity.class);
 			startActivity(alarm);
 		}else if(id==R.id.action_toggle_poll){
-			Toast.makeText(getApplicationContext(), "toggle poll", Toast.LENGTH_LONG).show();
+			
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setServiceAlarm(this, shouldStartAlarm);
+			Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
 		//TODO eventually make item update text see page 477 			
 		}else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();

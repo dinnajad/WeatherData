@@ -3,13 +3,21 @@
  */
 package karro.spike.weatherdataspike.model;
 
+import java.io.FileNotFoundException;
+
+import karro.spike.weatherdataspike.MainActivity;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
+import android.R;
 import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.Notification.Builder;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 /**
@@ -39,17 +47,36 @@ public class PollService extends IntentService {
 			return;
 		}
 		
-		storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
-		
+		try {
+			storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
+		} catch (FileNotFoundException e) {
+			//ignore but handle later by creating new Forecastkeeper
+		}	
 		
 		if(storage==null){
 			storage = new ForecastKeeper();
-			
-			}
+		}
 		
 		storage.saveForecast(new SimpleYrFetcher().fetchForecast());
 		storage.saveToPersistanse(getApplicationContext(), fileName);
 		storage.groupDataPerDay();
+		SendNotification();
+	}
+	
+	protected void SendNotification(){
+		Intent i = new Intent(getApplicationContext(), MainActivity.class);
+		PendingIntent pi= PendingIntent.getService(getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		int lastnotificationNumber = 001;
+		NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext());
+		
+		mBuilder.setContentTitle("FrostVarning").setSmallIcon(R.drawable.ic_lock_idle_alarm)
+			.setContentText("Inatt sjunker temperaturen under 0 grader, skydda alla känsliga växter!")
+		.setContentIntent(pi);
+		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		
+		manager.notify(lastnotificationNumber++, mBuilder.build());
+		
 	}
 	
 	public static void setServiceAlarm(Context context, boolean isOn){

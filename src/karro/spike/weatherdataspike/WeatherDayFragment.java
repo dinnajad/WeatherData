@@ -105,7 +105,7 @@ public class WeatherDayFragment extends Fragment {
 
 	private void setPicture(){
 		if(mData.getMintemperature()<=0){//TODO make limit flexible
-			//mImageView.setImageResource(R.drawable.frost_pic);
+			mImageView.setImageResource(R.drawable.frost_pic);
 			mImageView.setVisibility(android.view.View.VISIBLE);		
 		}else 
 			mImageView.setImageResource(R.drawable.sunflowers);
