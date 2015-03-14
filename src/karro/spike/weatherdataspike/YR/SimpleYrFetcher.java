@@ -27,7 +27,7 @@ import karro.spike.weatherdataspike.DataFetcher;
 public class SimpleYrFetcher extends DataFetcher {
 
 	private static final String TAG = "YrFetcher";
-	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/forecast.xml";
+	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/varsel_time_for_time.xml";
 
 	/***
 	 * bör startas i en bakgrundstråd

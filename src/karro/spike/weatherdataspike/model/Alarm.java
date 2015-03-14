@@ -6,12 +6,12 @@ package karro.spike.weatherdataspike.model;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-/**Holds all information about an alarm
+/**Holds all information about an alarm (enbart DataObjekt) 
  * @author Karro
  *
  */
 @Root(strict=false)
-public class Alarm {
+public class Alarm  {
 
 	/***
 	 * parameter is if it is temperature, wind, rain etc.
@@ -20,30 +20,31 @@ public class Alarm {
 	private String parameter;
 	@Element
 	private String logicOperator;
-	@Element
-	private String limit;//TODO börjar med String sen får vi ändra till det numeriska som passar bäst
-	@Element
+	@Element(required=false)
+	private String limit;//TODO hur se till att den aldrig är annat än float?
+	@Element(required=false)
 	private String limit2;
 	
-	public Alarm(String parameter, String logicOperator, String limit,
-			String limit2) {
+	@Element(required=false)
+	private boolean isActive= true;
+	
+	public Alarm(String parameter, String logicOperator, String limit) {
 		super();
 		this.parameter = parameter;
 		this.logicOperator = logicOperator;
 		this.limit = limit;
-		this.limit2 = limit2;
-	}
+		}
 	
 	public Alarm(){}
 
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Alarm när[parameter=" + parameter + " är "
-				+ logicOperator + ", limit=" + limit + " och eventuellt limit2=" + limit2
-				+ "]";//TODO improve ToString
+		return "Alarm när "+ parameter + " är "
+				+ logicOperator + " " + limit;
 	}
 	
 	/**
@@ -82,6 +83,20 @@ public class Alarm {
 	public void setLimit(String limit) {
 		this.limit = limit;
 	}
+	/**
+	 * @return the isActive
+	 */
+	public boolean isActive() {
+		return isActive;
+	}
+
+	/**
+	 * @param isActive the isActive to set
+	 */
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	/**
 	 * @return the limit2
 	 */

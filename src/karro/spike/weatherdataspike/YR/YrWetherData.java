@@ -224,7 +224,7 @@ public class YrWetherData implements IWeatherData {
 		try{
 		temp = Float.parseFloat(mTemperature.getTemperature());
 	}catch (NumberFormatException e){
-		//TODO handle exception
+		//ignorerar och returnerar null
 	}
 		return temp;
 	}

@@ -7,7 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 
 import karro.spike.weatherdataspike.YR.Forecast;
 import karro.spike.weatherdataspike.YR.IWeatherData;
@@ -27,21 +26,18 @@ import android.util.Log;
  */
 @Root(strict=false)
 public class ForecastKeeper {
-private static final String TAG = "ForecastKeeper";
-	//@ElementList
-	//private ArrayList<Forecast> forecasts; //TODO varför har jag denna?
+	private static final String TAG = "ForecastKeeper";
+
 	@Element
 	private  Forecast currentForecast;
 	@ElementList
-	private ArrayList<Alarm> alarms;//TODO should this be in this class at all?
- 
+	private ArrayList<Alarm> alarms;
+
 	private ArrayList<OneDayWeatherData> dataPerDay ;
-	
+
 	public ForecastKeeper(){
-		//forecasts = new ArrayList<Forecast>();
-		alarms = new ArrayList<Alarm>();//TODO make them get saved ones too
-		//alarms.addAll(fejkDataItems());
-		
+		alarms = new ArrayList<Alarm>();
+
 	}
 
 	public boolean saveForecast(Forecast fc){
@@ -50,28 +46,32 @@ private static final String TAG = "ForecastKeeper";
 		//forecasts.add(fc);
 		currentForecast = fc;
 		Log.v(TAG, "forecast saved"+ currentForecast);
-		
+
 		return true;				
 	}
 
-
+	/***
+	 * 
+	 * @param alarm
+	 */
 	public void AddAlarm(Alarm alarm){
-		alarms.add(alarm);
-		//TODO kolla att alarmet inte redan finns
+		if(!alarms.contains(alarm)){
+			alarms.add(alarm);
+		}
 	}
-	
+
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
-		//TODO what do? if no currentForecast	
+			//TODO what do? if no currentForecast	
 		}
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}
-	
+
 	public void groupDataPerDay() {
 		ArrayList<IWeatherData> lista = new ArrayList<IWeatherData>( currentForecast.getList());
 		dataPerDay= ForecastTransformer.groupWeatherDataForDate(lista);		
 	}	
-	
+
 	/***
 	 * Persists this class to xml file
 	 * @param context
@@ -93,6 +93,9 @@ private static final String TAG = "ForecastKeeper";
 			Log.e("serializer","the schema for the object is not valid" +e);
 			e.printStackTrace();
 		}
+
+
+
 	}
 	/***
 	 * 
@@ -105,32 +108,18 @@ private static final String TAG = "ForecastKeeper";
 		Serializer serializer= new Persister();
 		FileInputStream fileIn;
 		ForecastKeeper keeper =null;
-			try {
-				fileIn = context.openFileInput(fileName);
-				keeper = serializer.read(ForecastKeeper.class, fileIn);
-			} catch (FileNotFoundException fnfe) {
-				Log.e(TAG, fnfe.getMessage());
-				throw  fnfe;
-			} catch (Exception e) {
-				Log.e(TAG, e.getMessage());
-			}	
-			return keeper;			
-	}
-	/**
-	 * @return the forecasts
-	 *//*
-	public ArrayList<Forecast> getForecasts() {
-		return forecasts;
-	}
+		try {
+			fileIn = context.openFileInput(fileName);
+			keeper = serializer.read(ForecastKeeper.class, fileIn);
+		} catch (FileNotFoundException fnfe) {
+			Log.e(TAG, fnfe.getMessage());
+			throw  fnfe;
+		} catch (Exception e) {
+			Log.e(TAG, e.getMessage());
+		}	
 
-
-	*//**
-	 * @param forecasts the forecasts to set
-	 *//*
-	public void setForecasts(ArrayList<Forecast> forecasts) {
-		this.forecasts = forecasts;
+		return keeper;			
 	}
-*/
 
 	/**
 	 * @return the currentForecast
@@ -151,8 +140,16 @@ private static final String TAG = "ForecastKeeper";
 	/**
 	 * @return the alarms
 	 */
-	public ArrayList<Alarm> getAlarms() {
-		return alarms;
+	public ArrayList<IAlarm> getAlarms() {
+		ArrayList<IAlarm> iAlarms = new ArrayList<IAlarm>();
+		for (Alarm alarm : alarms) {
+			if(alarm.getParameter().equals("Temperaturen")){
+				TemperatureAlarm temp= new TemperatureAlarm();
+				temp.setAlarm(alarm);
+				iAlarms.add(temp);
+			}
+		}
+		return iAlarms;
 	}
 
 
@@ -164,11 +161,11 @@ private static final String TAG = "ForecastKeeper";
 	}
 
 	private ArrayList< Alarm> fejkDataItems() {
-		
-		Alarm ett= new Alarm("temperature","under","3","-11");
+
+		Alarm ett= new Alarm("temperature","under","3");
 		ArrayList<Alarm> alarms = new ArrayList<Alarm>();
 		alarms.add(ett);
-		
+
 		return alarms;
 	}
 
@@ -180,5 +177,5 @@ private static final String TAG = "ForecastKeeper";
 		this.dataPerDay = dataPerDay;
 	}
 
-	
+
 }

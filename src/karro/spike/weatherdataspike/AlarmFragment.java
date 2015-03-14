@@ -5,7 +5,9 @@ package karro.spike.weatherdataspike;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.model.Alarm;
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +19,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  * @author Karro
  *
  */
 public class AlarmFragment extends Fragment implements OnItemSelectedListener {
+	
 	private Spinner mParameterSpinner;
 	private Spinner mLogicSpinner;
-	private EditText limit2;
+	//private EditText limit2;
 	private EditText limit1;
 	private Button okbutton;
 	
@@ -39,6 +43,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
+		
 	}
 	
 	/***
@@ -48,13 +53,23 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View v= inflater.inflate(R.layout.alarm_fragment, container,false);
 		
-		limit1= (EditText) v.findViewById(R.id.editText1);
-		limit2= (EditText) v.findViewById(R.id.editText2);
-		
-		
-		
 		setUpSpinners(v);
 		setUpButton(v);
+		
+		limit1= (EditText) v.findViewById(R.id.editText1);
+		limit1.addTextChangedListener(new TextValidator(limit1) {
+		   
+			@Override
+			public void validate(TextView textView, String text) {
+				
+				try{
+				float f = Float.parseFloat(text);
+				okbutton.setEnabled(true);
+				}catch( NumberFormatException e){
+					okbutton.setEnabled(false);
+				}
+			}
+		});
 	return v;
 	}
 
@@ -63,6 +78,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	 */
 	private void setUpButton(View v) {
 		okbutton = (Button) v.findViewById(R.id.OKbutton);
+		okbutton.setEnabled(false);
 		okbutton.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -72,8 +88,20 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 				alarm.setParameter(selectedParameter);
 				alarm.setLogicOperator(selectedLogic);
 				alarm.setLimit(limit1.getText().toString());
-				alarm.setLimit2(limit2.getText().toString());		
-				//TODO spara undan Alarmet i lista nånstans
+				
+				String limit = limit1.getText().toString();
+				try{
+				float f = Float.parseFloat(limit);
+				}catch( NumberFormatException e){
+					//tell the user somehow
+				return;
+				}
+				
+				Intent data = new Intent();
+				data.putExtra("parameter", selectedParameter);
+				data.putExtra("operator", selectedLogic);
+				data.putExtra("limit", alarm.getLimit());
+				getActivity().setResult(Activity.RESULT_OK,data);
 				getActivity().finish();
 			}
 		});
@@ -126,3 +154,4 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 		 // Another interface callback
 	}
 }
+
