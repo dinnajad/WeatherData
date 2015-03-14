@@ -62,7 +62,7 @@ private static final String TAG = "ForecastKeeper";
 	
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
-			
+		//TODO what do? if no currentForecast	
 		}
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}

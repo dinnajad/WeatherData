@@ -27,10 +27,10 @@ import android.util.Log;
 public class PollService extends IntentService {
 
 	private static final String TAG = "PollService";
-	private static final long POLL_INTERVAL = 1000 * 15 ; //15 sec
+	private static final long POLL_INTERVAL = 1000 * 15 *60; //15 sec*60
 	private ForecastKeeper storage; 
 	private String fileName = "ForeCast.xml";
-	
+	private AlarmChecker alarmChecker;
 	public PollService(){
 	 super(TAG);	
 	}
@@ -60,7 +60,10 @@ public class PollService extends IntentService {
 		storage.saveForecast(new SimpleYrFetcher().fetchForecast());
 		storage.saveToPersistanse(getApplicationContext(), fileName);
 		storage.groupDataPerDay();
-		SendNotification();
+		
+		alarmChecker = new AlarmChecker(getApplicationContext());
+		alarmChecker.verifyAlarms(storage.getDataPerDay());
+		//SendNotification();
 	}
 	
 	protected void SendNotification(){
@@ -77,6 +80,24 @@ public class PollService extends IntentService {
 		
 		manager.notify(lastnotificationNumber++, mBuilder.build());
 		
+	}
+	/***
+	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 
+	 * @param context
+	 * @param isOn
+	 */
+	public static void setOneTimeServiceAlarm(Context context, boolean isOn){
+		Intent i = new Intent(context, PollService.class);
+		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
+		
+		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		
+		if(isOn){
+			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
+		}else{
+			manager.cancel(pi);
+			pi.cancel();
+		}
 	}
 	
 	public static void setServiceAlarm(Context context, boolean isOn){

@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		if (id == R.id.action_settings) {//TODO kopiera den här koden till övriga activities och modifiera när nödvändigt
 			//TODO proper settings Implementation
 			Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 			return true;
@@ -100,8 +100,14 @@ public class MainActivity extends Activity {
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
-		//TODO eventually make item update text see page 477 			
-		}else if(id==R.id.action_search){
+		//TODO eventually make item update text see page 477 
+			
+		}else if(id==R.id.action_refresh_data){			
+			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
+			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
+			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
+			}
+		else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 			//TODO proper Search implementation
 		}

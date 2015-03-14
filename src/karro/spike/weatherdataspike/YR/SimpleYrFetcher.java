@@ -19,7 +19,8 @@ import android.net.Uri;
 import android.util.Log;
 import karro.spike.weatherdataspike.DataFetcher;
 
-/**
+/**bör startas i en bakgrundstråd
+ * 
  * @author Karro
  *
  */
@@ -28,9 +29,17 @@ public class SimpleYrFetcher extends DataFetcher {
 	private static final String TAG = "YrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/forecast.xml";
 
+	/***
+	 * bör startas i en bakgrundstråd
+	 * @return
+	 */
 	public Forecast fetchForecast(){
 		return realImplementation();
 	}
+	/***
+	 * bör startas i en bakgrundstråd
+	 * @return
+	 */
 	public ArrayList<YrWetherData> fetchItems(){
 		return realImplementation1();
 	}
@@ -54,7 +63,7 @@ public class SimpleYrFetcher extends DataFetcher {
 			String xmlString =getUrl(url);
 			Log.i(TAG,"XMLsträng från YR:"+ xmlString);
 			//Log.i(TAG,"XMLsträng från YR: hämtad");
-			
+
 			Serializer serializer= new Persister();		
 			wdata =serializer.read(WeatherData.class, xmlString);
 

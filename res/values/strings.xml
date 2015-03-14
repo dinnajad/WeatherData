@@ -7,6 +7,7 @@
     <string name="action_myAlarms">Mina Alarm</string>
     <string name="action_search">Sök</string>
     <string name="action_toggle_poll">Automatisk uppdatering</string>
+    <string name="action_refresh_data">Hämta data nu</string>
     
     
     
