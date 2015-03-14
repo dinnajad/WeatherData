@@ -40,7 +40,7 @@ private static final String TAG = "ForecastKeeper";
 	public ForecastKeeper(){
 		//forecasts = new ArrayList<Forecast>();
 		alarms = new ArrayList<Alarm>();//TODO make them get saved ones too
-		alarms.addAll(fejkDataItems());
+		//alarms.addAll(fejkDataItems());
 		
 	}
 

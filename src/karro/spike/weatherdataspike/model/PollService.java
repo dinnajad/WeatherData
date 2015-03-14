@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 
 import karro.spike.weatherdataspike.MainActivity;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
-import android.R;
+
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -73,7 +73,7 @@ public class PollService extends IntentService {
 		int lastnotificationNumber = 001;
 		NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext());
 		
-		mBuilder.setContentTitle("FrostVarning").setSmallIcon(R.drawable.ic_lock_idle_alarm)
+		mBuilder.setContentTitle("FrostVarning").setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
 			.setContentText("Inatt sjunker temperaturen under 0 grader, skydda alla känsliga växter!")
 		.setContentIntent(pi);
 		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -81,6 +81,7 @@ public class PollService extends IntentService {
 		manager.notify(lastnotificationNumber++, mBuilder.build());
 		
 	}
+	
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 
 	 * @param context
@@ -91,7 +92,7 @@ public class PollService extends IntentService {
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
+		//TODO currently this cancels the repeating alarm, how dont?
 		if(isOn){
 			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		}else{
@@ -100,6 +101,11 @@ public class PollService extends IntentService {
 		}
 	}
 	
+	/***
+	 * 
+	 * @param context
+	 * @param isOn
+	 */
 	public static void setServiceAlarm(Context context, boolean isOn){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);

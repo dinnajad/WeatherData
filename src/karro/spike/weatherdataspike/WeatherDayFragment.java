@@ -63,7 +63,7 @@ public class WeatherDayFragment extends Fragment {
 			fejkData();
 		}
 
-		//TODO check that nothing is null
+		// check that nothing is null
 		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
 		String min =mData.getMinTemperatureString();
