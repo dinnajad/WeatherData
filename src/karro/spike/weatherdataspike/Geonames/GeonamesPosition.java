@@ -23,16 +23,16 @@ public class GeonamesPosition implements IPosition {
 	@Element
 	private String geonameId;
 	
-	@Element
+	@Element(required=false)
 	private String countryName;
 	
 	@Element(required=false, name="adminName1")
 	private String region; //adminName1
 	
-	@Element
+	@Element(required=false)
 	private String lat;
 	
-	@Element
+	@Element(required=false)
 	private String lng;
 	
 	

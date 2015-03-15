@@ -6,8 +6,8 @@ package karro.spike.weatherdataspike.model;
 import java.io.FileNotFoundException;
 
 import karro.spike.weatherdataspike.MainActivity;
+import karro.spike.weatherdataspike.YR.Forecast;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
-
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;
@@ -29,6 +29,8 @@ public class PollService extends IntentService {
 	private static final String TAG = "PollService";
 	private static final long POLL_INTERVAL = 1000 * 15 *60; //15 sec*60
 	private ForecastKeeper storage; 
+	private PositionKeeper storedPositions;
+	
 	private String fileName = "ForeCast.xml";
 	private AlarmChecker alarmChecker;
 	public PollService(){
@@ -49,6 +51,7 @@ public class PollService extends IntentService {
 		
 		try {
 			storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
+			storedPositions = PositionKeeper.readFromFile(getApplicationContext());
 		} catch (FileNotFoundException e) {
 			//ignore but handle later by creating new Forecastkeeper
 		}	
@@ -56,8 +59,20 @@ public class PollService extends IntentService {
 		if(storage==null){
 			storage = new ForecastKeeper();
 		}
+		if(storedPositions == null){
+			storedPositions = new PositionKeeper();
+		}
 		
-		storage.saveForecast(new SimpleYrFetcher().fetchForecast());
+		IPosition pos = storedPositions.getFavouritePosition();
+		Forecast prediction;
+		if( pos!=null){
+			
+			String s= pos.getRegion()+"/"+pos.getName();
+			prediction= new SimpleYrFetcher().fetchForecast(s);
+		}else{
+		prediction = new SimpleYrFetcher().fetchForecast();
+		}
+		storage.saveForecast(prediction);
 		storage.saveToPersistanse(getApplicationContext(), fileName);
 		storage.groupDataPerDay();
 		

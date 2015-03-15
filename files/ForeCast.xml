@@ -1,0 +1,24 @@
+<forecastKeeper>
+   <alarms/>
+   <currentForecast/>      
+   <savedPositions>
+      <IPosition class="karro.spike.weatherdataspike.Geonames.GeonamesPosition">
+         <countryName>Sweden</countryName>
+         <geonameId>605428</geonameId>
+         <lat>64.83571</lat>
+         <lng>20.98453</lng>
+         <name>Kåge</name>
+         <adminName1>Västerbotten</adminName1>
+      </IPosition>
+    </savedPositions>
+   <favouritePosition>
+		<IPosition class="karro.spike.weatherdataspike.Geonames.GeonamesPosition">
+         <countryName>Sweden</countryName>
+         <geonameId>605428</geonameId>
+         <lat>64.83571</lat>
+         <lng>20.98453</lng>
+         <name>Kåge</name>
+         <adminName1>Västerbotten</adminName1>
+      </IPosition>
+  </favouritePosition>
+</forecastKeeper>

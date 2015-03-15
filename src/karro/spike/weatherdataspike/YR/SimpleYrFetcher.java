@@ -28,13 +28,21 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private static final String TAG = "SimpleYrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/varsel_time_for_time.xml";
+	private static final String START = "http://www.yr.no/sted/Sverige/";
+	private static final String HOUR_BY_HOUR ="varsel_time_for_time.xml";
 
 	/***
 	 * bör startas i en bakgrundstråd
 	 * @return
 	 */
 	public Forecast fetchForecast(){
-		return realImplementation();
+		return realImplementation(null);
+	}
+	public Forecast fetchForecast(String landRegionStad){
+		String url = Uri.parse(START).buildUpon()
+				.appendEncodedPath(landRegionStad).appendEncodedPath(HOUR_BY_HOUR)
+				.build().toString();				
+		return realImplementation(url);
 	}
 	/***
 	 * bör startas i en bakgrundstråd
@@ -46,22 +54,24 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private ArrayList<YrWetherData> realImplementation1() {
 		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
-		items.addAll( realImplementation().getList());
+		items.addAll( realImplementation(null).getList());
 		return items;
 	}
 
 	/**
 	 * @return
 	 */
-	private Forecast realImplementation() {
+	private Forecast realImplementation(String url) {
 
 		WeatherData wdata=null;
 		//Forecast forecast=null;
 		try{
-			String url = Uri.parse(KÅGE).buildUpon().build().toString();//TODO use savedPosition instead of hardcoded
-
+			if(url==null){
+			 url = Uri.parse(KÅGE).buildUpon().build().toString();
+			}
 			String xmlString =getUrl(url);
 			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
+			Log.i(TAG,"URL till yr: "+url);
 			Log.i(TAG,"XMLsträng från YR: hämtad");
 
 			Serializer serializer= new Persister();		

@@ -10,6 +10,7 @@ import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
+import karro.spike.weatherdataspike.model.PositionKeeper;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -36,28 +37,29 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	public static final String LNG = "lng";
 	public static final String LAT = "lat";
 	private static final String TAG = "PositionPollService";
-	private ForecastKeeper storage;
+	private PositionKeeper storage;
 	private GoogleApiClient mGoogleApiClient;
 	private Location mLastLocation;
 	public ArrayList<IPosition> mPositionItems;
+	
 
 	public PositionPollService(String name) {
 		super(name);		
 		mPositionItems = new ArrayList<IPosition>();
 	}
-	
+
 	public PositionPollService(){
 		super(null);
 		mPositionItems = new ArrayList<IPosition>();
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see android.app.IntentService#onHandleIntent(android.content.Intent)
 	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.i(TAG, "recived the intent: "+ intent);
-		
+
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
 		if(!cm.getActiveNetworkInfo().isAvailable()){
@@ -68,7 +70,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 		buildGoogleApiClient();
 		mGoogleApiClient.connect();
-		
+
 		//getPositionData());
 	}
 
@@ -76,42 +78,61 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	 * @param intent
 	 */
 	private void getPositionData(double lat,double lng) {
-		
+
 		if(lat==0 || lng==0){return;}// if no real values no idea to go on
-		
+
 		float latitude = (float) lat;
 		float longitude = (float)lng;
-		
+
 		/*
 		SimpleGeonameFetcher fetcher = new SimpleGeonameFetcher();
 		ArrayList<GeonamesPosition> geopositions = fetcher.fetchItems(latitude, longitude);*/
 		//använda asyncTask istället
 		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute(latitude,longitude);
-		
+
 	}
 
 	/**
 	 * 
 	 */
 	private void handleRecivedData() {
-		// till att börja med tar vi första itemet i listan //TODO ask user what item to use
+		//ta emot datat.
 		Log.i(TAG,mPositionItems.get(0).toString());
-		
+		GeonamesPosition position =  (GeonamesPosition) mPositionItems.get(0);
+		//hitta geomnameID  
+		int id=Integer.parseInt( position.getGeonameId());
+		//be om nya data från db
+		ExtendPositionTask task = (ExtendPositionTask) new ExtendPositionTask().execute(id);
+	}
+
+	private void handleUpdatedData(){
+		// till att börja med tar vi första itemet i listan //TODO ask user what item to use
+		//här borde vi bara få ett objekt till svar eftersom vi använde id för att fråga
+		Log.i(TAG,mPositionItems.get(0).toString());
+
 		try {
-			storage = ForecastKeeper.readFromFile(getApplicationContext(), ForecastKeeper.FORE_CAST_XML);
+			storage= PositionKeeper.readFromFile(getApplicationContext());
+			
 		} catch (FileNotFoundException e) {
 			//ignore but handle later by creating new Forecastkeeper
-			Log.i(TAG, "hittade inte filen");
-		}	
-		
-		if(storage==null){
-			storage = new ForecastKeeper();
+			Log.i(TAG, "hittade inte filen, skapar en ny!");
 		}
 		
-		storage.AddPosition(mPositionItems.get(0));
-		storage.saveToPersistanse(getApplicationContext(), ForecastKeeper.FORE_CAST_XML);
+		if(storage==null){
+			storage = new PositionKeeper();
+		}
+		
+		IPosition pos= mPositionItems.get(0);
+		if(pos!=null){
+			storage.SetFavouritePosition(pos);
+			storage.AddPosition(pos);
+			
+		}else
+			Log.e(TAG, "No Position found");
+		storage.saveToPersistanse(getApplicationContext());// spara positioner (skapar en ny fil om den saknas)
+		Log.i(TAG, "hittade inte filen, skapar en ny!");
 	}
-	
+
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 		.addConnectionCallbacks(this)
@@ -132,12 +153,13 @@ public class PositionPollService extends IntentService implements ConnectionCall
 			getPositionData(mLastLocation.getLatitude(),mLastLocation.getLongitude()); //hit verkar den komma 
 		}else{
 			Log.e(TAG,"Hittade ingen Location");
-			//TODO set some default position 
+			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
+			
 		}
-		
-		
+
+
 	}
-	
+
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 
 	 * @param context
@@ -146,7 +168,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	public static void setOneTimeServiceAlarm(Context context, boolean isOn){
 		Intent i = new Intent(context, PositionPollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
-		
+
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		//TODO currently this cancels the repeating alarm, how dont?
 		if(isOn){
@@ -160,13 +182,13 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	@Override
 	public void onConnectionSuspended(int arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private class FetchPositionTask extends AsyncTask<Float,Void,ArrayList<GeonamesPosition>>{
@@ -177,13 +199,30 @@ public class PositionPollService extends IntentService implements ConnectionCall
 			float lng = params[1];
 			return new SimpleGeonameFetcher().fetchItems(lat,lng);
 		}
-		
+
 		@Override
 		protected void onPostExecute(ArrayList<GeonamesPosition> positions){
 			mPositionItems.addAll( positions);
 			handleRecivedData();
 		}
-		
+
 	}
 
+	private class ExtendPositionTask extends AsyncTask<Integer,Void,ArrayList<GeonamesPosition>>{
+		
+		@Override
+		protected ArrayList<GeonamesPosition> doInBackground(Integer... params) {
+			// TODO Auto-generated method stub
+			return new SimpleGeonameFetcher().fetchItems(params[0]);
+		}
+		
+		@Override
+		protected void onPostExecute(ArrayList<GeonamesPosition> positions){
+			mPositionItems.addAll( positions);
+			handleUpdatedData();
+		}
+
+		
+
+	}
 }

@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 			}
 		
 		else if(id==R.id.action_position){
-			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(this,true);
 			
 		}else if(id==R.id.action_search){

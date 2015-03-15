@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.YR.Forecast;
 import karro.spike.weatherdataspike.YR.IWeatherData;
 
@@ -33,14 +34,12 @@ public class ForecastKeeper {
 	private  Forecast currentForecast;
 	@ElementList
 	private ArrayList<Alarm> alarms;
-	@ElementList(required=false)
-	private ArrayList<IPosition> savedPositions;
-
+		
 	private ArrayList<OneDayWeatherData> dataPerDay ;
 
 	public ForecastKeeper(){
 		alarms = new ArrayList<Alarm>();
-		savedPositions = new ArrayList<IPosition>();
+		
 	}
 
 	public boolean saveForecast(Forecast fc){
@@ -53,15 +52,6 @@ public class ForecastKeeper {
 		return true;				
 	}
 	
-	/***
-	 * 
-	 * @param position
-	 */
-	public void AddPosition(IPosition position){
-		if(!savedPositions.contains(position)){
-			savedPositions.add(position);
-		}
-	}
 	
 	/***
 	 * 
@@ -125,8 +115,8 @@ public class ForecastKeeper {
 			fileIn = context.openFileInput(fileName);
 			keeper = serializer.read(ForecastKeeper.class, fileIn);
 		} catch (FileNotFoundException fnfe) {
-			Log.e(TAG, fnfe.getMessage());
-			throw  fnfe;
+			Log.e(TAG, "Reading defaultFile instead"+fnfe.getMessage());
+			//return readFromFile(context, "/WeatherData/files/ForeCast.xml"); ingen bra lösning får skapa en fejk i kod istället
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}	
@@ -190,5 +180,6 @@ public class ForecastKeeper {
 		this.dataPerDay = dataPerDay;
 	}
 
+	
 
 }
