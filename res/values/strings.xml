@@ -6,6 +6,7 @@
     <string name="action_alarm">Alarm</string>
     <string name="action_myAlarms">Mina Alarm</string>
     <string name="action_search">Sök</string>
+    <string name="action_position">Min Position</string>
     <string name="action_toggle_poll">Automatisk uppdatering</string>
     <string name="action_refresh_data">Hämta data nu</string>
     <string name= "frost">Inatt sjunker temperaturen under 0 grader</string>

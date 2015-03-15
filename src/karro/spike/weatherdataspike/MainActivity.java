@@ -123,12 +123,14 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
 			}
 		
-		else if(id==R.id.action_search){
+		else if(id==R.id.action_position){
+			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_LONG).show();
+			PositionPollService.setOneTimeServiceAlarm(this,true);
+			
+		}else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 			//TODO proper Search implementation
-			
-			PositionPollService.setOneTimeServiceAlarm(this,true);			
-		}
+		}	
 		return super.onOptionsItemSelected(item);
 	}
 	

@@ -6,18 +6,10 @@ package karro.spike.weatherdataspike;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationServices;
-
 import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
-
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
-import karro.spike.weatherdataspike.model.PollService;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
@@ -29,6 +21,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationServices;
 
 /**retrieves Positions from GEONAMES in a separate service And saves it to the XML file
  * @author Karro
@@ -81,14 +79,14 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		
 		if(lat==0 || lng==0){return;}// if no real values no idea to go on
 		
-		float longitude = (float)lng;
 		float latitude = (float) lat;
+		float longitude = (float)lng;
 		
 		/*
 		SimpleGeonameFetcher fetcher = new SimpleGeonameFetcher();
 		ArrayList<GeonamesPosition> geopositions = fetcher.fetchItems(latitude, longitude);*/
 		//använda asyncTask istället
-		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute();
+		FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute(latitude,longitude);
 		
 	}
 
@@ -171,11 +169,13 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		
 	}
 
-	private class FetchPositionTask extends AsyncTask<Void,Void,ArrayList<GeonamesPosition>>{
+	private class FetchPositionTask extends AsyncTask<Float,Void,ArrayList<GeonamesPosition>>{
 
 		@Override
-		protected ArrayList<GeonamesPosition> doInBackground(Void... params) {
-			return new SimpleGeonameFetcher().fetchItems();
+		protected ArrayList<GeonamesPosition> doInBackground(Float... params) {
+			float lat = params[0];
+			float lng = params[1];
+			return new SimpleGeonameFetcher().fetchItems(lat,lng);
 		}
 		
 		@Override

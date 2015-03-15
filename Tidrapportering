@@ -69,4 +69,5 @@ Söndag
 -1030					PositionHandler,PositionPollService
 -10,53-11,26
 11,55-
-13,24-
+13,24-14,25				Hämtar position ur gps, hämtar default position fr nätet
+12,26					Dags att koppla ihop det	
