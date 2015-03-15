@@ -27,17 +27,20 @@ import android.util.Log;
 @Root(strict=false)
 public class ForecastKeeper {
 	private static final String TAG = "ForecastKeeper";
+	public static final String FORE_CAST_XML = "ForeCast.xml";
 
 	@Element
 	private  Forecast currentForecast;
 	@ElementList
 	private ArrayList<Alarm> alarms;
+	@ElementList(required=false)
+	private ArrayList<IPosition> savedPositions;
 
 	private ArrayList<OneDayWeatherData> dataPerDay ;
 
 	public ForecastKeeper(){
 		alarms = new ArrayList<Alarm>();
-
+		savedPositions = new ArrayList<IPosition>();
 	}
 
 	public boolean saveForecast(Forecast fc){
@@ -49,7 +52,17 @@ public class ForecastKeeper {
 
 		return true;				
 	}
-
+	
+	/***
+	 * 
+	 * @param position
+	 */
+	public void AddPosition(IPosition position){
+		if(!savedPositions.contains(position)){
+			savedPositions.add(position);
+		}
+	}
+	
 	/***
 	 * 
 	 * @param alarm

@@ -3,6 +3,8 @@
  */
 package karro.spike.weatherdataspike.Geonames;
 
+import karro.spike.weatherdataspike.model.IPosition;
+
 import org.simpleframework.xml.*;
 
 import android.util.Log;
@@ -12,7 +14,7 @@ import android.util.Log;
  *
  */
 @Root(name="geoname", strict=false)
-public class GeonamesPosition {
+public class GeonamesPosition implements IPosition {
 	private static final String TAG = "GeonamesPosition";
 	
 	@Element(name="name")
@@ -33,24 +35,26 @@ public class GeonamesPosition {
 	@Element
 	private String lng;
 	
-	/*
-	private float lat;
-	private float lng;
-	*/
+	
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#toString()
+	 */
 	@Override
 	public String toString(){
 		return countryName+"/"+region+"/"+name;
 		
 	}
-	/**
-	 * @return the name
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#getName()
 	 */
+	@Override
 	public String getName() {
 		return name;
 	}
-	/**
-	 * @param name the name to set
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#setName(java.lang.String)
 	 */
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -60,35 +64,49 @@ public class GeonamesPosition {
 	public String getGeonameId() {
 		return geonameId;
 	}
-	/**
-	 * @param geonameId the geonameId to set
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#setGeonameId(java.lang.String)
 	 */
 	public void setGeonameId(String geonameId) {
 		this.geonameId = geonameId;
 	}
-	/**
-	 * @return the countryName
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#getCountryName()
 	 */
+	@Override
 	public String getCountryName() {
 		return countryName;
 	}
-	/**
-	 * @param countryName the countryName to set
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#setCountryName(java.lang.String)
 	 */
+	@Override
 	public void setCountryName(String countryName) {
 		this.countryName = countryName;
 	}
-	/**
-	 * @return the region
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#getRegion()
 	 */
+	@Override
 	public String getRegion() {
 		return region;
 	}
-	/**
-	 * @param region the region to set
+	/* (non-Javadoc)
+	 * @see karro.spike.weatherdataspike.Geonames.IPosition#setRegion(java.lang.String)
 	 */
+	@Override
 	public void setRegion(String region) {
 		this.region = region;
+	}
+	
+	@Override
+	public void setId(int id) {
+		geonameId=Integer.toString( id);		
+	}
+	
+	@Override
+	public int getId() {
+		return Integer.parseInt(geonameId);
 	}
 	
 	//TODO return the LatLng in some way

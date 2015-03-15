@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.DataFetcher;
+import karro.spike.weatherdataspike.model.IPosition;
 
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -169,7 +170,7 @@ public class SimpleGeonameFetcher extends DataFetcher{
 		Log.i(TAG,"	recieved xml:" + xmlString);
 		//GeonamesPositionList positions= new GeonamesPositionList();
 		ArrayList<GeonamesPosition> positions = new ArrayList<GeonamesPosition>();
-		GeonamesPosition position;
+		IPosition position;
 		Serializer serializer = new Persister();
 		try{
 		positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();

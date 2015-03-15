@@ -26,7 +26,7 @@ import karro.spike.weatherdataspike.DataFetcher;
  */
 public class SimpleYrFetcher extends DataFetcher {
 
-	private static final String TAG = "YrFetcher";
+	private static final String TAG = "SimpleYrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/varsel_time_for_time.xml";
 
 	/***
@@ -61,8 +61,8 @@ public class SimpleYrFetcher extends DataFetcher {
 			String url = Uri.parse(KÅGE).buildUpon().build().toString();//TODO use savedPosition instead of hardcoded
 
 			String xmlString =getUrl(url);
-			Log.i(TAG,"XMLsträng från YR:"+ xmlString);
-			//Log.i(TAG,"XMLsträng från YR: hämtad");
+			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
+			Log.i(TAG,"XMLsträng från YR: hämtad");
 
 			Serializer serializer= new Persister();		
 			wdata =serializer.read(WeatherData.class, xmlString);

@@ -2,6 +2,9 @@ package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -20,15 +23,18 @@ import android.widget.Toast;
 import android.os.Build;
 import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
+import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import karro.spike.weatherdataspike.model.PollService;
 
 public class MainActivity extends Activity {
 	protected static final String FORE_CAST_XML = "ForeCast.xml";
 	private ForecastKeeper storage;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,8 @@ public class MainActivity extends Activity {
 		}
 		
 	}
+	
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,9 +122,12 @@ public class MainActivity extends Activity {
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
 			}
+		
 		else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 			//TODO proper Search implementation
+			
+			PositionPollService.setOneTimeServiceAlarm(this,true);			
 		}
 		return super.onOptionsItemSelected(item);
 	}
