@@ -27,8 +27,8 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	private LatLng position; 
 	
 	public ArrayList<GeonamesPosition> fetchItems(){
-		//return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
-		return fetchItems(605428);
+		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
+		//return fetchItems(605428);
 	}
 	
 	/***
@@ -70,11 +70,11 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	/***
 	 * Hämtar positionsdata utifrån geonameId
 	 * @param geoId
-	 * @return
+	 * @return a positionObject if there is one otherwise null
 	 */
-	public ArrayList<GeonamesPosition> fetchItems(int geoId){
-		ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
-				
+	public GeonamesPosition fetchItems(int geoId){
+		//ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
+		GeonamesPosition position= null;
 		try{
 			String url = Uri.parse(GEOID_STARTPOINT).buildUpon()
 					.appendQueryParameter("geonameId", "605428")
@@ -86,8 +86,8 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			
 			Serializer serializer = new Persister();
 			//positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
-			GeonamesPosition position= serializer.read(GeonamesPosition.class, xmlString);
-			positions.add(position);
+			position= serializer.read(GeonamesPosition.class, xmlString);
+			
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
 		} catch (XmlPullParserException xppe) {
@@ -96,8 +96,9 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			Log.e(TAG, "Failed  to parse items, general exception", e);
 		}
 		
-		return positions;
+		return position;
 	}
+	
 	/***
 	 * 
 	 * @return

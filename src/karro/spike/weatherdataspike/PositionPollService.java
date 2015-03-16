@@ -41,7 +41,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	private GoogleApiClient mGoogleApiClient;
 	private Location mLastLocation;
 	public ArrayList<IPosition> mPositionItems;
-	
+	private GeonamesPosition mPosition;
 
 	public PositionPollService(String name) {
 		super(name);		
@@ -104,11 +104,18 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		//be om nya data från db
 		ExtendPositionTask task = (ExtendPositionTask) new ExtendPositionTask().execute(id);
 	}
-
+	
+	/**
+	 * 
+	 */
 	private void handleUpdatedData(){
-		// till att börja med tar vi första itemet i listan //TODO ask user what item to use
-		//här borde vi bara få ett objekt till svar eftersom vi använde id för att fråga
-		Log.i(TAG,mPositionItems.get(0).toString());
+		
+		if(mPosition==null){
+			Toast.makeText(getApplicationContext(), "Position has wrong format or service is unavaliable", Toast.LENGTH_SHORT).show();
+		}
+		
+		
+		Log.i(TAG,mPosition.toString());
 
 		try {
 			storage= PositionKeeper.readFromFile(getApplicationContext());
@@ -122,15 +129,15 @@ public class PositionPollService extends IntentService implements ConnectionCall
 			storage = new PositionKeeper();
 		}
 		
-		IPosition pos= mPositionItems.get(0);
-		if(pos!=null){
-			storage.SetFavouritePosition(pos);
-			storage.AddPosition(pos);
-			
+		
+		if(mPosition!=null){
+			storage.SetFavouritePosition(mPosition);
+			storage.AddPosition(mPosition);
+			Log.v(TAG, "adminName1:"+(mPosition).getRegion());
 		}else
 			Log.e(TAG, "No Position found");
 		storage.saveToPersistanse(getApplicationContext());// spara positioner (skapar en ny fil om den saknas)
-		Log.i(TAG, "hittade inte filen, skapar en ny!");
+		//Log.i(TAG, "hittade inte filen, skapar en ny!");
 	}
 
 	protected synchronized void buildGoogleApiClient() {
@@ -208,17 +215,19 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 	}
 
-	private class ExtendPositionTask extends AsyncTask<Integer,Void,ArrayList<GeonamesPosition>>{
+	private class ExtendPositionTask extends AsyncTask<Integer,Void,GeonamesPosition>{
 		
+		
+
 		@Override
-		protected ArrayList<GeonamesPosition> doInBackground(Integer... params) {
+		protected GeonamesPosition doInBackground(Integer... params) {
 			// TODO Auto-generated method stub
 			return new SimpleGeonameFetcher().fetchItems(params[0]);
 		}
 		
 		@Override
-		protected void onPostExecute(ArrayList<GeonamesPosition> positions){
-			mPositionItems.addAll( positions);
+		protected void onPostExecute(GeonamesPosition position){
+			mPosition = position;
 			handleUpdatedData();
 		}
 

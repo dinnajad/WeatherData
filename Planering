@@ -1,19 +1,24 @@
 TODO stora grejer
 
+1)Rotation kolla 
+2)Backknappen kolla
+
+3)Ändra till 24h period istället för kalenderDygn
+
+4)Putsa på Huvudvyn, 
+
 	A Implementera Settings
 		*Länk till YR
 		*Sätta tidsintervall automatisk Hämtning
 	
 	
-	B Implementera möjlighet till flera Positioner
-	
-	C Impl ej hårdkodad position
+	(B Implementera möjlighet till flera Positioner)
 	
 	D Impl positionssök
 	
 	E Impl Meny på övriga Aktiviteter
 	
-	F Impl vy för Notifieringar inne i Appen
+	(f Impl vy för Notifieringar inne i Appen)
 	
 	
 	

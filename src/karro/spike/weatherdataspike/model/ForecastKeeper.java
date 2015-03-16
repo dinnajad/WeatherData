@@ -72,7 +72,7 @@ public class ForecastKeeper {
 
 	public void groupDataPerDay() {
 		ArrayList<IWeatherData> lista = new ArrayList<IWeatherData>( currentForecast.getList());
-		dataPerDay= ForecastTransformer.groupWeatherDataForDate(lista);		
+		dataPerDay= ForecastTransformer.groupWeatherDataFor24h(lista);		
 	}	
 
 	/***

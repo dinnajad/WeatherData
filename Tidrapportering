@@ -73,4 +73,9 @@ Söndag
 14,26	14,50				Dags att koppla ihop det
 14,50	18
 18,50-20
-2050-
+2050-23
+
+måndag
+17,00-17,21				felsökning parsning av data, handleUpdatedData
+19-19,35				Fixat felet
+19,35-

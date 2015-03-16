@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 		FragmentManager manager =getFragmentManager();
 		Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
-		//fragment = new WeatherFrameFragment();
+		
 		fragment =new WeatherDayFragment();
 		manager.beginTransaction()
 		.add(R.id.fragmentContainer, fragment)
@@ -58,22 +58,31 @@ public class MainActivity extends Activity {
 		}
 		if(storage==null){
 			//starta Pollservice och låt den köra hämtningen en gång
-				Intent i = new Intent(getApplicationContext(), PollService.class);
-				try {
-					setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
-				} catch (FileNotFoundException fe) {
-					Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
-					if(storage==null){
-					storage = new ForecastKeeper();
-					}
-				}
-			}else{
-		OneDayWeatherData data = storage.getTodaysWeather();
-		//Ladda fragmentet med data
-		WeatherDayFragment odwd = (WeatherDayFragment)fragment;
-		odwd.setData(data);
+			//Intent i = new Intent(getApplicationContext(), PollService.class);
+			getForecastKeeper();
+		}else{
+			OneDayWeatherData data = storage.getTodaysWeather();
+			//Ladda fragmentet med data
+			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
+			odwd.setData(data);
 		}
 		
+	}
+
+
+
+	/**
+	 * 
+	 */
+	private void getForecastKeeper() {
+		try {
+			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
+		} catch (FileNotFoundException fe) {
+			Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
+			if(storage==null){
+			storage = new ForecastKeeper();
+			}
+		}
 	}
 	
 	
@@ -115,12 +124,21 @@ public class MainActivity extends Activity {
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
+			invalidateOptionsMenu();
 		//TODO eventually make item update text see page 477 
 			
 		}else if(id==R.id.action_refresh_data){			
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
+			getForecastKeeper();
+			FragmentManager manager =getFragmentManager();
+			Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
+			
+			OneDayWeatherData data = storage.getTodaysWeather();
+			//Ladda fragmentet med data
+			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
+			odwd.setData(data);
 			}
 		
 		else if(id==R.id.action_position){
@@ -149,7 +167,21 @@ public class MainActivity extends Activity {
 		}
 		
 	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu){
+		super.onPrepareOptionsMenu(menu);
+		MenuItem toggleItem = menu.findItem(R.id.action_toggle_poll);
+		if(PollService.isServiceAlarmOn(getApplicationContext())){
+			toggleItem.setTitle(R.string.action_toggle_poll_turn_off);
+		}else{
+			toggleItem.setTitle(R.string.action_toggle_poll);
+		}
+		
+		return true;
 	
+	
+	}
 	public ForecastKeeper getStorage() {
 		return storage;
 	}

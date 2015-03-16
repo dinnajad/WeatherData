@@ -3,6 +3,7 @@
  */
 package karro.spike.weatherdataspike.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -122,10 +123,16 @@ public class OneDayWeatherData {
 	}
 
 	public String getDayString() {
+		int size = mIWeatherData.size();
+		
+		Date enddate =mIWeatherData.get(size-1).getEndTime();
+		
 		if(day==null)return " ";
 		Calendar cal = new GregorianCalendar();
 		cal.setTime(day);
-		return day.toString(); //TODO nicer time format
+		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		
+		return (formater.format(day)+" -"+formater.format(enddate)); 
 	}
 
 
