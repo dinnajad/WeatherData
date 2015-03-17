@@ -65,8 +65,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="karro.spike.weatherdata.AlarmListActivity" project="WeatherData" 
-    file="/WeatherData/src/karro/spike/weatherdata/AlarmListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="karro.spike.weatherdataspike.AlarmListActivity" project="WeatherData" 
+    file="/WeatherData/src/karro/spike/weatherdataspike/AlarmListActivity.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="579" y="105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -130,8 +130,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="karro.spike.weatherdata.AlarmListFragment" project="WeatherData" 
-    file="/WeatherData/src/karro/spike/weatherdata/AlarmListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="15" language="java" name="karro.spike.weatherdataspike.AlarmListFragment" project="WeatherData" 
+    file="/WeatherData/src/karro/spike/weatherdataspike/AlarmListFragment.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1510" y="847"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -203,7 +203,7 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="23" language="java" name="kakarro.spike.weatherdataspike.YR.YrPrecipitation" project="WeatherData" 
+  <class id="23" language="java" name="karro.spike.weatherdataspike.YR.YrPrecipitation" project="WeatherData" 
     file="/WeatherData/src/karro/spike/weatherdataspike/YR/YrPrecipitation.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="3268" y="1657"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -275,8 +275,8 @@
       <operations public="true" package="true" protected="true" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="31" language="java" name="karro.spike.weatherdataspike.model.PollService" project="WeatherData" 
-    file="/WeatherData/src/karro/spike/weatherdataspike/model/PollService.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="31" language="java" name="karro.spikkarro.spike.weatherdataspike.PollServiceerData" 
+    file="/WeatherData/src/karro/spike/weatherdataspike/PollService.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2602" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      

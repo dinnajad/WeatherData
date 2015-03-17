@@ -30,8 +30,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="karro.spike.weatherdataspike.model.PollService" project="WeatherData" 
-    file="/WeatherData/src/karro/spike/weatherdataspike/model/PollService.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="karro.spike.weatherdataspike.PollService" project="WeatherData" 
+    file="/WeatherData/src/karro/spike/weatherdataspike/PollService.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1130" y="159"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -85,9 +85,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="10" language="java" name="kakarro.spike.weatherdataspike.YR.YrRootWeatherData" project="WeatherData" 
+  <class id="10" language="java" name="karro.spike.weatherdataspike.YR.YrRootWeatherData" project="WeatherData" 
     file="/WeatherData/src/karro/spike/weatherdataspike/YR/YrRootWeatherData.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1294" y="377"/>    
+    <position height="-1" width="-1" x="1290" y="503"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      

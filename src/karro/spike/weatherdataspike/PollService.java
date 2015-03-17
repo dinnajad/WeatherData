@@ -1,13 +1,16 @@
 /**
  * 
  */
-package karro.spike.weatherdataspike.model;
+package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 
-import karro.spike.weatherdataspike.MainActivity;
 import karro.spike.weatherdataspike.YR.YrForecast;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
+import karro.spike.weatherdataspike.model.AlarmChecker;
+import karro.spike.weatherdataspike.model.ForecastKeeper;
+import karro.spike.weatherdataspike.model.IPosition;
+import karro.spike.weatherdataspike.model.PositionKeeper;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.Notification;

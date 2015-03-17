@@ -1,11 +1,14 @@
 /**
  * 
  */
-package karro.spike.weatherdata;
+package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
+import karro.spike.weatherdata.R;
+import karro.spike.weatherdata.R.id;
+import karro.spike.weatherdata.R.layout;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IAlarm;

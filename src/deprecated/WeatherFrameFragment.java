@@ -1,14 +1,14 @@
-package karro.spike.weatherdataspike;
+package deprecated;
 
 
 import java.util.ArrayList;
 
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.PollService;
 import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrWetherData;
-import karro.spike.weatherdataspike.model.PollService;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.AsyncTask;

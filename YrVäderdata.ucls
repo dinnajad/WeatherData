@@ -100,6 +100,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="14">    
+    <bendpoint x="856" y="776"/>    
     <end type="SOURCE" refId="2" navigable="false">      
       <attribute id="15" name="mWindSpeed"/>      
       <multiplicity id="16" minimum="0" maximum="1"/>    
@@ -140,6 +141,7 @@
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="29">    
+    <bendpoint x="369" y="721"/>    
     <end type="SOURCE" refId="2" navigable="false">      
       <attribute id="30" name="mSymbol"/>      
       <multiplicity id="31" minimum="0" maximum="1"/>    

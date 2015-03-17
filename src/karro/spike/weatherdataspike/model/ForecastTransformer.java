@@ -28,15 +28,15 @@ public class ForecastTransformer {
 		List<YrWetherData> dataList = fc.getList();
 		ArrayList<IWeatherData> aDataList = new ArrayList<IWeatherData>();
 		aDataList.addAll(dataList);
-		ArrayList<OneDayWeatherData> resultList =groupWeatherDataForDate( aDataList);
+		ArrayList<OneDayWeatherData> resultList =groupWeatherDataFor24h(aDataList);
 		return resultList.get(0);
-		//return findWeatherdataForDate(today, dataList);
 	}
 
 	/**
-	 * @param selectedDay the date to find data for
+	 * @param selectedDay the date to find data 
 	 * @param dataList
 	 */
+	@Deprecated
 	private static OneDayWeatherData findWeatherdataForDate(Date selectedDay , List<YrWetherData> dataList) {
 
 		OneDayWeatherData odwd =  new OneDayWeatherData();
@@ -104,7 +104,7 @@ public class ForecastTransformer {
 	}
 	
 	/***
-	 * groups the items into OneDayWeatherData items
+	 * groups the items into OneDayWeatherData items based on date obs. compares only the date component of the timestamp
 	 * @param dataList
 	 * @return grouped List
 	 */

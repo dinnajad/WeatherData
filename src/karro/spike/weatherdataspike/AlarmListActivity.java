@@ -1,6 +1,10 @@
-package karro.spike.weatherdata;
+package karro.spike.weatherdataspike;
 
 
+import karro.spike.weatherdata.R;
+import karro.spike.weatherdata.R.id;
+import karro.spike.weatherdata.R.layout;
+import karro.spike.weatherdata.R.menu;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;

@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import android.os.Build;
-import karro.spike.weatherdata.AlarmListActivity;
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
@@ -29,7 +28,6 @@ import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
-import karro.spike.weatherdataspike.model.PollService;
 
 public class MainActivity extends Activity {
 	protected static final String FORE_CAST_XML = "ForeCast.xml";
@@ -145,10 +143,10 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(this,true);
 			
-		}else if(id==R.id.action_search){
+		/*}else if(id==R.id.action_search){
 			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
 			//TODO proper Search implementation
-		}	
+*/		}	
 		return super.onOptionsItemSelected(item);
 	}
 	
