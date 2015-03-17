@@ -5,8 +5,8 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.DataFetcher;
-import karro.spike.weatherdataspike.YR.IWeatherData;
 import karro.spike.weatherdataspike.YR.YrWetherData;
+import karro.spike.weatherdataspike.model.IWeatherData;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

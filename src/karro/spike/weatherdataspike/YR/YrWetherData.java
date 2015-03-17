@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import karro.spike.weatherdataspike.model.IWeatherData;
+
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -26,22 +28,22 @@ public class YrWetherData implements IWeatherData {
 	private String  mEndTime;	
 	
 	@Element(name="temperature")// hur tar man ut ett attribut på ett element? nästade objekt
-	private Temperature mTemperature;
+	private YrTemperature mTemperature;
 	
 	@Element(name="precipitation")
-	private Precipitation mPrecipitation;
+	private YrPrecipitation mPrecipitation;
 
 	@Element(name="windDirection")
-	private WindDirection mWindDirection;
+	private YrWindDirection mWindDirection;
 
 	@Element(name="windSpeed")
-	private WindSpeed mWindSpeed;
+	private YrWindSpeed mWindSpeed;
 	
 	@Element(name="pressure")
-	private Pressure mPressure;
+	private YrPressure mPressure;
 	
 	@Element(name="symbol")
-	private Symbol mSymbol;// symbol numberEx
+	private YrSymbol mSymbol;// symbol numberEx
 	
 	
 	/* (non-Javadoc)
@@ -106,15 +108,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getTemperature()
 	 */
 	@Override
-	public Temperature getTemperature() {
+	public YrTemperature getTemperature() {
 		return mTemperature;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setTemperature(karro.spike.weatherdataspike.YR.Temperature)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setTemperature(karro.spike.weatherdataspike.YR.YrTemperature)
 	 */
 	@Override
-	public void setTemperature(Temperature temperature) {
+	public void setTemperature(YrTemperature temperature) {
 		mTemperature = temperature;
 	}
 
@@ -140,15 +142,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getPrecipitation()
 	 */
 	@Override
-	public Precipitation getPrecipitation() {
+	public YrPrecipitation getPrecipitation() {
 		return mPrecipitation;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setPrecipitation(karro.spike.weatherdataspike.YR.Precipitation)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setPrecipitation(karro.spike.weatherdataspike.YR.YrPrecipitation)
 	 */
 	@Override
-	public void setPrecipitation(Precipitation precipitation) {
+	public void setPrecipitation(YrPrecipitation precipitation) {
 		mPrecipitation = precipitation;
 	}
 
@@ -156,15 +158,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getWindDirection()
 	 */
 	@Override
-	public WindDirection getWindDirection() {
+	public YrWindDirection getWindDirection() {
 		return mWindDirection;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setWindDirection(karro.spike.weatherdataspike.YR.WindDirection)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setWindDirection(karro.spike.weatherdataspike.YR.YrWindDirection)
 	 */
 	@Override
-	public void setWindDirection(WindDirection windDirection) {
+	public void setWindDirection(YrWindDirection windDirection) {
 		mWindDirection = windDirection;
 	}
 
@@ -172,15 +174,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getWindSpeed()
 	 */
 	@Override
-	public WindSpeed getWindSpeed() {
+	public YrWindSpeed getWindSpeed() {
 		return mWindSpeed;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setWindSpeed(karro.spike.weatherdataspike.YR.WindSpeed)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setWindSpeed(karro.spike.weatherdataspike.YR.YrWindSpeed)
 	 */
 	@Override
-	public void setWindSpeed(WindSpeed windSpeed) {
+	public void setWindSpeed(YrWindSpeed windSpeed) {
 		mWindSpeed = windSpeed;
 	}
 
@@ -188,15 +190,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getPressure()
 	 */
 	@Override
-	public Pressure getPressure() {
+	public YrPressure getPressure() {
 		return mPressure;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setPressure(karro.spike.weatherdataspike.YR.Pressure)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setPressure(karro.spike.weatherdataspike.YR.YrPressure)
 	 */
 	@Override
-	public void setPressure(Pressure pressure) {
+	public void setPressure(YrPressure pressure) {
 		mPressure = pressure;
 	}
 
@@ -206,15 +208,15 @@ public class YrWetherData implements IWeatherData {
 	 * @see karro.spike.weatherdataspike.YR.IWeatherData#getSymbol()
 	 */
 	@Override
-	public Symbol getSymbol() {
+	public YrSymbol getSymbol() {
 		return mSymbol;
 	}
 
 	/* (non-Javadoc)
-	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setSymbol(karro.spike.weatherdataspike.YR.Symbol)
+	 * @see karro.spike.weatherdataspike.YR.IWeatherData#setSymbol(karro.spike.weatherdataspike.YR.YrSymbol)
 	 */
 	@Override
-	public void setSymbol(Symbol symbol) {
+	public void setSymbol(YrSymbol symbol) {
 		mSymbol = symbol;
 	}
 

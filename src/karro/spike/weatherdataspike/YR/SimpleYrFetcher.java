@@ -35,10 +35,10 @@ public class SimpleYrFetcher extends DataFetcher {
 	 * bör startas i en bakgrundstråd
 	 * @return
 	 */
-	public Forecast fetchForecast(){
+	public YrForecast fetchForecast(){
 		return realImplementation(null);
 	}
-	public Forecast fetchForecast(String landRegionStad){
+	public YrForecast fetchForecast(String landRegionStad){
 		String url = Uri.parse(START).buildUpon()
 				.appendEncodedPath(landRegionStad).appendEncodedPath(HOUR_BY_HOUR)
 				.build().toString();				
@@ -61,10 +61,10 @@ public class SimpleYrFetcher extends DataFetcher {
 	/**
 	 * @return
 	 */
-	private Forecast realImplementation(String url) {
+	private YrForecast realImplementation(String url) {
 
-		WeatherData wdata=null;
-		//Forecast forecast=null;
+		YrRootWeatherData wdata=null;
+		//YrForecast forecast=null;
 		try{
 			if(url==null){
 			 url = Uri.parse(KÅGE).buildUpon().build().toString();
@@ -75,7 +75,7 @@ public class SimpleYrFetcher extends DataFetcher {
 			Log.i(TAG,"XMLsträng från YR: hämtad");
 
 			Serializer serializer= new Persister();		
-			wdata =serializer.read(WeatherData.class, xmlString);
+			wdata =serializer.read(YrRootWeatherData.class, xmlString);
 
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
@@ -93,8 +93,8 @@ public class SimpleYrFetcher extends DataFetcher {
 	 */
 	private ArrayList<YrWetherData> fejkImplementation() {
 		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
-		WeatherData wdata=null;
-		Forecast data =null;
+		YrRootWeatherData wdata=null;
+		YrForecast data =null;
 		try{
 			String xmlString = "\r\n" +"<weatherdata>"
 					+		"<forecast>" 
@@ -124,7 +124,7 @@ public class SimpleYrFetcher extends DataFetcher {
 
 			Serializer serializer= new Persister();
 
-			wdata =serializer.read(WeatherData.class, xmlString);
+			wdata =serializer.read(YrRootWeatherData.class, xmlString);
 			//items
 
 		}catch ( IOException ioe){

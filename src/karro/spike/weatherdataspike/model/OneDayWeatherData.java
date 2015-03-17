@@ -9,8 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import karro.spike.weatherdataspike.YR.IWeatherData;
-
 /**
  * @author Karro
  *

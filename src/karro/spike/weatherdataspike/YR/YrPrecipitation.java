@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false)
-public class Precipitation {
+public class YrPrecipitation {
 
 	
 	@Attribute(name="maxvalue",required=false)

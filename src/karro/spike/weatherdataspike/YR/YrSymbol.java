@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false)
-public class Symbol {
+public class YrSymbol {
 
 	@Attribute(name="numberEx")
 	private String numberEx;

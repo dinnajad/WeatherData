@@ -15,7 +15,7 @@ import org.simpleframework.xml.Root;
  */
 @Root(strict=false,name="forecast")
 //@Root(strict=false)
-public class Forecast {
+public class YrForecast {
 
 	@ElementList(name="tabular")
 	private List<YrWetherData> mList;

@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false)
-public class Pressure {
+public class YrPressure {
 
 	@Attribute(name="value")
 	private String mValue;

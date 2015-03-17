@@ -6,7 +6,7 @@ package karro.spike.weatherdataspike.model;
 import java.io.FileNotFoundException;
 
 import karro.spike.weatherdataspike.MainActivity;
-import karro.spike.weatherdataspike.YR.Forecast;
+import karro.spike.weatherdataspike.YR.YrForecast;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import android.app.AlarmManager;
 import android.app.IntentService;
@@ -64,7 +64,7 @@ public class PollService extends IntentService {
 		}
 		
 		IPosition pos = storedPositions.getFavouritePosition();
-		Forecast prediction;
+		YrForecast prediction;
 		if( pos!=null){
 			
 			String s= pos.getRegion()+"/"+pos.getName();

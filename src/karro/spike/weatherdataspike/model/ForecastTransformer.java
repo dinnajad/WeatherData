@@ -11,8 +11,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import karro.spike.weatherdataspike.YR.Forecast;
-import karro.spike.weatherdataspike.YR.IWeatherData;
+import karro.spike.weatherdataspike.YR.YrForecast;
 import karro.spike.weatherdataspike.YR.YrWetherData;
 import android.util.Log;
 
@@ -24,8 +23,8 @@ public class ForecastTransformer {
 
 	private static final String TAG = "ForecastTransformer";
 
-	public static OneDayWeatherData getTodaysWeather(Forecast fc){
-		Date today = new Date();//TODO use calendar to set time correct now its gmt tror jag
+	public static OneDayWeatherData getTodaysWeather(YrForecast fc){
+		Date today = new Date();//TODO use calendar to set time correct now its UTC tror jag
 		List<YrWetherData> dataList = fc.getList();
 		ArrayList<IWeatherData> aDataList = new ArrayList<IWeatherData>();
 		aDataList.addAll(dataList);

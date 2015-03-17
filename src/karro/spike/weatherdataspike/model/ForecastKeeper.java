@@ -9,8 +9,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
-import karro.spike.weatherdataspike.YR.Forecast;
-import karro.spike.weatherdataspike.YR.IWeatherData;
+import karro.spike.weatherdataspike.YR.YrForecast;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -31,7 +30,7 @@ public class ForecastKeeper {
 	public static final String FORE_CAST_XML = "ForeCast.xml";
 
 	@Element
-	private  Forecast currentForecast;
+	private  YrForecast currentForecast;
 	@ElementList
 	private ArrayList<Alarm> alarms;
 		
@@ -42,7 +41,7 @@ public class ForecastKeeper {
 		
 	}
 
-	public boolean saveForecast(Forecast fc){
+	public boolean saveForecast(YrForecast fc){
 		if(fc == null)return false;
 
 		//forecasts.add(fc);
@@ -127,7 +126,7 @@ public class ForecastKeeper {
 	/**
 	 * @return the currentForecast
 	 */
-	public Forecast getCurrentForecast() {
+	public YrForecast getCurrentForecast() {
 		return currentForecast;
 	}
 
@@ -135,7 +134,7 @@ public class ForecastKeeper {
 	/**
 	 * @param currentForecast the currentForecast to set
 	 */
-	public void setCurrentForecast(Forecast currentForecast) {
+	public void setCurrentForecast(YrForecast currentForecast) {
 		this.currentForecast = currentForecast;
 	}
 

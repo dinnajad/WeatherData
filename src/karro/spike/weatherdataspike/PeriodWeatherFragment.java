@@ -4,8 +4,8 @@
 package karro.spike.weatherdataspike;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdataspike.YR.IWeatherData;
-import karro.spike.weatherdataspike.YR.WindDirection;
+import karro.spike.weatherdataspike.YR.YrWindDirection;
+import karro.spike.weatherdataspike.model.IWeatherData;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -67,7 +67,7 @@ public class PeriodWeatherFragment extends Fragment {
 		mTemperatureTextView.setText(data.getTemperature().getTemperature());
 		mPrecipitationTextView.setText(data.getPrecipitation().getValue());
 		
-		WindDirection dir= data.getWindDirection();
+		YrWindDirection dir= data.getWindDirection();
 		mWindDirTextView.setText(dir.getCode()+" : "+ dir.getDegree());
 		mWindSpeedTextview.setText(data.getWindSpeed().getMps());
 	}

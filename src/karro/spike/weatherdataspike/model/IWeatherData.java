@@ -1,6 +1,13 @@
-package karro.spike.weatherdataspike.YR;
+package karro.spike.weatherdataspike.model;
 
 import java.util.Date;
+
+import karro.spike.weatherdataspike.YR.YrPrecipitation;
+import karro.spike.weatherdataspike.YR.YrPressure;
+import karro.spike.weatherdataspike.YR.YrSymbol;
+import karro.spike.weatherdataspike.YR.YrTemperature;
+import karro.spike.weatherdataspike.YR.YrWindDirection;
+import karro.spike.weatherdataspike.YR.YrWindSpeed;
 
 public interface IWeatherData {
 
@@ -22,7 +29,7 @@ public interface IWeatherData {
 	/**
 	 * @return the temperature
 	 */
-	public abstract Temperature getTemperature();
+	public abstract YrTemperature getTemperature();
 	
 	/***
 	 * 
@@ -32,7 +39,7 @@ public interface IWeatherData {
 	/**
 	 * @param temperature the temperature to set
 	 */
-	public abstract void setTemperature(Temperature temperature);
+	public abstract void setTemperature(YrTemperature temperature);
 
 	/**
 	 * @return the endTime
@@ -47,45 +54,45 @@ public interface IWeatherData {
 	/**
 	 * @return the precipitation
 	 */
-	public abstract Precipitation getPrecipitation();
+	public abstract YrPrecipitation getPrecipitation();
 
 	/**
 	 * @param precipitation the precipitation to set
 	 */
-	public abstract void setPrecipitation(Precipitation precipitation);
+	public abstract void setPrecipitation(YrPrecipitation precipitation);
 
 	/**
 	 * @return the windDirection
 	 */
-	public abstract WindDirection getWindDirection();
+	public abstract YrWindDirection getWindDirection();
 
 	/**
 	 * @param windDirection the windDirection to set
 	 */
-	public abstract void setWindDirection(WindDirection windDirection);
+	public abstract void setWindDirection(YrWindDirection windDirection);
 
 	/**
 	 * @return the windSpeed
 	 */
-	public abstract WindSpeed getWindSpeed();
+	public abstract YrWindSpeed getWindSpeed();
 
 	/**
 	 * @param windSpeed the windSpeed to set
 	 */
-	public abstract void setWindSpeed(WindSpeed windSpeed);
+	public abstract void setWindSpeed(YrWindSpeed windSpeed);
 
 	/**
 	 * @return the pressure
 	 */
-	public abstract Pressure getPressure();
+	public abstract YrPressure getPressure();
 
 	/**
 	 * @param pressure the pressure to set
 	 */
-	public abstract void setPressure(Pressure pressure);
+	public abstract void setPressure(YrPressure pressure);
 
-	public abstract Symbol getSymbol();
+	public abstract YrSymbol getSymbol();
 
-	public abstract void setSymbol(Symbol symbol);
+	public abstract void setSymbol(YrSymbol symbol);
 
 }

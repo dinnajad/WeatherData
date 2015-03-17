@@ -9,7 +9,7 @@ import org.simpleframework.xml.Attribute;
  * @author Karro
  *
  */
-public class WindSpeed {
+public class YrWindSpeed {
 
 	@Attribute(name="name")
 	private String mName;

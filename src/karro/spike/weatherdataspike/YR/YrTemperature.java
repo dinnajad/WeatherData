@@ -9,7 +9,7 @@ import org.simpleframework.xml.Attribute;
  * @author Karro
  *
  */
-public class Temperature {
+public class YrTemperature {
 
 	
 	@Attribute(name = "value")
@@ -23,7 +23,7 @@ public class Temperature {
 	 */
 	@Override
 	public String toString() {
-		return "Temperature [mTemperature=" + mTemperature + ", unit=" + unit
+		return "YrTemperature [mTemperature=" + mTemperature + ", unit=" + unit
 				+ "]";
 	}
 

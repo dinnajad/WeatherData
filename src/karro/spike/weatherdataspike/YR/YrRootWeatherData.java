@@ -11,10 +11,10 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false, name="weatherdata")
-public class WeatherData {//TODO rename
+public class YrRootWeatherData {//TODO rename
 
 	@Element(name="forecast")
-	private Forecast mForeCast;
+	private YrForecast mForeCast;
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -27,14 +27,14 @@ public class WeatherData {//TODO rename
 	/**
 	 * @return the foreCast
 	 */
-	public Forecast getForeCast() {
+	public YrForecast getForeCast() {
 		return mForeCast;
 	}
 
 	/**
 	 * @param foreCast the foreCast to set
 	 */
-	public void setForeCast(Forecast foreCast) {
+	public void setForeCast(YrForecast foreCast) {
 		mForeCast = foreCast;
 	}
 }
