@@ -81,24 +81,12 @@ public class AlarmListFragment extends ListFragment  {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View v= inflater.inflate(R.layout.fragment_alarm_list, container,false);
 		list = (ListView) v.findViewById(R.id.myAlarmList);
-//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
-//
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> parent, View view,
-//					int position, long id) {
-//				
-//					
-//				return true;
-//			}
-//		});
-//		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		
+
 		list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);// tar jag bort denna öppnas inte contextmenyn vid val
 		list.setMultiChoiceModeListener(new MultiChoiceModeListener() {
 
 			@Override
 			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-				// TODO Auto-generated method stub
 				// Here you can do something when items are selected/de-selected,
 				// such as update the title in the CAB
 				return false;
@@ -124,17 +112,12 @@ public class AlarmListFragment extends ListFragment  {
 					long id, boolean checked) {
 				// Here you can perform updates to the CAB due to
 				// an invalidate() request
-				// TODO Auto-generated method stub
-
 			}
 			
 			@Override
 			public void onDestroyActionMode(ActionMode mode) {
 				// Here you can make any necessary updates to the activity when
 				// the CAB is removed. By default, selected items are deselected/unchecked.
-
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
@@ -148,6 +131,7 @@ public class AlarmListFragment extends ListFragment  {
 		
 		return v;
 	}
+	
 	/*
 	  String selected = "";
 	  
@@ -179,19 +163,12 @@ public class AlarmListFragment extends ListFragment  {
 			{
 				Log.v("DELETE","deleting: " +mAlarms.get(i).toString());
 				Toast.makeText(getActivity(),"removed" +i, Toast.LENGTH_SHORT).show();
-				mAlarms.remove(i);
+				IAlarm alarm = mAlarms.remove(i);
+				keeper.RemoveAlarm(alarm);// måste be keepern ta bort alarmet för att det ska märkas nästa gång vi öppnar appen
 				Log.v("DELETE","deleted"+i);
 			}
-		}
+		}	
 		
-		
-		//Toast.makeText(getActivity(),"removed" +l, Toast.LENGTH_SHORT).show();
-		
-	}	
-	/*
-	@Override
-    public void onLongPress(MotionEvent event) {
-        Log.d(DEBUG_TAG, "onLongPress: " + event.toString()); 
-    }*/
-
+		keeper.saveToPersistanse(getActivity().getApplicationContext(), filename);
+	}
 }
