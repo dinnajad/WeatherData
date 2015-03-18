@@ -58,7 +58,42 @@ public class OneDayWeatherData {
 				+ ", maxTemperature=" + mMaxTemperature + ", mintemperature="
 				+ mMinTemperature + "]";
 	}
+	
+	// Use @Override to avoid accidental overloading.
+	   @Override public boolean equals(Object o) {
+	     // Return true if the objects are identical.
+	     // (This is just an optimization, not required for correctness.)
+	     if (this == o) {
+	       return true;
+	     }
 
+	     // Return false if the other object has the wrong type.
+	     // This type may be an interface depending on the interface's specification.
+	     if (!(o instanceof OneDayWeatherData)) {
+	       return false;
+	     }
+
+	     // Cast to the appropriate type.
+	     // This will succeed because of the instanceof, and lets us access private fields.
+	     OneDayWeatherData lhs = (OneDayWeatherData) o;
+
+	     // Check each field. Primitive fields, reference fields, and nullable reference
+	     // fields are all treated differently.
+	     boolean result = mMaxTemperature == lhs.mMaxTemperature &&
+	    		 mMinTemperature == lhs.mMinTemperature &&
+				 mIWeatherData==null ? lhs.mIWeatherData==null :  mIWeatherData.equals(lhs.mIWeatherData);
+	    		
+	     /*
+	    		 
+	    		 primitiveField == lhs.primitiveField &&
+	             referenceField.equals(lhs.referenceField) &&
+	             (nullableField == null ? lhs.nullableField == null
+	                                    : nullableField.equals(lhs.nullableField));
+	     */
+	     
+	     return result;
+	   }
+	
 	/**
 	 * @return the place
 	 */

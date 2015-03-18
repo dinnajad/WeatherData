@@ -55,33 +55,38 @@ public class ForecastTransformer {
 
 		return odwd;
 	}
-	
+
+	public static ArrayList<OneDayWeatherData> groupWeatherDataFor24h( List<IWeatherData> dataList) {
+		Date compareDate = new Date();
+		return groupWeatherDataFor24h(compareDate,dataList);
+	}
+
 	/***
 	 * groups the items into OneDayWeatherData items
 	 * @param dataList
 	 * @return grouped List
 	 */
-	public static ArrayList<OneDayWeatherData> groupWeatherDataFor24h( List<IWeatherData> dataList) {
-		Date compareDate = new Date();
-		ArrayList<OneDayWeatherData> resultList = new ArrayList<OneDayWeatherData>();
-		OneDayWeatherData odwd =  new OneDayWeatherData();
+	public static ArrayList<OneDayWeatherData> groupWeatherDataFor24h(Date compareDate, List<IWeatherData> dataList) {
 
+		ArrayList<OneDayWeatherData> resultList = new ArrayList<OneDayWeatherData>();
+		OneDayWeatherData grupp =  new OneDayWeatherData();
+		resultList.add(grupp);
 		for (int i = 0; i < dataList.size(); i++) {
 
 			//getItem
 			IWeatherData item = dataList.get(i);
 			//check date												
 			Date fromDate = item.getTime();	
-			
-			
+
+
 			long timediff = calcTimeDiff(compareDate, fromDate);
-			
+
 			if(timediff>(24 * 60 *60 * 1000)){				
 				compareDate = fromDate;
-				odwd =  new OneDayWeatherData();	
-				resultList.add(odwd);		
+				grupp =  new OneDayWeatherData();	
+				resultList.add(grupp);		
 			}			
-			odwd.AddIWeatherData(item);//Lägg till i gruppen			
+			grupp.AddIWeatherData(item);//Lägg till i gruppen			
 		}
 		return resultList;
 	}
@@ -94,15 +99,15 @@ public class ForecastTransformer {
 		GregorianCalendar compareCal = new GregorianCalendar();
 		compareCal.setTime(compareDate);
 		long compareTime = compareCal.getTimeInMillis();
-		
+
 		GregorianCalendar fromTimeCal = new GregorianCalendar();
 		fromTimeCal.setTime(fromDate);
 		long fromTime = fromTimeCal.getTimeInMillis();
-		
+
 		long timediff= fromTime -compareTime;
 		return timediff;
 	}
-	
+
 	/***
 	 * groups the items into OneDayWeatherData items based on date obs. compares only the date component of the timestamp
 	 * @param dataList
