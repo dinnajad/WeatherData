@@ -15,17 +15,29 @@ import karro.spike.weatherdataspike.model.IAlarm;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * @author Karro
  *
  */
-public class AlarmListFragment extends ListFragment {
+public class AlarmListFragment extends ListFragment  {
+	private ListView list;
 	private String filename;
 	private ArrayList<IAlarm> mAlarms;//remember to save list to persistence if changes are made
 	ForecastKeeper keeper;
@@ -47,13 +59,13 @@ public class AlarmListFragment extends ListFragment {
 		mAlarms = keeper.getAlarms();
 		//skapa adapter
 		//TODO skapa custom adapter med bättre vy
-		ArrayAdapter<IAlarm> adapter = new ArrayAdapter<IAlarm>(getActivity(), android.R.layout.simple_list_item_1,mAlarms);
+		ArrayAdapter<IAlarm> adapter = new ArrayAdapter<IAlarm>(getActivity(), android.R.layout.simple_list_item_multiple_choice,mAlarms);
 		setListAdapter(adapter);
-		
+
 	}
 	/*
 	private Alarm[] fejkDataItems() {
-		
+
 		Alarm ett= new Alarm("temperature","under","3");
 		Alarm[] alarms = new Alarm[3];
 		alarms[0] =ett;
@@ -68,7 +80,118 @@ public class AlarmListFragment extends ListFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		View v= inflater.inflate(R.layout.fragment_alarm_list, container,false);
-		ListView list = (ListView) v.findViewById(R.id.myAlarmList);
-	return v;
+		list = (ListView) v.findViewById(R.id.myAlarmList);
+//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
+//
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> parent, View view,
+//					int position, long id) {
+//				
+//					
+//				return true;
+//			}
+//		});
+//		list.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+		
+		list.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);// tar jag bort denna öppnas inte contextmenyn vid val
+		list.setMultiChoiceModeListener(new MultiChoiceModeListener() {
+
+			@Override
+			public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+				// TODO Auto-generated method stub
+				// Here you can do something when items are selected/de-selected,
+				// such as update the title in the CAB
+				return false;
+			}			
+
+			@Override
+			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+				// Respond to clicks on the actions in the CAB
+				switch (item.getItemId()) {
+				
+				case R.id.action_delete:
+					Log.v("DELETE","found delete case");
+					deleteSelectedItems();
+					mode.finish(); // Action picked, so close the CAB
+					return true;
+				default:
+					return false;
+				}
+			}
+
+			@Override
+			public void onItemCheckedStateChanged(ActionMode mode, int position,
+					long id, boolean checked) {
+				// Here you can perform updates to the CAB due to
+				// an invalidate() request
+				// TODO Auto-generated method stub
+
+			}
+			
+			@Override
+			public void onDestroyActionMode(ActionMode mode) {
+				// Here you can make any necessary updates to the activity when
+				// the CAB is removed. By default, selected items are deselected/unchecked.
+
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+				// Inflate the menu for the CAB
+				MenuInflater inflater = mode.getMenuInflater();
+				inflater.inflate(R.menu.contextual, menu);
+				return true;
+			}
+		});
+		
+		return v;
 	}
+	/*
+	  String selected = "";
+	  
+      
+	  
+      int cntChoice = myList.getCount();
+
+      SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
+
+      for(int i = 0; i < cntChoice; i++){
+
+          if(sparseBooleanArray.get(i)) {
+
+              selected += myList.getItemAtPosition(i).toString() + "\n";
+
+               
+
+          }
+
+      }*/
+	private void deleteSelectedItems() {
+		Log.v("DELETE","entered deletefkn");
+		
+		int listCount = list.getCount();
+		SparseBooleanArray sparseBooleanArray = list.getCheckedItemPositions();
+		for(int i=0; i<listCount;i++)
+		{
+			if(sparseBooleanArray.get(i)) 
+			{
+				Log.v("DELETE","deleting: " +mAlarms.get(i).toString());
+				Toast.makeText(getActivity(),"removed" +i, Toast.LENGTH_SHORT).show();
+				mAlarms.remove(i);
+				Log.v("DELETE","deleted"+i);
+			}
+		}
+		
+		
+		//Toast.makeText(getActivity(),"removed" +l, Toast.LENGTH_SHORT).show();
+		
+	}	
+	/*
+	@Override
+    public void onLongPress(MotionEvent event) {
+        Log.d(DEBUG_TAG, "onLongPress: " + event.toString()); 
+    }*/
+
 }

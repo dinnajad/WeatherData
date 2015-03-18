@@ -6,6 +6,7 @@
     <string name="action_alarm">Alarm</string>
     <string name="action_myAlarms">Mina Alarm</string>
     <string name="action_search">Sök</string>
+    <string name="action_delete">Ta bort</string>
     <string name="action_position">Min Position</string>
     <string name="action_toggle_poll">Slå på automatisk hämtning</string>
     <string name="action_toggle_poll_turn_off">Slå av automatisk hämtning</string>
