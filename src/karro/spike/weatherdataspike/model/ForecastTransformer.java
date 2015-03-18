@@ -71,6 +71,7 @@ public class ForecastTransformer {
 		ArrayList<OneDayWeatherData> resultList = new ArrayList<OneDayWeatherData>();
 		OneDayWeatherData grupp =  new OneDayWeatherData();
 		resultList.add(grupp);
+		
 		for (int i = 0; i < dataList.size(); i++) {
 
 			//getItem
@@ -78,17 +79,23 @@ public class ForecastTransformer {
 			//check date												
 			Date fromDate = item.getTime();	
 
-
 			long timediff = calcTimeDiff(compareDate, fromDate);
 
 			if(timediff>(24 * 60 *60 * 1000)){				
-				compareDate = fromDate;
+				compareDate = add24hTime(compareDate);
 				grupp =  new OneDayWeatherData();	
 				resultList.add(grupp);		
 			}			
 			grupp.AddIWeatherData(item);//Lägg till i gruppen			
 		}
 		return resultList;
+	}
+	
+	private static Date add24hTime(Date startDate){
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(startDate);
+		cal.add(Calendar.HOUR, 24);
+		return cal.getTime();		
 	}
 
 	/**
