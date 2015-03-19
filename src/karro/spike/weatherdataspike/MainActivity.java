@@ -2,33 +2,19 @@ package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 
-import com.google.android.gms.common.annotation.KeepName;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-import android.os.Build;
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
-import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
-import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	protected static final String FORE_CAST_XML = "ForeCast.xml";
@@ -128,8 +114,10 @@ public class MainActivity extends Activity {
 			//TODO better update of view
 		}else if(id==R.id.action_position){
 			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
-			PositionPollService.setOneTimeServiceAlarm(this,true);			
-			}
+			PositionPollService.setOneTimeServiceAlarm(this,true);
+			/*Intent position = new Intent(this,PositionActivity.class);
+			startActivity(position);*/
+		}
 		/*if (id == R.id.action_settings) {
 		//TODO proper settings Implementation
 		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();

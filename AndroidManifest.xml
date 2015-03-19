@@ -39,6 +39,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <activity
+            android:name="karro.spike.weatherdataspike.AlarmListActivity"
+            android:label="@string/title_activity_alarm_list"
+            android:parentActivityName="karro.spike.weatherdataspike.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="karro.spike.weatherdataspike.MainActivity" />
+        </activity>
 		<service android:name="karro.spike.weatherdataspike.PollService"></service>
 		<service android:name="karro.spike.weatherdataspike.PositionPollService"></service>
 		
@@ -49,14 +58,7 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyC62sOo_BIZzo8aissEPXFIy3sfY3mv23w" />
 
-        <activity
-            android:name="karro.spike.weatherdataspike.AlarmListActivity"
-            android:label="@string/title_activity_alarm_list"
-            android:parentActivityName="karro.spike.weatherdataspike.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="karro.spike.weatherdataspike.MainActivity" />
-        </activity>
+        
     </application>
 
 </manifest>

@@ -30,11 +30,13 @@ public class PositionKeeper {
 	private ArrayList<IPosition> savedPositions;
 	@Element(required=false)
 	private IPosition favouritePosition;
-	
+	@ElementList(required=false)
+	private ArrayList<IPosition> textSearchedPositions;
 	
 	public  PositionKeeper(){
 		savedPositions = new ArrayList<IPosition>();
-
+		textSearchedPositions = new ArrayList<IPosition>();
+		
 		favouritePosition = new GeonamesPosition();//Have to have a default...
 		favouritePosition.setCountryName("France");
 		favouritePosition.setRegion("Île-de-France");
@@ -126,6 +128,20 @@ public class PositionKeeper {
 	 */
 	public IPosition getFavouritePosition() {
 		return favouritePosition;
+	}
+
+	/**
+	 * @return the textSearchedPositions
+	 */
+	public ArrayList<IPosition> getTextSearchedPositions() {
+		return textSearchedPositions;
+	}
+
+	/**
+	 * @param textSearchedPositions the textSearchedPositions to set
+	 */
+	public void setTextSearchedPositions(ArrayList<IPosition> textSearchedPositions) {
+		this.textSearchedPositions = textSearchedPositions;
 	}
 
 	

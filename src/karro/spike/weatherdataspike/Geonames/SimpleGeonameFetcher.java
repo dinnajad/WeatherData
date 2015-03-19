@@ -13,7 +13,9 @@ import org.xmlpull.v1.XmlPullParserException;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String TAG = "GeonamesFetcher";
@@ -23,7 +25,7 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String GEOID_STARTPOINT ="http://api.geonames.org/get?";
 	
 	private static final String USERNAME = "frostVakt";
-	
+	public ArrayList<GeonamesPosition> mPositionItems; //TODO remove or change visibility
 	private LatLng position; 
 	
 	public ArrayList<GeonamesPosition> fetchItems(){
@@ -75,9 +77,10 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	public GeonamesPosition fetchItems(int geoId){
 		//ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
 		GeonamesPosition position= null;
+		String id = Integer.toString(geoId);
 		try{
 			String url = Uri.parse(GEOID_STARTPOINT).buildUpon()
-					.appendQueryParameter("geonameId", "605428")
+					.appendQueryParameter("geonameId", id)
 					.appendQueryParameter("username", USERNAME)
 					.build().toString();
 			Log.i(TAG,"querystring: " + url);
@@ -97,6 +100,58 @@ public class SimpleGeonameFetcher extends DataFetcher{
 		}
 		
 		return position;
+	}
+	
+	/***
+	 * http://api.geonames.org/search?name_startsWith=KåG&maxRows=10&username=frostVakt
+	 * Hämtar positionsdata utifrån text
+	 * @param geoId
+	 * @return a positionObject if there is one otherwise null
+	 */
+	public Geonames fetchItemsforString(String name){
+		ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
+		Geonames position= null;
+		try{
+			String url = Uri.parse("http://api.geonames.org/search?").buildUpon()
+					.appendQueryParameter("name_startsWith", name)
+					.appendQueryParameter("username", USERNAME)
+					.build().toString();
+			Log.i(TAG,"querystring: " + url);
+			String xmlString = getUrl(url);
+			Log.i(TAG,"	recieved xml:" + xmlString);
+			
+			Serializer serializer = new Persister();
+			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
+			//position= serializer.read(GeonamesPosition.class, xmlString);
+			
+		}catch ( IOException ioe){
+			Log.e(TAG, "Failed  to fetch items", ioe);
+		} catch (XmlPullParserException xppe) {
+			Log.e(TAG, "Failed  to parse items", xppe);
+		} catch (Exception e) {
+			Log.e(TAG, "Failed  to parse items, general exception", e);
+		}
+		
+		return position;
+	}
+	public void fetchTextPos(String name){ 
+	//FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute(latitude,longitude);
+	FetchTextPositionTask task = (FetchTextPositionTask) new FetchTextPositionTask().execute(name);	
+	}
+	private class FetchTextPositionTask extends AsyncTask<String,Void,Geonames>{
+
+		@Override
+		protected Geonames doInBackground(String... params) {
+			String name = params[0];			
+			return fetchItemsforString(name);
+		}
+
+		@Override
+		protected void onPostExecute(Geonames positions){
+			mPositionItems.addAll( positions.getList());
+		
+		}
+
 	}
 	
 	/***

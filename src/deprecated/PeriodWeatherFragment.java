@@ -1,7 +1,7 @@
 /**
  * 
  */
-package karro.spike.weatherdataspike;
+package deprecated;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.YR.YrWindDirection;
@@ -44,10 +44,10 @@ public class PeriodWeatherFragment extends Fragment {
 	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		View v= inflater.inflate(R.layout.period_fragment, container,false);
+		/*View v= inflater.inflate(R.layout.period_fragment, container,false);
 		setUpTextViews(v);
-		//TODO setupSymbol();
-		return v;
+		// setupSymbol();*/
+		return container;
 	}
 
 	/***
@@ -55,7 +55,7 @@ public class PeriodWeatherFragment extends Fragment {
 	 * @param v
 	 */
 	private void setUpTextViews(View v) {
-		mfromTimeTextView = (TextView) v.findViewById(R.id.fromTimeTextView);
+		/*mfromTimeTextView = (TextView) v.findViewById(R.id.fromTimeTextView);
 		mToTimeTextView = (TextView) v.findViewById(R.id.toTimeTextView);
 		mTemperatureTextView = (TextView) v.findViewById(R.id.tempTextView);
 		mPrecipitationTextView = (TextView) v.findViewById(R.id.precipitationTextview);
@@ -69,6 +69,6 @@ public class PeriodWeatherFragment extends Fragment {
 		
 		YrWindDirection dir= data.getWindDirection();
 		mWindDirTextView.setText(dir.getCode()+" : "+ dir.getDegree());
-		mWindSpeedTextview.setText(data.getWindSpeed().getMps());
+		mWindSpeedTextview.setText(data.getWindSpeed().getMps());*/
 	}
 }
