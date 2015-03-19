@@ -32,27 +32,27 @@ import karro.spike.weatherdataspike.model.OneDayWeatherData;
 public class MainActivity extends Activity {
 	protected static final String FORE_CAST_XML = "ForeCast.xml";
 	private ForecastKeeper storage;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		FragmentManager manager =getFragmentManager();
 		Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
-		
-		fragment =new WeatherDayFragment();
-		manager.beginTransaction()
-		.add(R.id.fragmentContainer, fragment)
-		.commit();
+
+			fragment =new WeatherDayFragment();
+			manager.beginTransaction()
+			.add(R.id.fragmentContainer, fragment)
+			.commit();
 		}
 		//Läs in data från fil
 		try {
 			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
 		} catch (FileNotFoundException e) {
-						
+
 		}
 		if(storage==null){
 			//starta Pollservice och låt den köra hämtningen en gång
@@ -64,9 +64,7 @@ public class MainActivity extends Activity {
 			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
 			odwd.setData(data);
 		}
-		
 	}
-
 
 
 	/**
@@ -78,12 +76,12 @@ public class MainActivity extends Activity {
 		} catch (FileNotFoundException fe) {
 			Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
 			if(storage==null){
-			storage = new ForecastKeeper();
+				storage = new ForecastKeeper();
 			}
 		}
 	}
-	
-	
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,58 +96,57 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {//TODO kopiera den här koden till övriga activities och modifiera när nödvändigt
-			//TODO proper settings Implementation
-			Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
-			return true;
-			
-		}else if(id==R.id.action_alarm){
-			Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
+		
+		if(id==R.id.action_alarm){
+			//Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
 			//skapa ny aktivitet
 			Intent alarm = new Intent(this,AlarmActivity.class);
 			startActivityForResult(alarm, 0);
 			//startActivity(alarm);
-			
+
 		}else if(id==R.id.action_my_alarms){
-			Toast.makeText(getApplicationContext(), "Mina Alarm", Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "Mina Alarm", Toast.LENGTH_LONG).show();
 			//skapa ny aktivitet
-			
+
 			Intent alarms = new Intent(this,AlarmListActivity.class);
 			alarms.putExtra("filename", FORE_CAST_XML);
 			startActivity(alarms);
 		}else if(id==R.id.action_toggle_poll){
-			
+
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
 			invalidateOptionsMenu();
-		//TODO eventually make item update text see page 477 
-			
+
 		}else if(id==R.id.action_refresh_data){			
-			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
+			boolean shouldStartAlarm = PollService.isServiceAlarmOn(this);//differs from set repeting one above here we want to restart it if it should be on 
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
+			
+			//försök uppdatera vyn , vet att det här bara är tur om det funkar men hinner inte leta reda på hur man egentligen ska göra
+			//TODO better update of view
 			getForecastKeeper();
 			FragmentManager manager =getFragmentManager();
 			Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
-			
+
 			OneDayWeatherData data = storage.getTodaysWeather();
 			//Ladda fragmentet med data
 			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
 			odwd.setData(data);
-			}
-		
-		else if(id==R.id.action_position){
-			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
-			PositionPollService.setOneTimeServiceAlarm(this,true);
 			
-		/*}else if(id==R.id.action_search){
-			Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_LONG).show();
-			//TODO proper Search implementation
-*/		}	
+		}else if(id==R.id.action_position){
+			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
+			PositionPollService.setOneTimeServiceAlarm(this,true);			
+			}
+		/*if (id == R.id.action_settings) {//TODO kopiera den här koden till övriga activities och modifiera när nödvändigt
+		//TODO proper settings Implementation
+		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
+		return true;
+
+	}else*/	
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode,int resultCode, Intent data){
 		if(data!=null){
@@ -157,13 +154,17 @@ public class MainActivity extends Activity {
 			String parameter = data.getStringExtra("parameter");
 			String operator = data.getStringExtra("operator");
 			String limit = data.getStringExtra("limit");
-			
-			
+
+
 			Alarm alarm= new Alarm(parameter,operator,limit);
-		storage.AddAlarm(alarm);	
-		storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
+			storage.AddAlarm(alarm);	
+			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
+
+			Intent alarms = new Intent(this,AlarmListActivity.class);
+			alarms.putExtra("filename", FORE_CAST_XML);
+			startActivity(alarms);
 		}
-		
+
 	}
 
 	@Override
@@ -175,10 +176,10 @@ public class MainActivity extends Activity {
 		}else{
 			toggleItem.setTitle(R.string.action_toggle_poll);
 		}
-		
+
 		return true;
-	
-	
+
+
 	}
 	public ForecastKeeper getStorage() {
 		return storage;

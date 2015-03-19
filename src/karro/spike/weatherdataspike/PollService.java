@@ -5,16 +5,15 @@ package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 
-import karro.spike.weatherdataspike.YR.YrForecast;
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
+import karro.spike.weatherdataspike.YR.YrForecast;
+import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 import karro.spike.weatherdataspike.model.AlarmChecker;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.PositionKeeper;
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
-import android.app.Notification.Builder;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -30,7 +29,7 @@ import android.util.Log;
 public class PollService extends IntentService {
 
 	private static final String TAG = "PollService";
-	private static final long POLL_INTERVAL = 1000 * 15 *60; //15 sec*60
+	private static final long POLL_INTERVAL = 1000 * 60 * 60 * 24/4 ;// 4 ggr per dygn
 	private ForecastKeeper storage; 
 	private PositionKeeper storedPositions;
 	
@@ -67,7 +66,15 @@ public class PollService extends IntentService {
 		}
 		
 		IPosition pos = storedPositions.getFavouritePosition();
-		YrForecast prediction;
+		/*YrForecast prediction;
+		if( pos!=null){
+			
+			String s= pos.getRegion()+"/"+pos.getName();
+			prediction= new SimpleYrFetcher().fetchForecast(s);
+		}else{
+		prediction = new SimpleYrFetcher().fetchForecast();
+		}*/
+		YrRootWeatherData prediction;
 		if( pos!=null){
 			
 			String s= pos.getRegion()+"/"+pos.getName();
@@ -75,7 +82,8 @@ public class PollService extends IntentService {
 		}else{
 		prediction = new SimpleYrFetcher().fetchForecast();
 		}
-		storage.saveForecast(prediction);
+		storage.saveRootData(prediction);
+		storage.saveForecast(prediction.getForeCast());
 		storage.saveToPersistanse(getApplicationContext(), fileName);
 		storage.groupDataPerDay();
 		
@@ -110,9 +118,11 @@ public class PollService extends IntentService {
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 		
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		//TODO currently this cancels the repeating alarm, how dont?
+		//TODO currently this cancels the repeating alarm, how dont? reset the repeting alarm after if it was on
+		manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		if(isOn){
-			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
+			
+			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
 		}else{
 			manager.cancel(pi);
 			pi.cancel();

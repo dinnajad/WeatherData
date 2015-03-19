@@ -6,6 +6,7 @@ package karro.spike.weatherdataspike;
 import java.util.Date;
 
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Fragment;
@@ -29,11 +30,14 @@ public class WeatherDayFragment extends Fragment {
 	private TextView mDayTextView;
 	private TextView mMaxTempTextview;
 	private TextView mMinTextView;
+	private TextView mCreditsTextView;
 
 	private ImageView mImageView;
 
 	private OneDayWeatherData mData; 
 	private Boolean isExtended = true;
+
+
 
 	/***
 	 * called from the OS when creating the fragment. 
@@ -57,6 +61,7 @@ public class WeatherDayFragment extends Fragment {
 		mDayTextView = (TextView) v.findViewById(R.id.dayTextView);
 		mMaxTempTextview = (TextView) v.findViewById(R.id.maxTempTextView);
 		mMinTextView = (TextView) v.findViewById(R.id.minTempTextView);
+		mCreditsTextView = (TextView) v.findViewById(R.id.yr);
 
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
 		if(mData == null){
@@ -68,13 +73,21 @@ public class WeatherDayFragment extends Fragment {
 		String max= mData.getMaxTemperatureString();
 		String min =mData.getMinTemperatureString();
 
+		String yr=null;
+		YrRootWeatherData root=	storage.getRootWeatherData();
+		if(root!=null){
+			yr =root.getCredit().toString();
+		}
+
 		if(date==null)date=" ";		
 		if(max==null) max= "";		
 		if(min==null)min="";
+		if(yr==null)yr="";
 
 		mDayTextView.setText(date);
 		mMinTextView.setText(min);
 		mMaxTempTextview.setText(max);
+		mCreditsTextView.setText(yr);
 
 		if(isExtended){
 			mPlaceTextview.setText(mData.getPlace());

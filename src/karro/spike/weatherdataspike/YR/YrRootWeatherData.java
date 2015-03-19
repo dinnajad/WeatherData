@@ -15,7 +15,10 @@ public class YrRootWeatherData {//TODO rename
 
 	@Element(name="forecast")
 	private YrForecast mForeCast;
-
+	
+	@Element(name="credit", required=false)
+	private YrCredit mCredit;
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -36,5 +39,19 @@ public class YrRootWeatherData {//TODO rename
 	 */
 	public void setForeCast(YrForecast foreCast) {
 		mForeCast = foreCast;
+	}
+
+	/**
+	 * @return the credit
+	 */
+	public YrCredit getCredit() {
+		return mCredit;
+	}
+
+	/**
+	 * @param credit the credit to set
+	 */
+	public void setCredit(YrCredit credit) {
+		mCredit = credit;
 	}
 }

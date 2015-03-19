@@ -7,9 +7,9 @@ TODO stora grejer
 
 4)Putsa på Huvudvyn, 
 
-	A Implementera Settings
-		*Länk till YR
-		*Sätta tidsintervall automatisk Hämtning
+	A Implementera Settings- tar bort settingsknappen
+		*Länk till YR- la i ett textfält på förstasidan istället, får duga för nu
+		*Sätta tidsintervall automatisk Hämtning- kör automatiskt 4 ggr per dygn , får duga för nu
 	
 	
 	(B Implementera möjlighet till flera Positioner)

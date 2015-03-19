@@ -58,12 +58,19 @@
             android:text="-3 grader Celcius" />
 
     </LinearLayout>
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/frost_pic" 
-        android:visibility="invisible"/>
-
+        android:visibility="invisible"
+        android:enabled="false"/>
+	<TextView
+            android:id="@+id/yr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/yr"             
+        	android:textAppearance="?android:attr/textAppearanceSmall"
+        	android:autoLink="web"
+        />
 </LinearLayout>

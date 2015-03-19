@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.YR.YrForecast;
+import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
@@ -31,6 +32,10 @@ public class ForecastKeeper {
 
 	@Element
 	private  YrForecast currentForecast;
+	
+	@Element(required=false) 
+	private YrRootWeatherData mRootData;
+	
 	@ElementList
 	private ArrayList<Alarm> alarms;
 		
@@ -188,6 +193,12 @@ public class ForecastKeeper {
 		this.dataPerDay = dataPerDay;
 	}
 
-	
+	public void saveRootData(YrRootWeatherData prediction) {
+		mRootData = prediction;		
+	}
+
+	public YrRootWeatherData getRootWeatherData(){
+		return mRootData;
+	}
 
 }

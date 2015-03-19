@@ -35,15 +35,17 @@ public class SimpleYrFetcher extends DataFetcher {
 	 * bör startas i en bakgrundstråd
 	 * @return
 	 */
-	public YrForecast fetchForecast(){
+	public YrRootWeatherData fetchForecast(){
 		return realImplementation(null);
 	}
-	public YrForecast fetchForecast(String landRegionStad){
+	
+	public YrRootWeatherData fetchForecast(String landRegionStad){
 		String url = Uri.parse(START).buildUpon()
 				.appendEncodedPath(landRegionStad).appendEncodedPath(HOUR_BY_HOUR)
 				.build().toString();				
 		return realImplementation(url);
 	}
+	
 	/***
 	 * bör startas i en bakgrundstråd
 	 * @return
@@ -54,14 +56,43 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private ArrayList<YrWetherData> realImplementation1() {
 		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
-		items.addAll( realImplementation(null).getList());
+		items.addAll( realImplementation(null).getForeCast().getList());
 		return items;
 	}
 
 	/**
 	 * @return
 	 */
-	private YrForecast realImplementation(String url) {
+	/*private YrForecast realImplementation(String url) {
+
+		YrRootWeatherData wdata=null;
+		//YrForecast forecast=null;
+		try{
+			if(url==null){
+			 url = Uri.parse(KÅGE).buildUpon().build().toString();
+			}
+			String xmlString =getUrl(url);
+			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
+			Log.i(TAG,"URL till yr: "+url);
+			Log.i(TAG,"XMLsträng från YR: hämtad");
+
+			Serializer serializer= new Persister();		
+			wdata =serializer.read(YrRootWeatherData.class, xmlString);
+
+		}catch ( IOException ioe){
+			Log.e(TAG, "Failed  to fetch items", ioe);
+		} catch (XmlPullParserException e) {
+			Log.e(TAG, "Failed  to parse items", e);
+		} catch (Exception e) {
+			Log.e(TAG, "Failed  to parse items", e);
+		}
+
+		return wdata.getForeCast();
+	}*/
+	/**
+	 * @return
+	 */
+	private YrRootWeatherData realImplementation(String url) {
 
 		YrRootWeatherData wdata=null;
 		//YrForecast forecast=null;
@@ -85,9 +116,8 @@ public class SimpleYrFetcher extends DataFetcher {
 			Log.e(TAG, "Failed  to parse items", e);
 		}
 
-		return wdata.getForeCast();
+		return wdata;
 	}
-
 	/**
 	 * @return
 	 */

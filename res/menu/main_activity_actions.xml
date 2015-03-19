@@ -36,8 +36,8 @@
           android:title="@string/action_refresh_data"
           android:showAsAction="never" />
    
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
+   <!-- Settings, should always be in the overflow -->
+    <!--  <item android:id="@+id/action_settings"  removed , theres nothing to put into it in this version
           android:title="@string/action_settings"
-          android:showAsAction="never" />
+          android:showAsAction="never" /> -->
 </menu>

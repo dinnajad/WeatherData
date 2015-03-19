@@ -5,10 +5,4 @@
         android:icon="@android:drawable/ic_delete"
           android:title="@string/action_delete"
           android:showAsAction="ifRoom|withText" />
-    
-  <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_refresh_data"
-          android:title="@string/action_refresh_data"
-          android:showAsAction="ifRoom" />
- 
-</menu>
+  </menu>
