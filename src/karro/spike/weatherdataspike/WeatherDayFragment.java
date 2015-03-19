@@ -6,6 +6,7 @@ package karro.spike.weatherdataspike;
 import java.util.Date;
 
 import karro.spike.weatherdata.R;
+import karro.spike.weatherdataspike.YR.YrLocation;
 import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
@@ -72,18 +73,24 @@ public class WeatherDayFragment extends Fragment {
 		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
 		String min =mData.getMinTemperatureString();
-
+		
+		String place=null;
 		String yr=null;
 		if(storage!=null){
 			YrRootWeatherData root=	storage.getRootWeatherData();
 			if(root!=null){
 				yr =root.getCredit().toString();
+				YrLocation location= root.getLocation();
+				if(location!=null){
+					place = location.toString();
+				}
 			}
 		}
 		if(date==null)date=" ";		
 		if(max==null) max= "";		
 		if(min==null)min="";
 		if(yr==null)yr="";
+		if(place==null)place="";
 
 		mDayTextView.setText(date);
 		mMinTextView.setText(min);
@@ -91,7 +98,7 @@ public class WeatherDayFragment extends Fragment {
 		mCreditsTextView.setText(yr);
 
 		if(isExtended){
-			mPlaceTextview.setText(mData.getPlace());
+			mPlaceTextview.setText(place);
 			mPlaceTextview.setEnabled(true);
 			mPlaceTextview.setVisibility(View.VISIBLE);
 			//setPicture();

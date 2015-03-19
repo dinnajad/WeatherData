@@ -130,7 +130,7 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(this,true);			
 			}
-		/*if (id == R.id.action_settings) {//TODO kopiera den här koden till övriga activities och modifiera när nödvändigt
+		/*if (id == R.id.action_settings) {
 		//TODO proper settings Implementation
 		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 		return true;

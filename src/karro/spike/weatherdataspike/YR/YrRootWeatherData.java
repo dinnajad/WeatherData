@@ -19,6 +19,9 @@ public class YrRootWeatherData {//TODO rename
 	@Element(name="credit", required=false)
 	private YrCredit mCredit;
 	
+	@Element(name="location", required= false)
+	private YrLocation location;
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -53,5 +56,19 @@ public class YrRootWeatherData {//TODO rename
 	 */
 	public void setCredit(YrCredit credit) {
 		mCredit = credit;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public YrLocation getLocation() {
+		return location;
+	}
+
+	/**
+	 * @param location the location to set
+	 */
+	public void setLocation(YrLocation location) {
+		this.location = location;
 	}
 }
