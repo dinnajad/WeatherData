@@ -14,12 +14,12 @@ TODO stora grejer
 	
 	(B Implementera möjlighet till flera Positioner)
 	
-	D Impl positionssök
+	D Impl positionssök- via text
 	
-	E Impl Meny på övriga Aktiviteter
+	E Impl Meny på övriga Aktiviteter- Tar bort alla menyItems. just nu behövs de inte men menyn finns och är förberedd om behov uppstår
 	
 	(f Impl vy för Notifieringar inne i Appen)
 	
-	
+	g ikon
 	
 	Viktigt att testa hur funkar den första körningen på ny telefon när sparfilen inte existerar

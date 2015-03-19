@@ -28,7 +28,7 @@ public class SimpleYrFetcher extends DataFetcher {
 
 	private static final String TAG = "SimpleYrFetcher";
 	private static final String KÅGE = "http://www.yr.no/sted/Sverige/Västerbotten/Kåge/varsel_time_for_time.xml";
-	private static final String START = "http://www.yr.no/sted/Sverige/";
+	private static final String START = "http://www.yr.no/place/";
 	private static final String HOUR_BY_HOUR ="varsel_time_for_time.xml";
 
 	/***
@@ -40,6 +40,10 @@ public class SimpleYrFetcher extends DataFetcher {
 	}
 	
 	public YrRootWeatherData fetchForecast(String landRegionStad){
+		
+		landRegionStad = landRegionStad.replace(' ', '_');
+		
+		Log.v(TAG,"landregionstad"+ landRegionStad);
 		String url = Uri.parse(START).buildUpon()
 				.appendEncodedPath(landRegionStad).appendEncodedPath(HOUR_BY_HOUR)
 				.build().toString();				
@@ -100,9 +104,10 @@ public class SimpleYrFetcher extends DataFetcher {
 			if(url==null){
 			 url = Uri.parse(KÅGE).buildUpon().build().toString();
 			}
+			Log.i(TAG,"URL: "+url);
 			String xmlString =getUrl(url);
 			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
-			Log.i(TAG,"URL till yr: "+url);
+			//Log.i(TAG,"URL till yr: "+url);
 			Log.i(TAG,"XMLsträng från YR: hämtad");
 
 			Serializer serializer= new Persister();		

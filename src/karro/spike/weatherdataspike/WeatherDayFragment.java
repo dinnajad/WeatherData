@@ -74,11 +74,12 @@ public class WeatherDayFragment extends Fragment {
 		String min =mData.getMinTemperatureString();
 
 		String yr=null;
-		YrRootWeatherData root=	storage.getRootWeatherData();
-		if(root!=null){
-			yr =root.getCredit().toString();
+		if(storage!=null){
+			YrRootWeatherData root=	storage.getRootWeatherData();
+			if(root!=null){
+				yr =root.getCredit().toString();
+			}
 		}
-
 		if(date==null)date=" ";		
 		if(max==null) max= "";		
 		if(min==null)min="";
@@ -100,7 +101,6 @@ public class WeatherDayFragment extends Fragment {
 			mImageView.setEnabled(false);
 			mImageView.setVisibility(android.view.View.GONE);
 		}
-		//TODO if(orientation=landscape)
 
 		return v;
 	}

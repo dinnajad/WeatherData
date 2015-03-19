@@ -36,10 +36,10 @@ public class PositionKeeper {
 		savedPositions = new ArrayList<IPosition>();
 
 		favouritePosition = new GeonamesPosition();//Have to have a default...
-		favouritePosition.setCountryName("Sweden");
-		favouritePosition.setRegion("Västerbotten");
-		favouritePosition.setId(605428);
-		favouritePosition.setName("Kåge");
+		favouritePosition.setCountryName("France");
+		favouritePosition.setRegion("Île-de-France");
+		favouritePosition.setId(2988507);
+		favouritePosition.setName("Paris");
 	}
 	
 	/***
@@ -104,7 +104,7 @@ public class PositionKeeper {
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}	
-
+		if(keeper==null)keeper=new PositionKeeper();
 		return keeper;			
 	}
 	/**

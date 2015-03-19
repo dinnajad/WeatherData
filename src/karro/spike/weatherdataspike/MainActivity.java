@@ -2,6 +2,7 @@ package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
 
+import com.google.android.gms.common.annotation.KeepName;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -55,9 +56,10 @@ public class MainActivity extends Activity {
 
 		}
 		if(storage==null){
-			//starta Pollservice och låt den köra hämtningen en gång
+			//starta Pollservice och låt den köra hämtningen en gång till
 			//Intent i = new Intent(getApplicationContext(), PollService.class);
 			getForecastKeeper();
+			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
 		}else{
 			OneDayWeatherData data = storage.getTodaysWeather();
 			//Ladda fragmentet med data
@@ -75,9 +77,9 @@ public class MainActivity extends Activity {
 			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
 		} catch (FileNotFoundException fe) {
 			Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
-			if(storage==null){
-				storage = new ForecastKeeper();
 			}
+		if(storage==null){
+			storage = new ForecastKeeper();
 		}
 	}
 
@@ -123,17 +125,7 @@ public class MainActivity extends Activity {
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
 			
-			//försök uppdatera vyn , vet att det här bara är tur om det funkar men hinner inte leta reda på hur man egentligen ska göra
 			//TODO better update of view
-			getForecastKeeper();
-			FragmentManager manager =getFragmentManager();
-			Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
-
-			OneDayWeatherData data = storage.getTodaysWeather();
-			//Ladda fragmentet med data
-			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
-			odwd.setData(data);
-			
 		}else if(id==R.id.action_position){
 			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(this,true);			
@@ -155,7 +147,7 @@ public class MainActivity extends Activity {
 			String operator = data.getStringExtra("operator");
 			String limit = data.getStringExtra("limit");
 
-
+			getForecastKeeper();
 			Alarm alarm= new Alarm(parameter,operator,limit);
 			storage.AddAlarm(alarm);	
 			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);

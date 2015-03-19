@@ -55,6 +55,9 @@ public class AlarmListFragment extends ListFragment  {
 		} catch (FileNotFoundException e) {
 			keeper =  new ForecastKeeper();
 		}
+		if(keeper==null){
+			keeper= new ForecastKeeper();
+		}
 		//hämta dataItems listan
 		mAlarms = keeper.getAlarms();
 		//skapa adapter

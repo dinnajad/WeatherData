@@ -77,7 +77,7 @@ public class PollService extends IntentService {
 		YrRootWeatherData prediction;
 		if( pos!=null){
 			
-			String s= pos.getRegion()+"/"+pos.getName();
+			String s=pos.getCountryName()+"/"+ pos.getRegion()+"/"+pos.getName();
 			prediction= new SimpleYrFetcher().fetchForecast(s);
 		}else{
 		prediction = new SimpleYrFetcher().fetchForecast();
@@ -89,6 +89,7 @@ public class PollService extends IntentService {
 		
 		alarmChecker = new AlarmChecker(getApplicationContext());
 		alarmChecker.verifyAlarms(storage.getDataPerDay());
+		Log.v(TAG, "OnHandleIntent ended " );
 		//SendNotification();
 	}
 	
@@ -120,12 +121,10 @@ public class PollService extends IntentService {
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		//TODO currently this cancels the repeating alarm, how dont? reset the repeting alarm after if it was on
 		manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
+		Log.v(TAG,"I setOneTimeServiceAlarm "+ isOn);
 		if(isOn){
 			
 			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
-		}else{
-			manager.cancel(pi);
-			pi.cancel();
 		}
 	}
 	

@@ -156,6 +156,7 @@ public class OneDayWeatherData {
 	}
 
 	public String getDayString() {
+		if(mIWeatherData!=null){
 		int size = mIWeatherData.size();
 		
 		Date enddate =mIWeatherData.get(size-1).getEndTime();
@@ -165,7 +166,9 @@ public class OneDayWeatherData {
 		cal.setTime(day);
 		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
-		return (formater.format(day)+" -"+formater.format(enddate)); 
+		return (formater.format(day)+" -"+formater.format(enddate));
+		}
+		return " ";
 	}
 
 

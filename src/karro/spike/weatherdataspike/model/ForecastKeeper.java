@@ -30,7 +30,7 @@ public class ForecastKeeper {
 	private static final String TAG = "ForecastKeeper";
 	public static final String FORE_CAST_XML = "ForeCast.xml";
 
-	@Element
+	@Element(required=false)
 	private  YrForecast currentForecast;
 	
 	@Element(required=false) 
@@ -78,7 +78,8 @@ public class ForecastKeeper {
 
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
-			//TODO what do? if no currentForecast	
+			//TODO what do? if no currentForecast
+			return null;
 		}
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}
