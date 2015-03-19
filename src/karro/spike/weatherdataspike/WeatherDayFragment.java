@@ -64,6 +64,7 @@ public class WeatherDayFragment extends Fragment {
 		mMinTextView = (TextView) v.findViewById(R.id.minTempTextView);
 		mCreditsTextView = (TextView) v.findViewById(R.id.yr);
 
+		storage=((MainActivity) getActivity()).getStorage();
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
 		if(mData == null){
 			fejkData();
