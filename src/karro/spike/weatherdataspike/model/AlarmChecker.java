@@ -5,6 +5,7 @@ package karro.spike.weatherdataspike.model;
 
 import java.util.ArrayList;
 
+import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.MainActivity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -66,8 +67,8 @@ public class AlarmChecker {
 
 		NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(context);
 
-		mBuilder.setContentTitle("FrostVarning").setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-		.setContentText(msg+" Du har "+ numberOfNotificationsSent + " vädervarningar "+ context.getString(karro.spike.weatherdata.R.string.frost))//TODO hur få ut texten och inte int värdet
+		mBuilder.setContentTitle("FrostVarning").setSmallIcon(R.drawable.thermometer_snowflake)
+		.setContentText("Du har "+ numberOfNotificationsSent + " vädervarningar "+ context.getString(karro.spike.weatherdata.R.string.frost))//TODO hur få ut texten och inte int värdet
 		 /*
          * Sets the big view "big text" style and supplies the
          * text that will be displayed
@@ -76,7 +77,7 @@ public class AlarmChecker {
          * pre-4.1 devices.
          */
         .setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(msg+" .."+ karro.spike.weatherdata.R.string.frost_warning_big
+                .bigText(msg+" .."+ context.getString(karro.spike.weatherdata.R.string.frost_warning_big)
                 		+ " Du har "+ numberOfNotificationsSent + " vädervarningar"))
                 		.setAutoCancel(true)
 		.setContentIntent(pi);
