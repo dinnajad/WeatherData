@@ -11,11 +11,16 @@ import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 /**
@@ -74,7 +79,7 @@ public class WeatherDayFragment extends Fragment {
 		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
 		String min =mData.getMinTemperatureString();
-		
+
 		String place=null;
 		String yr=null;
 		if(storage!=null){
@@ -102,7 +107,7 @@ public class WeatherDayFragment extends Fragment {
 			mPlaceTextview.setText(place);
 			mPlaceTextview.setEnabled(true);
 			mPlaceTextview.setVisibility(View.VISIBLE);
-			//setPicture();
+			setPicture();
 		}else{
 			mPlaceTextview.setEnabled(false);
 			mPlaceTextview.setVisibility(View.GONE);
@@ -125,11 +130,18 @@ public class WeatherDayFragment extends Fragment {
 	}
 
 	private void setPicture(){
+		if(getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
+			
 		if(mData.getMintemperature()<=0){//TODO make limit flexible
 			mImageView.setImageResource(R.drawable.frost_pic);
 			mImageView.setVisibility(android.view.View.VISIBLE);		
-		}else 
+		}else {
 			mImageView.setImageResource(R.drawable.sunflowers);
+			mImageView.setVisibility(android.view.View.VISIBLE);
+		}
+		/*Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+		int rotation = display.getRotation();*/
+}
 	}
 
 	public OneDayWeatherData getData() {

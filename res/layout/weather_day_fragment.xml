@@ -4,7 +4,16 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:orientation="vertical" >
-
+   <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/frost_pic" 
+        android:visibility="invisible"
+        android:enabled="false"
+    	android:layout_alignParentBottom="true"
+    	android:layout_alignParentRight="true"
+    	/>
     <TextView
         android:id="@+id/placeTextView"
         android:layout_width="wrap_content"
@@ -63,7 +72,9 @@
             android:text="-3 grader Celcius" />
 
     </LinearLayout>
-    <TextView
+   
+ 
+	 <TextView
             android:id="@+id/yr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,13 +84,4 @@
         	android:layout_gravity="bottom"
         	android:layout_alignParentBottom="true"
         />
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/frost_pic" 
-        android:visibility="invisible"
-        android:enabled="false"
-    	android:layout_alignParentBottom="true"/>m
-	
 </RelativeLayout>

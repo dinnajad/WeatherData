@@ -32,18 +32,19 @@ public class PositionKeeper {
 	private IPosition favouritePosition;
 	@ElementList(required=false)
 	private ArrayList<IPosition> textSearchedPositions;
-	
+
 	public  PositionKeeper(){
 		savedPositions = new ArrayList<IPosition>();
 		textSearchedPositions = new ArrayList<IPosition>();
-		
+
 		favouritePosition = new GeonamesPosition();//Have to have a default...
 		favouritePosition.setCountryName("France");
 		favouritePosition.setRegion("Île-de-France");
 		favouritePosition.setId(2988507);
 		favouritePosition.setName("Paris");
+
 	}
-	
+
 	/***
 	 * 
 	 * @param position
@@ -51,10 +52,10 @@ public class PositionKeeper {
 	public void AddPosition(IPosition position){
 		if(!savedPositions.contains(position)){
 			savedPositions.add(position);
-			
+
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @param position
@@ -63,7 +64,7 @@ public class PositionKeeper {
 		favouritePosition = position;
 		Log.w(TAG,"Favourite Position Set");
 	}
-	
+
 	/***
 	 * Persists this class to xml file
 	 * @param context
@@ -86,7 +87,7 @@ public class PositionKeeper {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/***
 	 * 
 	 * @param context
@@ -106,7 +107,10 @@ public class PositionKeeper {
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}	
-		if(keeper==null)keeper=new PositionKeeper();
+		if(keeper==null){
+			keeper=new PositionKeeper();
+			keeper.saveToPersistanse(context);
+		}
 		return keeper;			
 	}
 	/**
@@ -144,6 +148,6 @@ public class PositionKeeper {
 		this.textSearchedPositions = textSearchedPositions;
 	}
 
-	
+
 
 }
