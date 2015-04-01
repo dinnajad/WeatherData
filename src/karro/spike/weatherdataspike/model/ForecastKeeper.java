@@ -49,7 +49,6 @@ public class ForecastKeeper {
 	public boolean saveForecast(YrForecast fc){
 		if(fc == null)return false;
 
-		//forecasts.add(fc);
 		currentForecast = fc;
 		Log.v(TAG, "forecast saved"+ currentForecast);
 
@@ -60,13 +59,14 @@ public class ForecastKeeper {
 	/***
 	 * 
 	 * @param alarm
-	 */
+	 *//*
 	public void AddAlarm(Alarm alarm){
 		if(!alarms.contains(alarm)){
 			alarms.add(alarm);
 		}
-	}
+	}*/
 	
+	/*
 	public void RemoveAlarm(IAlarm ialarm){
 		Alarm alarm = ialarm.getAlarm();
 		if(alarms.contains(alarm)){
@@ -74,11 +74,11 @@ public class ForecastKeeper {
 		}else{
 			Log.e(TAG, "no item found in alarmList " +alarm.toString());
 		}
-	}
+	}*/
 
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
-			//TODO what do? if no currentForecast
+			// what do? if no currentForecast
 			return null;
 		}
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
@@ -95,7 +95,7 @@ public class ForecastKeeper {
 	 * @param fileName
 	 */
 	public void saveToPersistanse(Context context, String fileName){
-		//TODO think about using http://stackoverflow.com/questions/4118751/how-do-i-serialize-an-object-and-save-it-to-a-file-in-android instead
+		//think about using http://stackoverflow.com/questions/4118751/how-do-i-serialize-an-object-and-save-it-to-a-file-in-android instead
 		//https://androidresearch.wordpress.com/2013/04/07/caching-objects-in-android-internal-storage/
 		Serializer serializer= new Persister();
 		FileOutputStream fileOut;
@@ -107,15 +107,12 @@ public class ForecastKeeper {
 
 			e.printStackTrace();
 		}catch (Exception e) {
-			Log.e("serializer","the schema for the object is not valid" +e);
+			Log.e(TAG+"serializer","the schema for the object is not valid" +e);
 			e.printStackTrace();
 		}
-
-
-
 	}
+	
 	/***
-	 * 
 	 * @param context
 	 * @param fileName
 	 * @return an instance of forecastKeeper or null if something went wrong in reading file
@@ -156,7 +153,7 @@ public class ForecastKeeper {
 
 	/**
 	 * @return the alarms
-	 */
+	 *//*
 	public ArrayList<IAlarm> getAlarms() {
 		ArrayList<IAlarm> iAlarms = new ArrayList<IAlarm>();
 		for (Alarm alarm : alarms) {
@@ -167,7 +164,7 @@ public class ForecastKeeper {
 			}
 		}
 		return iAlarms;
-	}
+	}*/
 
 
 	/**

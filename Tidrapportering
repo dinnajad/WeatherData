@@ -99,4 +99,8 @@ Torsdag
 Fredag
 9,15-
 
+31/3 tisdag
+9,15-	9,36			fixa null i notifieringen, Alarmchecker körde bara mot dummyalarm, oops
 
+1/4 10,30-10,50		bryta ut AlarmKeeper ur Forecast keeper, med tove på ryggen
+1109-

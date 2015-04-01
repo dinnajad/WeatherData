@@ -36,8 +36,8 @@ public class TemperatureAlarm implements IAlarm {
 	
 	@Override
 	public String getAlarmMessage() {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO AlarmMessage now only limit
+		return alarm.getLimit();
 	}
 	@Override
 	public void setAlarm(Alarm alarm) {

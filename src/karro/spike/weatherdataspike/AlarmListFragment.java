@@ -10,6 +10,7 @@ import karro.spike.weatherdata.R;
 import karro.spike.weatherdata.R.id;
 import karro.spike.weatherdata.R.layout;
 import karro.spike.weatherdataspike.model.Alarm;
+import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IAlarm;
 import android.app.ListFragment;
@@ -40,7 +41,7 @@ public class AlarmListFragment extends ListFragment  {
 	private ListView list;
 	private String filename;
 	private ArrayList<IAlarm> mAlarms;//remember to save list to persistence if changes are made
-	ForecastKeeper keeper;
+	AlarmKeeper keeper;
 	/***
 	 * called from the OS when creating the fragment. 
 	 * Initialise essentials here
@@ -51,12 +52,12 @@ public class AlarmListFragment extends ListFragment  {
 		Intent i =getActivity().getIntent();
 		filename= i.getStringExtra("filename");
 		try {
-			keeper = ForecastKeeper.readFromFile(getActivity().getApplicationContext(), filename);
+			keeper = AlarmKeeper.readFromFile(getActivity().getApplicationContext());
 		} catch (FileNotFoundException e) {
-			keeper =  new ForecastKeeper();
+			keeper =  new AlarmKeeper();
 		}
 		if(keeper==null){
-			keeper= new ForecastKeeper();
+			keeper= new AlarmKeeper();
 		}
 		//hämta dataItems listan
 		mAlarms = keeper.getAlarms();
@@ -149,9 +150,6 @@ public class AlarmListFragment extends ListFragment  {
           if(sparseBooleanArray.get(i)) {
 
               selected += myList.getItemAtPosition(i).toString() + "\n";
-
-               
-
           }
 
       }*/
@@ -172,6 +170,6 @@ public class AlarmListFragment extends ListFragment  {
 			}
 		}	
 		
-		keeper.saveToPersistanse(getActivity().getApplicationContext(), filename);
+		keeper.saveToPersistence(getActivity().getApplicationContext());
 	}
 }

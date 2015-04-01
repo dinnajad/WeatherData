@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.model.Alarm;
+import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Activity;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	protected static final String TAG = "MainActivity";
 	protected static final String FORE_CAST_XML = "ForeCast.xml";
 	private ForecastKeeper storage;
 
@@ -134,12 +136,24 @@ public class MainActivity extends Activity {
 			String parameter = data.getStringExtra("parameter");
 			String operator = data.getStringExtra("operator");
 			String limit = data.getStringExtra("limit");
-
-			getForecastKeeper();
 			Alarm alarm= new Alarm(parameter,operator,limit);
+			AlarmKeeper aKeeper;
+			/*
+			getForecastKeeper();
+				
 			storage.AddAlarm(alarm);	
 			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
-
+*/
+			
+			try {
+				aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
+			} catch (FileNotFoundException e) {
+				Log.e(TAG, "AlarmFileNotFound " +e);
+				aKeeper =new AlarmKeeper();
+			}
+			aKeeper.AddAlarm(alarm);
+			aKeeper.saveToPersistence(getApplicationContext());
+			
 			Intent alarms = new Intent(this,AlarmListActivity.class);
 			alarms.putExtra("filename", FORE_CAST_XML);
 			startActivity(alarms);
