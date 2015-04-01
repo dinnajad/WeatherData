@@ -33,8 +33,9 @@ public class AlarmKeeper {
 	public AlarmKeeper(){
 		alarms = new ArrayList<Alarm>();
 	}
+	
 	/***
-	 * 
+	 * Add a new alarm if it not already exists
 	 * @param alarm
 	 */
 	public void AddAlarm(Alarm alarm){
@@ -43,6 +44,10 @@ public class AlarmKeeper {
 		}
 	}
 
+	/***
+	 * Removes an Alarm
+	 * @param ialarm
+	 */
 	public void RemoveAlarm(IAlarm ialarm){
 		Alarm alarm = ialarm.getAlarm();
 		if(alarms.contains(alarm)){
@@ -93,7 +98,7 @@ public class AlarmKeeper {
 		return keeper;			
 	}
 
-	/**
+	/**Returns the alarms and wrapps them in wrappers
 	 * @return the alarms
 	 */
 	public ArrayList<IAlarm> getAlarms() {

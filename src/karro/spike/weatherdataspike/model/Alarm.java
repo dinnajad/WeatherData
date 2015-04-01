@@ -28,6 +28,9 @@ public class Alarm  {
 	@Element(required=false)
 	private boolean isActive= true;
 	
+	@Element(required=false)
+	private String message = null;
+	
 	public Alarm(String parameter, String logicOperator, String limit) {
 		super();
 		this.parameter = parameter;
@@ -47,6 +50,20 @@ public class Alarm  {
 				+ logicOperator + " " + limit;
 	}
 	
+	/**
+	 * @return the message
+	 */
+	public String getMessage() {
+		return message;
+	}
+
+	/**
+	 * @param message the message to set
+	 */
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 	/**
 	 * @return the parameter
 	 */

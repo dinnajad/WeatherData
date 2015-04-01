@@ -48,15 +48,18 @@ public class AlarmChecker {
 		alarm.setLimit("-10");
 		alarm.setLogicOperator("Över");
 		alarm.setParameter("Temperaturen");
+		alarm.setMessage("EttKalltMeddelande");
 		tempAlarm.setAlarm(alarm);
 		alarms.add(tempAlarm);
-		/*TemperatureAlarm tempAlarm2 = new TemperatureAlarm();
+		TemperatureAlarm tempAlarm2 = new TemperatureAlarm();
 		Alarm alarm2 = new Alarm();
 		alarm2.setLimit("10");
 		alarm2.setLogicOperator("Under");
 		alarm2.setParameter("Temperaturen");
+		alarm2.setMessage("kolla ett meddelande!");
 		tempAlarm2.setAlarm(alarm2);
-		alarms.add(tempAlarm2);*/
+		
+		alarms.add(tempAlarm2);
 		
 		//för varje dag
 		for (OneDayWeatherData oneDayWeatherData : dataPerDay) {

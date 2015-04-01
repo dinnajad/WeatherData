@@ -33,12 +33,15 @@ public class TemperatureAlarm implements IAlarm {
 		}
 		return false;
 	}
-	
+
+	/***
+	 * returns the custom message
+	 */
 	@Override
 	public String getAlarmMessage() {
-		//TODO AlarmMessage now only limit
-		return alarm.getLimit();
+		return alarm.getLimit()+ alarm.getMessage();
 	}
+
 	@Override
 	public void setAlarm(Alarm alarm) {
 		this.alarm = alarm;		
@@ -51,9 +54,6 @@ public class TemperatureAlarm implements IAlarm {
 
 	@Override
 	public String toString(){
-	return alarm.toString();
-}
-
-
-
+		return alarm.toString();
+	}
 }

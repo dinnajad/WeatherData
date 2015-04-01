@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical" 
-    android:padding="8dp">
+    android:orientation="vertical"
+    android:padding="8dp" >
 
     <TextView
         android:id="@+id/textView1"
@@ -38,32 +38,47 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="4"
-        android:hint="skriv in siffran här"
+        android:hint="@string/editText_number_hint"
         android:inputType="numberSigned" >
-        
     </EditText>
 
-<!--     <TextView -->
-<!--         android:id="@+id/textView3" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:text="@string/and" -->
-<!--         android:textAppearance="?android:attr/textAppearanceMedium" /> -->
+    <!-- <TextView -->
+    <!-- android:id="@+id/textView3" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:text="@string/and" -->
+    <!-- android:textAppearance="?android:attr/textAppearanceMedium" /> -->
 
-<!--     <EditText -->
-<!--         android:id="@+id/editText2" -->
-<!--         android:layout_width="wrap_content" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:layout_weight="1" -->
-<!--         android:ems="10" -->
-<!--         android:hint="skriv in siffror här" -->
-<!--         android:inputType="numberSigned" /> -->
 
-    
+    <!-- <EditText -->
+    <!-- android:id="@+id/editText2" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" -->
+    <!-- android:ems="10" -->
+    <!-- android:hint="skriv in siffror här" -->
+    <!-- android:inputType="numberSigned" /> -->
+
+    <TextView
+        android:id="@+id/textView_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textView_message" />
+
+    <EditText
+        android:id="@+id/editText_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/editText_message_hint"
+        android:maxLength="60" >
+    </EditText>
+
     <Button
         android:id="@+id/OKbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Skapa Alarm" />
+        android:text="@string/button_createAlarm" >
+    </Button>
 
 </LinearLayout>

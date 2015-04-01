@@ -31,6 +31,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	private Spinner mLogicSpinner;
 	//private EditText limit2;
 	private EditText limit1;
+	private EditText mMessageEditText;
 	private Button okbutton;
 	
 	private String selectedParameter;
@@ -55,6 +56,8 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 		
 		setUpSpinners(v);
 		setUpButton(v);
+		
+		mMessageEditText = (EditText) v.findViewById(R.id.editText_message);
 		
 		limit1= (EditText) v.findViewById(R.id.editText1);
 		limit1.addTextChangedListener(new TextValidator(limit1) {
@@ -97,10 +100,13 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 				return;
 				}
 				
+				String message = mMessageEditText.getText().toString();
+				
 				Intent data = new Intent();
 				data.putExtra("parameter", selectedParameter);
 				data.putExtra("operator", selectedLogic);
 				data.putExtra("limit", alarm.getLimit());
+				data.putExtra("message", message);
 				getActivity().setResult(Activity.RESULT_OK,data);
 				getActivity().finish();
 			}

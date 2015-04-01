@@ -137,6 +137,9 @@ public class MainActivity extends Activity {
 			String operator = data.getStringExtra("operator");
 			String limit = data.getStringExtra("limit");
 			Alarm alarm= new Alarm(parameter,operator,limit);
+			
+			String message = data.getStringExtra("message");
+			alarm.setMessage(message);
 			AlarmKeeper aKeeper;
 			/*
 			getForecastKeeper();
