@@ -4,6 +4,7 @@
 package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrForecast;
@@ -12,6 +13,7 @@ import karro.spike.weatherdataspike.model.AlarmChecker;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.PositionKeeper;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -92,7 +94,21 @@ public class PollService extends IntentService {
 		Log.v(TAG, "OnHandleIntent ended " );
 		//SendNotification();
 	}
-	
+	/***
+	 * from http://stackoverflow.com/questions/12172092/check-if-activity-is-running-from-service
+	 * ev use shared preferences instead http://androidblog.reindustries.com/check-if-an-android-activity-is-currently-running/
+	 * @param myPackage
+	 * @return
+	 *//*
+	public boolean isForeground(String myPackage){
+		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		 List< ActivityManager.RunningTaskInfo > runningTaskInfo = manager.getRunningTasks(1); 
+
+		     ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
+		   if(componentInfo.getPackageName().equals(myPackage)) return true;
+		return false;
+		}
+	*/
 	protected void SendNotification(){
 		Intent i = new Intent(getApplicationContext(), MainActivity.class);
 		PendingIntent pi= PendingIntent.getService(getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);

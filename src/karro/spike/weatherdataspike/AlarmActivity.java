@@ -8,7 +8,10 @@ import karro.spike.weatherdata.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,7 +37,37 @@ public class AlarmActivity extends Activity {
 		.commit();
 		}
 	}
+	
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
 
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("active", true);
+		ed.commit();
+		Log.v("AlarmActivity", "AlarmActivity Active" );
+	}
+
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("active", false);
+		ed.commit();
+		Log.v("AlarmActivity", "AlarmActivity NOT active" );
+	}
+ 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

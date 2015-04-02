@@ -11,6 +11,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -65,13 +67,41 @@ public class MainActivity extends Activity {
 			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
 		} catch (FileNotFoundException fe) {
 			Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
-			}
+		}
 		if(storage==null){
 			storage = new ForecastKeeper();
 		}
 	}
+	
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
 
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("active", true);
+		ed.commit();
+		Log.v(TAG, "Main Active" );
+	}
 
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("active", false);
+		ed.commit();
+		Log.v(TAG, "Main NOT active" );
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +116,7 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
+
 		if(id==R.id.action_alarm){
 			//Toast.makeText(getApplicationContext(), "nyttAlarm", Toast.LENGTH_LONG).show();
 			//skapa ny aktivitet
@@ -112,7 +142,7 @@ public class MainActivity extends Activity {
 			boolean shouldStartAlarm = PollService.isServiceAlarmOn(this);//differs from set repeting one above here we want to restart it if it should be on 
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
-			
+
 			//TODO better update of view
 		}else if(id==R.id.action_position){
 			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
@@ -137,17 +167,17 @@ public class MainActivity extends Activity {
 			String operator = data.getStringExtra("operator");
 			String limit = data.getStringExtra("limit");
 			Alarm alarm= new Alarm(parameter,operator,limit);
-			
+
 			String message = data.getStringExtra("message");
 			alarm.setMessage(message);
 			AlarmKeeper aKeeper;
 			/*
 			getForecastKeeper();
-				
+
 			storage.AddAlarm(alarm);	
 			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
-*/
-			
+			 */
+
 			try {
 				aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
 			} catch (FileNotFoundException e) {
@@ -156,7 +186,7 @@ public class MainActivity extends Activity {
 			}
 			aKeeper.AddAlarm(alarm);
 			aKeeper.saveToPersistence(getApplicationContext());
-			
+
 			Intent alarms = new Intent(this,AlarmListActivity.class);
 			alarms.putExtra("filename", FORE_CAST_XML);
 			startActivity(alarms);
@@ -178,10 +208,18 @@ public class MainActivity extends Activity {
 
 
 	}
+	/***
+	 * gets the ForecastKeeper that stores the data
+	 * @return
+	 */
 	public ForecastKeeper getStorage() {
 		return storage;
 	}
 
+	/***
+	 * Sets the ForecastKeeper that will store data
+	 * @param storage
+	 */
 	public void setStorage(ForecastKeeper storage) {
 		this.storage = storage;
 	}

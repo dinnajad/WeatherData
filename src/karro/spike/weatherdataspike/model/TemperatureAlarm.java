@@ -39,7 +39,7 @@ public class TemperatureAlarm implements IAlarm {
 	 */
 	@Override
 	public String getAlarmMessage() {
-		return alarm.getLimit()+ alarm.getMessage();
+		return alarm.getLimit()+ " "+alarm.getMessage();
 	}
 
 	@Override

@@ -23,3 +23,10 @@ TODO stora grejer
 	g ikon
 	
 	Viktigt att testa hur funkar den första körningen på ny telefon när sparfilen inte existerar
+	
+	
+	Buggar o dylikt
+	
+	SharedPreferences settingen active blir fel eftersom onStop anropas i ovntad ordning.
+		möjlig lösning: sätta en variabel per activity och i servicen kolla om någon av dom är aktiva
+	
