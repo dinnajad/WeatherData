@@ -10,12 +10,11 @@ import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
+
+import com.google.android.gms.maps.model.LatLng;
 
 public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String TAG = "GeonamesFetcher";

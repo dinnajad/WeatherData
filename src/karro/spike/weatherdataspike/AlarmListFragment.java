@@ -3,15 +3,10 @@
  */
 package karro.spike.weatherdataspike;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdata.R.id;
-import karro.spike.weatherdata.R.layout;
-import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
-import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IAlarm;
 import android.app.ListFragment;
 import android.content.Intent;
@@ -23,12 +18,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -39,9 +31,9 @@ import android.widget.Toast;
  */
 public class AlarmListFragment extends ListFragment  {
 	private ListView list;
-	private String filename;
 	private ArrayList<IAlarm> mAlarms;//remember to save list to persistence if changes are made
 	AlarmKeeper keeper;
+	
 	/***
 	 * called from the OS when creating the fragment. 
 	 * Initialise essentials here
@@ -49,13 +41,9 @@ public class AlarmListFragment extends ListFragment  {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		Intent i =getActivity().getIntent();
-		filename= i.getStringExtra("filename");
-		try {
-			keeper = AlarmKeeper.readFromFile(getActivity().getApplicationContext());
-		} catch (FileNotFoundException e) {
-			keeper =  new AlarmKeeper();
-		}
+		
+		keeper = AlarmKeeper.readFromFile(getActivity().getApplicationContext());
+
 		if(keeper==null){
 			keeper= new AlarmKeeper();
 		}
@@ -67,6 +55,7 @@ public class AlarmListFragment extends ListFragment  {
 		setListAdapter(adapter);
 
 	}
+	
 	/*
 	private Alarm[] fejkDataItems() {
 
@@ -98,15 +87,13 @@ public class AlarmListFragment extends ListFragment  {
 
 			@Override
 			public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-				// Respond to clicks on the actions in the CAB
-				switch (item.getItemId()) {
-				
-				case R.id.action_delete:
+				int itemId = item.getItemId();
+				if (itemId == R.id.action_delete) {
 					Log.v("DELETE","found delete case");
 					deleteSelectedItems();
 					mode.finish(); // Action picked, so close the CAB
 					return true;
-				default:
+				} else {
 					return false;
 				}
 			}
@@ -117,7 +104,7 @@ public class AlarmListFragment extends ListFragment  {
 				// Here you can perform updates to the CAB due to
 				// an invalidate() request
 			}
-			
+
 			@Override
 			public void onDestroyActionMode(ActionMode mode) {
 				// Here you can make any necessary updates to the activity when
@@ -132,15 +119,15 @@ public class AlarmListFragment extends ListFragment  {
 				return true;
 			}
 		});
-		
+
 		return v;
 	}
-	
+
 	/*
 	  String selected = "";
-	  
-      
-	  
+
+
+
       int cntChoice = myList.getCount();
 
       SparseBooleanArray sparseBooleanArray = myList.getCheckedItemPositions();
@@ -155,7 +142,7 @@ public class AlarmListFragment extends ListFragment  {
       }*/
 	private void deleteSelectedItems() {
 		Log.v("DELETE","entered deletefkn");
-		
+
 		int listCount = list.getCount();
 		SparseBooleanArray sparseBooleanArray = list.getCheckedItemPositions();
 		for(int i=0; i<listCount;i++)
@@ -169,7 +156,7 @@ public class AlarmListFragment extends ListFragment  {
 				Log.v("DELETE","deleted"+i);
 			}
 		}	
-		
+
 		keeper.saveToPersistence(getActivity().getApplicationContext());
 	}
 }

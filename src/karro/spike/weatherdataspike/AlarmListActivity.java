@@ -2,13 +2,13 @@ package karro.spike.weatherdataspike;
 
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdata.R.id;
-import karro.spike.weatherdata.R.layout;
-import karro.spike.weatherdata.R.menu;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,6 +27,36 @@ public class AlarmListActivity extends Activity {
 		.add(R.id.fragmentContainer, fragment)
 		.commit();
 		}
+	}
+	
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("AlarmlistActive", true);
+		ed.commit();
+		Log.v("AlarmList", "AlarmList Active" );
+	}
+
+	/***
+	 * Saves the state in shared preferences so that the services can see if the app is active
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		// Store our shared preference
+		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
+		Editor ed = sp.edit();
+		ed.putBoolean("AlarmlistActive", false);
+		ed.commit();
+		Log.v("AlarmList", "AlarmList NOT active" );
 	}
 
 	@Override

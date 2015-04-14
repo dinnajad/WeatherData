@@ -16,22 +16,25 @@ public class TemperatureAlarm implements IAlarm {
 
 	@Override
 	public boolean checkAlarm(OneDayWeatherData data) {
+		boolean alarmTriggered = false;
 		float limit = Float.valueOf(alarm.getLimit());
-		if(alarm.getLogicOperator()=="Under"){
+		if( alarm.getLogicOperator().equals("Under")){
 			if(data.getMintemperature()<limit){
 				//ALARM RIIIIIING
-				return true;
+				alarmTriggered = true;
+				Log.i(TAG, alarm.toString() + " < " + data.getMintemperature());
 			}
-		}else if(alarm.getLogicOperator()=="Över"){
+		}else if(alarm.getLogicOperator().equals("Över")){
 			if(data.getMaxTemperature()>limit){
 				//ALARM RIIIIIING
-				return true;
+				alarmTriggered = true;
+				Log.i(TAG, alarm.toString() + " > " + data.getMaxTemperature());
 			}
 		}else{
 			Log.e(TAG, "Alarm fungerar inte : Okänd kombination " + alarm.toString());
-			return false;
+			alarmTriggered = false;
 		}
-		return false;
+		return alarmTriggered;
 	}
 
 	/***
@@ -39,7 +42,7 @@ public class TemperatureAlarm implements IAlarm {
 	 */
 	@Override
 	public String getAlarmMessage() {
-		return alarm.getLimit()+ alarm.getMessage();
+		return alarm.getLimit() + " " + alarm.getMessage();
 	}
 
 	@Override

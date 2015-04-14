@@ -5,9 +5,8 @@ package karro.spike.weatherdataspike.Geonames;
 
 import karro.spike.weatherdataspike.model.IPosition;
 
-import org.simpleframework.xml.*;
-
-import android.util.Log;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  * @author Karro

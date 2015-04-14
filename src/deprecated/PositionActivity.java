@@ -2,14 +2,12 @@ package deprecated;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
-
-import com.google.android.gms.common.api.GoogleApiClient;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.gms.common.api.GoogleApiClient;
 
 public class PositionActivity extends Activity {
 

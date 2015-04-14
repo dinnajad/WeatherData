@@ -3,8 +3,6 @@
  */
 package deprecated;
 
-import karro.spike.weatherdata.R;
-import karro.spike.weatherdataspike.YR.YrWindDirection;
 import karro.spike.weatherdataspike.model.IWeatherData;
 import android.app.Fragment;
 import android.os.Bundle;

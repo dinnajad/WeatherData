@@ -19,7 +19,6 @@ import org.simpleframework.xml.core.Persister;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * @author Karro
@@ -55,27 +54,6 @@ public class ForecastKeeper {
 		return true;				
 	}
 	
-	
-	/***
-	 * 
-	 * @param alarm
-	 *//*
-	public void AddAlarm(Alarm alarm){
-		if(!alarms.contains(alarm)){
-			alarms.add(alarm);
-		}
-	}*/
-	
-	/*
-	public void RemoveAlarm(IAlarm ialarm){
-		Alarm alarm = ialarm.getAlarm();
-		if(alarms.contains(alarm)){
-			alarms.remove(alarm);
-		}else{
-			Log.e(TAG, "no item found in alarmList " +alarm.toString());
-		}
-	}*/
-
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
 			// what do? if no currentForecast

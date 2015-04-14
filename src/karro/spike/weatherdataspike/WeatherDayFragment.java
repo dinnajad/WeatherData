@@ -11,16 +11,12 @@ import karro.spike.weatherdataspike.YR.YrRootWeatherData;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Fragment;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 /**

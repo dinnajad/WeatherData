@@ -82,7 +82,7 @@ public class AlarmKeeper {
 	 * @return an instance of forecastKeeper or null if something went wrong in reading file
 	 * @throws FileNotFoundException 
 	 */
-	public static AlarmKeeper readFromFile(Context context) throws FileNotFoundException{
+	public static AlarmKeeper readFromFile(Context context) {
 		Serializer serializer= new Persister();
 		FileInputStream fileIn;
 		AlarmKeeper keeper =null;
@@ -90,9 +90,11 @@ public class AlarmKeeper {
 			fileIn = context.openFileInput(FILENAME);
 			keeper = serializer.read(AlarmKeeper.class, fileIn);
 		} catch (FileNotFoundException fnfe) {
-			Log.e(TAG, "Reading defaultFile instead"+fnfe.getMessage());
+			Log.e(TAG, "Reading defaultFile instead" + fnfe.getMessage());
+			keeper = new AlarmKeeper();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
+			keeper = new AlarmKeeper(); //TODO jag vet inte vad som skulle kunna orsaka det här så jag skapar en ny för att slippa tänka just nu
 		}	
 
 		return keeper;			

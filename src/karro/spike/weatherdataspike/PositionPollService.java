@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import karro.spike.weatherdataspike.Geonames.GeonamesPosition;
 import karro.spike.weatherdataspike.Geonames.SimpleGeonameFetcher;
-import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.PositionKeeper;
 import android.app.AlarmManager;
@@ -18,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,12 +61,17 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		Log.i(TAG, "recived the intent: "+ intent);
 
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-		if(!cm.getActiveNetworkInfo().isAvailable()){
-			Log.e(TAG, "No network acess");
+		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+		if(networkInfo == null){ // kolla null undvik nullpointerexception
+			Log.e(TAG, "No network access, networkInfo object was null");
 			return;
 		}
-		Log.v(TAG, "Network acess ready");
+		
+		if(!networkInfo.isAvailable()){
+			Log.e(TAG, "No network access");
+			return;
+		}
+		Log.v(TAG, "Network access ready");
 
 		buildGoogleApiClient();
 		mGoogleApiClient.connect();

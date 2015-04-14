@@ -5,19 +5,14 @@ package karro.spike.weatherdataspike.YR;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 
-import org.simpleframework.xml.Attribute;
-import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Root;
+import karro.spike.weatherdataspike.DataFetcher;
+
 import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.Text;
 import org.simpleframework.xml.core.Persister;
 
 import android.net.Uri;
 import android.util.Log;
-import karro.spike.weatherdataspike.DataFetcher;
 
 /**bör startas i en bakgrundstråd
  * 

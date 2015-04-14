@@ -12,12 +12,11 @@
     <string name="action_toggle_poll">Slå på automatisk hämtning</string>
     <string name="action_toggle_poll_turn_off">Slå av automatisk hämtning</string>
     <string name="action_refresh_data">Hämta data nu</string>
+    <string name="action_warnings">Mina vädervarningar</string>
+    
     <string name="button_createAlarm">Skapa Alarm</string>
-    
-    
-    <string name= "frost">Inatt sjunker temperaturen under 0 grader</string>
+    <string name="frost">Inatt sjunker temperaturen under 0 grader</string>
     <string name="frost_warning_big">Inatt sjunker temperaturen under 0 grader, skydda alla känsliga växter!</string>
-    
     <string name="max_temperature">Högsta temperatur: </string>
     <string name="min_temperature">Lägsta Temperatur: </string>
     <string name="temperature">Temperatur: </string>
@@ -28,20 +27,21 @@
     <string name="is">är</string>
     <string name="and">och</string>
     <string name="title_activity_alarm_list">AlarmListActivity</string>
-    
     <string name="editText_number_hint">Skriv in siffran här</string>
-	<string name="editText_message_hint">Skriv in ett kort meddelande här</string>
-	<string name="textView_message">Meddelande:</string>
-	
-	
+    <string name="editText_message_hint">Skriv in ett kort meddelande här</string>
+    <string name="textView_message">Meddelande:</string>
+
     <string-array name="parameters">
         <item name="temp">Temperaturen</item>
-       <!--  <item name="windSpeed">Vindhastigheten</item>  begränsar omfattningen just nu-->
+        <!-- <item name="windSpeed">Vindhastigheten</item>  begränsar omfattningen just nu -->
     </string-array>
-    
     <string-array name="logicalOperators">
         <item name="less">Under</item>
         <item name="above">Över</item>
-<!--         <item name="between">Mellan</item> begränsar omfattningen-->
+        <!-- <item name="between">Mellan</item> begränsar omfattningen -->
     </string-array>
+
+    <string name="title_activity_weather_warning">WeatherWarningActivity</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>
