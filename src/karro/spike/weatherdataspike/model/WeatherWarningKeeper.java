@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import org.simpleframework.xml.ElementArray;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
@@ -20,13 +21,13 @@ import android.util.Log;
  * @author Karro
  *
  */
-@Root
+@Root(strict=false)
 public class WeatherWarningKeeper {
 
 	private static final String FILENAME = "WeatherWarnings.xml";
 	private static final String TAG ="WeatherWarningKeeper";
 
-	@ElementArray
+	@ElementList
 	private ArrayList<WeatherWarning> warnings;
 
 	/***
@@ -42,7 +43,7 @@ public class WeatherWarningKeeper {
 	 */
 	public static WeatherWarningKeeper readFromFile(Context context) {
 
-		Serializer serializer= new Persister();
+		Serializer serializer = new Persister();
 		FileInputStream fileIn;
 		WeatherWarningKeeper keeper =null;
 		try {
@@ -75,7 +76,7 @@ public class WeatherWarningKeeper {
 
 			e.printStackTrace();
 		}catch (Exception e) {
-			Log.e(TAG+"serializer","the schema for the object is not valid" +e);
+			Log.e(TAG+"serializer","the schema for the object is not valid " +e);
 			e.printStackTrace();
 		}
 	}

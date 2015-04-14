@@ -81,7 +81,9 @@ public class AlarmChecker {
 			}
 
 		}
+		warningKeeper.saveToPersistence(context);
 		Log.i(TAG, "returning from verifyAlarms");
+		
 	}
 
 	/***

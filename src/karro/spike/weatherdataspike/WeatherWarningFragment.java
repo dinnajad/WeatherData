@@ -18,7 +18,7 @@ import android.widget.ArrayAdapter;
 public class WeatherWarningFragment extends ListFragment{
 	private WeatherWarningKeeper keeper;
 	private ArrayList<WeatherWarning> warnings;
-	
+
 	/***
 	 * called from the OS when creating the fragment. 
 	 * Initialise essentials here
@@ -26,7 +26,7 @@ public class WeatherWarningFragment extends ListFragment{
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+
 		keeper = WeatherWarningKeeper.readFromFile(getActivity().getApplicationContext());
 
 		if(keeper==null){
@@ -37,11 +37,11 @@ public class WeatherWarningFragment extends ListFragment{
 		//skapa adapter
 		//TODO skapa custom adapter med bättre vy
 		ArrayAdapter<WeatherWarning> adapter = new ArrayAdapter<WeatherWarning>(getActivity().getApplicationContext(), 
-														android.R.layout.simple_list_item_multiple_choice, warnings);
+				android.R.layout.simple_list_item_multiple_choice, warnings);
 		setListAdapter(adapter);
 
 	}
-	
+
 	/***
 	 * creates the view, connect listeners
 	 *//*

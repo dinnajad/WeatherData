@@ -11,9 +11,9 @@ import org.simpleframework.xml.Root;
  * @author Karro
  *
  */
-@Root
+@Root(strict=false)
 public class WeatherWarning {
-	@Element
+	@Element(required=false)
 	private String message ;
 	@Element
 	private IAlarm alarm;
