@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
  *
  */
 @Root(strict=false, name="weatherdata")
-public class YrRootWeatherData {//TODO rename
+public class YrRootWeatherData {
 
 	@Element(name="forecast")
 	private YrForecast mForeCast;

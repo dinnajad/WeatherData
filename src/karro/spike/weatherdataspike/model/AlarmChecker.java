@@ -47,7 +47,7 @@ public class AlarmChecker {
 		ArrayList<IAlarm> alarms = keeper.getAlarms();
 //Log.i(TAG,"Antal alarm utöver de två hårdkodade: " + alarms.size());
 		//börjar med hårdkodat alarm: om temperaturen är under 0 grader
-		//TODO använda de alarm användaren skapat!!!
+		
 		/*TemperatureAlarm tempAlarm = new TemperatureAlarm();
 		Alarm alarm = new Alarm();
 		alarm.setLimit("-10");

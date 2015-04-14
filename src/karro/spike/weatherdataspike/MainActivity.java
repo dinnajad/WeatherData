@@ -93,35 +93,15 @@ public class MainActivity extends Activity {
 	 * Saves the state in shared preferences so that the services can see if the app is active
 	 */
 	@Override
-<<<<<<< HEAD
-	protected void onStart() {
-		super.onStart();
 
-		// Store our shared preference
-		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
-		Editor ed = sp.edit();
-		ed.putBoolean("MainActive", true);
-		ed.commit();
-		Log.v(TAG, "Main Active" );
-	}
-
-	/***
-	 * Saves the state in shared preferences so that the services can see if the app is active
-	 */
-	@Override
-=======
->>>>>>> origin/master
 	protected void onStop() {
 		super.onStop();
 
 		// Store our shared preference
 		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
 		Editor ed = sp.edit();
-<<<<<<< HEAD
+
 		ed.putBoolean("MainActive", false);
-=======
-		ed.putBoolean("active", false);
->>>>>>> origin/master
 		ed.commit();
 		Log.v(TAG, "Main NOT active" );
 	}
@@ -178,7 +158,7 @@ public class MainActivity extends Activity {
 		
 		}
 		/*if (id == R.id.action_settings) {
-		//TODO proper settings Implementation
+		// proper settings Implementation
 		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 		return true;
 
@@ -206,16 +186,9 @@ public class MainActivity extends Activity {
 			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
 			 */
 
-<<<<<<< HEAD
+
 			aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
-=======
-			try {
-				aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
-			} catch (FileNotFoundException e) {
-				Log.e(TAG, "AlarmFileNotFound " +e);
-				aKeeper =new AlarmKeeper();
-			}
->>>>>>> origin/master
+
 			aKeeper.AddAlarm(alarm);
 			aKeeper.saveToPersistence(getApplicationContext());
 

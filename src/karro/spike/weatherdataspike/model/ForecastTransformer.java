@@ -24,7 +24,7 @@ public class ForecastTransformer {
 	private static final String TAG = "ForecastTransformer";
 
 	public static OneDayWeatherData getTodaysWeather(YrForecast fc){
-		Date today = new Date();//TODO use calendar to set time correct now its UTC tror jag
+		Date today = new Date();
 		List<YrWetherData> dataList = fc.getList();
 		ArrayList<IWeatherData> aDataList = new ArrayList<IWeatherData>();
 		aDataList.addAll(dataList);

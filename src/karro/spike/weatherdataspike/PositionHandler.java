@@ -64,11 +64,11 @@ public class PositionHandler implements ConnectionCallbacks, OnConnectionFailedL
 	
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		
 
 	}
 	@Override
 	public void onConnectionSuspended(int arg0) {
-		// TODO Auto-generated method stub
+		
 	}
 }

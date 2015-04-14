@@ -143,7 +143,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> parent, View view, int position,
 			long id) {
-		// TODO Auto-generated method stub
+		
 		// An item was selected. You can retrieve the selected item using
 	
         String selected = (String) parent.getItemAtPosition(position);
@@ -156,7 +156,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 
 	@Override
 	public void onNothingSelected(AdapterView<?> parent) {
-		// TODO Auto-generated method stub
+		
 		 // Another interface callback
 	}
 }

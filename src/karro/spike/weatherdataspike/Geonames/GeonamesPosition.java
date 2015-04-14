@@ -108,7 +108,7 @@ public class GeonamesPosition implements IPosition {
 		return Integer.parseInt(geonameId);
 	}
 	
-	//TODO return the LatLng in some way
+	//tobedone return the LatLng in some way
 	/**
 	 * @return the lat
 	 *//*

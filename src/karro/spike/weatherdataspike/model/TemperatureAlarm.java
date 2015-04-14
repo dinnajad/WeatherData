@@ -42,11 +42,8 @@ public class TemperatureAlarm implements IAlarm {
 	 */
 	@Override
 	public String getAlarmMessage() {
-<<<<<<< HEAD
-		return alarm.getLimit() + " " + alarm.getMessage();
-=======
-		return alarm.getLimit()+ " "+alarm.getMessage();
->>>>>>> origin/master
+
+		return alarm.getLimit()+ " " + alarm.getMessage();
 	}
 
 	@Override

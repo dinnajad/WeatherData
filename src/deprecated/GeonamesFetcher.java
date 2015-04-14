@@ -41,7 +41,7 @@
 //	// spara koordinater att hämta från?
 //	
 //	public ArrayList<GeonamesPosition> fetchItems(){
-//		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE
+//		return fetchItems(64.8355f, 20.98453f); 
 //		
 //	}
 //	
@@ -89,7 +89,7 @@
 //	throws XmlPullParserException, IOException{
 //		ArrayList<GeonamesPosition> positions = new ArrayList<GeonamesPosition>();
 //		int eventType = parser.next();		
-//		//TODO  ta bort fejkdata item
+//		
 //		GeonamesPosition fejkDataItem = new GeonamesPosition();
 //		fejkDataItem.setCountryName("SWEDEN fejk");
 //		fejkDataItem.setName(USERNAME);

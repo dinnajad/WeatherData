@@ -110,7 +110,7 @@ public class PositionFragment extends Fragment implements ConnectionCallbacks, O
     
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -125,7 +125,7 @@ public class PositionFragment extends Fragment implements ConnectionCallbacks, O
 
 	@Override
 	public void onConnectionSuspended(int arg0) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 	 @Override

@@ -182,7 +182,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		//TODO currently this cancels the repeating alarm, how dont?
+		
 		if(isOn){
 			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		}else{
@@ -193,13 +193,13 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 	@Override
 	public void onConnectionSuspended(int arg0) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
@@ -226,7 +226,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 		@Override
 		protected GeonamesPosition doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
+			
 			return new SimpleGeonameFetcher().fetchItems(params[0]);
 		}
 		

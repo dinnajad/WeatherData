@@ -24,11 +24,11 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String GEOID_STARTPOINT ="http://api.geonames.org/get?";
 	
 	private static final String USERNAME = "frostVakt";
-	public ArrayList<GeonamesPosition> mPositionItems; //TODO remove or change visibility
+	private ArrayList<GeonamesPosition> mPositionItems; 
 	private LatLng position; 
 	
 	public ArrayList<GeonamesPosition> fetchItems(){
-		return fetchItems(64.8355f, 20.98453f); //TODO dont use hardcoded position KÅGE		
+		return fetchItems(64.8355f, 20.98453f); // dont use hardcoded position KÅGE		
 		//return fetchItems(605428);
 	}
 	
@@ -242,5 +242,19 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	}
 
 		return positions;		
+	}
+
+	/**
+	 * @return the positionItems
+	 */
+	public ArrayList<GeonamesPosition> getPositionItems() {
+		return mPositionItems;
+	}
+
+	/**
+	 * @param positionItems the positionItems to set
+	 */
+	public void setPositionItems(ArrayList<GeonamesPosition> positionItems) {
+		mPositionItems = positionItems;
 	}
 }

@@ -21,7 +21,7 @@ public class Alarm  {
 	@Element
 	private String logicOperator;
 	@Element(required=false)
-	private String limit;//TODO hur se till att den aldrig är annat än float?
+	private String limit;
 	@Element(required=false)
 	private String limit2;
 	

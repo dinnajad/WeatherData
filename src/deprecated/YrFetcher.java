@@ -81,7 +81,7 @@ public class YrFetcher extends DataFetcher {
 						//Log.i(TAG, "hittat vindhastighet: " + name);
 					}else if(XML_PRESSURE.equals(name)){
 						//Log.i(TAG, "hittat lufttryck: " + name);
-						//TODO Parsa ut mer data om behov finns
+						
 					}
 					
 					eventType = parser.nextTag();

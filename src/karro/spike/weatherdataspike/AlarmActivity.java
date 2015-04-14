@@ -48,11 +48,8 @@ public class AlarmActivity extends Activity {
 		// Store our shared preference
 		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
 		Editor ed = sp.edit();
-<<<<<<< HEAD
+
 		ed.putBoolean("AlarmActivityActive", true);
-=======
-		ed.putBoolean("active", true);
->>>>>>> origin/master
 		ed.commit();
 		Log.v("AlarmActivity", "AlarmActivity Active" );
 	}
@@ -67,11 +64,8 @@ public class AlarmActivity extends Activity {
 		// Store our shared preference
 		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
 		Editor ed = sp.edit();
-<<<<<<< HEAD
+
 		ed.putBoolean("AlarmActivityActive", false);
-=======
-		ed.putBoolean("active", false);
->>>>>>> origin/master
 		ed.commit();
 		Log.v("AlarmActivity", "AlarmActivity NOT active" );
 	}

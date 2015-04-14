@@ -33,7 +33,7 @@ public class PositionActivity extends Activity {
 	
 	SimpleGeonameFetcher fetcher =  new SimpleGeonameFetcher();
 	fetcher.fetchTextPos("Ume");
-	fetcher.mPositionItems.get(0).toString();
+	//fetcher.mPositionItems.get(0).toString();
 	}
 	
 	/* add this to manifest if this activity should be used again

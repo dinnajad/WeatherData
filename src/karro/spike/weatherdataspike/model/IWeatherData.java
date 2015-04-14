@@ -24,7 +24,7 @@ public interface IWeatherData {
 	/**
 	 * @param time the time to set
 	 */
-	public abstract void setTime(String time);//TODO eventuellt byta till Date isf String
+	public abstract void setTime(String time);
 
 	/**
 	 * @return the temperature
