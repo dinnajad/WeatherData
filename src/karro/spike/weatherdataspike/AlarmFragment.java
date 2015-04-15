@@ -21,7 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-/**
+/**Fragment that shows an alarm
  * @author Karro
  *
  */
@@ -76,7 +76,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 	return v;
 	}
 
-	/**
+	/** sets up the buttons
 	 * @param v
 	 */
 	private void setUpButton(View v) {
@@ -113,7 +113,7 @@ public class AlarmFragment extends Fragment implements OnItemSelectedListener {
 		});
 	}
 
-	/**
+	/** Sets up the spinners
 	 * @param v
 	 */
 	private void setUpSpinners(View v) {

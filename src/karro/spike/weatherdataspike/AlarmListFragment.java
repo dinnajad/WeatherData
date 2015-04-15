@@ -28,7 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/**
+/**Fragment that shows a list of the Alarms
  * @author Karro
  *
  */
@@ -150,10 +150,8 @@ public class AlarmListFragment extends ListFragment  {
 		return v;
 	}
 
-	/*
+	/*How to get hold of the selected items, example
 	  String selected = "";
-
-
 
       int cntChoice = myList.getCount();
 
@@ -167,6 +165,9 @@ public class AlarmListFragment extends ListFragment  {
           }
 
       }*/
+	/***
+	 * Helper function that deletes items that is selected
+	 */
 	private void deleteSelectedItems() {
 		Log.v("DELETE","entered deletefkn");
 

@@ -35,7 +35,9 @@ public class PositionHandler implements ConnectionCallbacks, OnConnectionFailedL
 		mGoogleApiClient.connect();
 	}
 
-
+	/***
+	 * Builds the GoogleApiClient
+	 */
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this.context)
 		.addConnectionCallbacks(this)
@@ -61,14 +63,14 @@ public class PositionHandler implements ConnectionCallbacks, OnConnectionFailedL
 			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		}
 	}
-	
+
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		
+
 
 	}
 	@Override
 	public void onConnectionSuspended(int arg0) {
-		
+
 	}
 }

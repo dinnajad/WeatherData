@@ -6,8 +6,6 @@ import android.widget.TextView;
 
 /***
  * hämtad från http://stackoverflow.com/questions/2763022/android-how-can-i-validate-edittext-input
- * @author 
- *
  */
 public abstract class TextValidator implements TextWatcher {
     private final TextView textView;

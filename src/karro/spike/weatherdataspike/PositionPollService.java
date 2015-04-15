@@ -66,7 +66,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 			Log.e(TAG, "No network access, networkInfo object was null");
 			return;
 		}
-		
+
 		if(!networkInfo.isAvailable()){
 			Log.e(TAG, "No network access");
 			return;
@@ -79,8 +79,10 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		//getPositionData());
 	}
 
-	/**
-	 * @param intent
+	/***
+	 * Gets Positiondata for a GPS coordinate
+	 * @param lat
+	 * @param lng
 	 */
 	private void getPositionData(double lat,double lng) {
 
@@ -98,7 +100,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	}
 
 	/**
-	 * 
+	 * Handles data received from first get via FetchPositionTask
 	 */
 	private void handleRecivedData() {
 		//ta emot datat.
@@ -109,32 +111,32 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		//be om nya data från db
 		ExtendPositionTask task = (ExtendPositionTask) new ExtendPositionTask().execute(id);
 	}
-	
+
 	/**
-	 * 
+	 * Handles the data received from second get via ExtendPositionTask
 	 */
 	private void handleUpdatedData(){
-		
+
 		if(mPosition==null){
 			Toast.makeText(getApplicationContext(), "Position has wrong format or service is unavaliable", Toast.LENGTH_SHORT).show();
 		}
-		
-		
+
+
 		Log.i(TAG,mPosition.toString());
 
 		try {
 			storage= PositionKeeper.readFromFile(getApplicationContext());
-			
+
 		} catch (FileNotFoundException e) {
 			//ignore but handle later by creating new Forecastkeeper
 			Log.i(TAG, "hittade inte filen, skapar en ny!");
 		}
-		
+
 		if(storage==null){
 			storage = new PositionKeeper();
 		}
-		
-		
+
+
 		if(mPosition!=null){
 			storage.SetFavouritePosition(mPosition);
 			storage.AddPosition(mPosition);
@@ -144,7 +146,10 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		storage.saveToPersistanse(getApplicationContext());// spara positioner (skapar en ny fil om den saknas)
 		//Log.i(TAG, "hittade inte filen, skapar en ny!");
 	}
-
+	
+	/***
+	 * builds googleAPIclient to be able to get position
+	 */
 	protected synchronized void buildGoogleApiClient() {
 		mGoogleApiClient = new GoogleApiClient.Builder(this)
 		.addConnectionCallbacks(this)
@@ -166,7 +171,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		}else{
 			Log.e(TAG,"Hittade ingen Location");
 			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
-			
+
 		}
 
 
@@ -182,7 +187,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
+
 		if(isOn){
 			manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		}else{
@@ -193,16 +198,19 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 	@Override
 	public void onConnectionSuspended(int arg0) {
-		
-
+		//nothing
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		
-
+		//nothing
 	}
 
+	/***
+	 * Fetches PositionDataFrom Geonames based on lat,lng (GPS coordinate)
+	 * @author Karro
+	 *
+	 */
 	private class FetchPositionTask extends AsyncTask<Float,Void,ArrayList<GeonamesPosition>>{
 
 		@Override
@@ -220,23 +228,23 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 	}
 
+	/***
+	 * Extends the positiondata that FetchPositionTassk got. fetches this time based on GEONAMESid witch gets more data
+	 * @author Karro
+	 *
+	 */
 	private class ExtendPositionTask extends AsyncTask<Integer,Void,GeonamesPosition>{
-		
-		
 
 		@Override
 		protected GeonamesPosition doInBackground(Integer... params) {
-			
+
 			return new SimpleGeonameFetcher().fetchItems(params[0]);
 		}
-		
+
 		@Override
 		protected void onPostExecute(GeonamesPosition position){
 			mPosition = position;
 			handleUpdatedData();
 		}
-
-		
-
 	}
 }

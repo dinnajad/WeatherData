@@ -1,11 +1,8 @@
 package karro.spike.weatherdataspike;
 
-import java.io.FileNotFoundException;
-
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
-import karro.spike.weatherdataspike.model.ForecastKeeper;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -18,6 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+/***
+ * the Main Activity, starterclass
+ * @author Karro
+ *
+ */
 public class MainActivity extends Activity {
 	protected static final String TAG = "MainActivity";
 	

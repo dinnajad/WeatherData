@@ -20,7 +20,7 @@ import android.net.ConnectivityManager;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
+/**Pollservice that handles getting data from YR
  * @author Karro
  *
  */
@@ -114,7 +114,7 @@ public class PollService extends IntentService {
 	}
 	
 	/***
-	 * 
+	 *  Method to start the pollservice reguraly
 	 * @param context
 	 * @param isOn
 	 */

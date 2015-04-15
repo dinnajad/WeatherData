@@ -12,6 +12,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/***
+ * Shows a List of My Alarms
+ * @author Karro
+ *
+ */
 public class AlarmListActivity extends Activity {
 
 	@Override

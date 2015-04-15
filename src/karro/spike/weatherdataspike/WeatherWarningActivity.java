@@ -1,8 +1,6 @@
 package karro.spike.weatherdataspike;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdata.R.id;
-import karro.spike.weatherdata.R.layout;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -47,6 +45,7 @@ public class WeatherWarningActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	*/
+	
 	/***
 	 * Saves the state in shared preferences so that the services can see if the app is active
 	 */

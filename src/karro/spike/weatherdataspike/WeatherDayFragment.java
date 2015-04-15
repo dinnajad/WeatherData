@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
+/**Fragment that  shows one days weatherdata
  * @author Karro
  *
  */
@@ -50,7 +50,7 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+
 		//Läs in data från fil
 		try {
 			storage= ForecastKeeper.readFromFile(getActivity());
@@ -82,7 +82,7 @@ public class WeatherDayFragment extends Fragment {
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
 		return v;
 	}
-	
+
 	/***
 	 * called after on Start and everytime the fragment is brought to the front 
 	 * good place to make sure that all data is up to date
@@ -93,9 +93,9 @@ public class WeatherDayFragment extends Fragment {
 		getForecastKeeper();//för att datat ska vara aktuellt
 		updateView();
 	}
-	
+
 	/**
-	 * 
+	 * gets a current ForecastKeeper
 	 */
 	private void getForecastKeeper() {
 		try {
@@ -107,16 +107,17 @@ public class WeatherDayFragment extends Fragment {
 			storage = new ForecastKeeper();
 		}
 	}
+
 	/**
 	 * Updates all components with current data
 	 */
 	private void updateView() {
-		 mData = storage.getTodaysWeather();
-		 
-		 if(mData == null){
-				fejkData();//just to show something
-				//TODO create alternative view for cases when No Data is Avaliable ie first Start
-			}
+		mData = storage.getTodaysWeather();
+
+		if(mData == null){
+			fejkData();//just to show something
+			//TODO create alternative view for cases when No Data is Avaliable ie first Start
+		}
 
 		// check that nothing is null
 		String date= mData.getDayString();			
@@ -160,7 +161,7 @@ public class WeatherDayFragment extends Fragment {
 	}
 
 	/**
-	 * 
+	 * Fejks some data
 	 */
 	private void fejkData() {
 		mData= new OneDayWeatherData();
@@ -170,6 +171,9 @@ public class WeatherDayFragment extends Fragment {
 		mData.setPlace("Himlen");
 	}
 
+	/***
+	 * Sets the Pic based on temperature
+	 */
 	private void setPicture(){
 		if(getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
 
