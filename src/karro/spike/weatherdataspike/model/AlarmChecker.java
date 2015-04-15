@@ -45,7 +45,7 @@ public class AlarmChecker {
 		AlarmKeeper keeper = AlarmKeeper.readFromFile(context);
 		//ArrayList<IAlarm> alarms = new ArrayList<IAlarm>();
 		ArrayList<IAlarm> alarms = keeper.getAlarms();
-//Log.i(TAG,"Antal alarm utöver de två hårdkodade: " + alarms.size());
+		//Log.i(TAG,"Antal alarm utöver de två hårdkodade: " + alarms.size());
 		//börjar med hårdkodat alarm: om temperaturen är under 0 grader
 		
 		/*TemperatureAlarm tempAlarm = new TemperatureAlarm();
@@ -66,6 +66,7 @@ public class AlarmChecker {
 
 		alarms.add(tempAlarm2);*/
 		  warningKeeper = WeatherWarningKeeper.readFromFile(context);
+		  warningKeeper.clearWarnings();
 		//för varje dag
 		for (OneDayWeatherData oneDayWeatherData : dataPerDay) {
 			//kolla varje alarm

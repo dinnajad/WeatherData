@@ -89,7 +89,7 @@ public class WeatherWarningKeeper {
 
 		return warnings;
 	}
-	
+
 	/***
 	 * Adds a warning
 	 * @param warning
@@ -98,6 +98,13 @@ public class WeatherWarningKeeper {
 		if(!warnings.contains(warning)){
 			warnings.add(warning);
 		}
+	}
+
+	/***
+	 * Clears the list of warnings
+	 */
+	public void clearWarnings() {
+		warnings.clear();		
 	}
 
 }
