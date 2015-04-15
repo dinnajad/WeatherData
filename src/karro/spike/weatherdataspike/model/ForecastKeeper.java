@@ -20,7 +20,7 @@ import org.simpleframework.xml.core.Persister;
 import android.content.Context;
 import android.util.Log;
 
-/**
+/**Keeps the forecasts and reads /ssaves to file
  * @author Karro
  *
  */
@@ -31,20 +31,25 @@ public class ForecastKeeper {
 
 	@Element(required=false)
 	private  YrForecast currentForecast;
-	
+
 	@Element(required=false) 
 	private YrRootWeatherData mRootData;
-	
+
 	@ElementList
 	private ArrayList<Alarm> alarms;
-		
+
 	private ArrayList<OneDayWeatherData> dataPerDay ;
 
 	public ForecastKeeper(){
 		alarms = new ArrayList<Alarm>();
-		
+
 	}
 
+	/***
+	 * adds the forecast
+	 * @param fc
+	 * @return
+	 */
 	public boolean saveForecast(YrForecast fc){
 		if(fc == null)return false;
 
@@ -53,7 +58,11 @@ public class ForecastKeeper {
 
 		return true;				
 	}
-	
+
+	/***
+	 * gets a forecast of todays weather or null if there is none
+	 * @return
+	 */
 	public OneDayWeatherData getTodaysWeather() {
 		if(currentForecast==null){
 			// what do? if no currentForecast
@@ -62,6 +71,9 @@ public class ForecastKeeper {
 		return ForecastTransformer.getTodaysWeather(currentForecast);		
 	}
 
+	/***
+	 * groups forecastdata in 24h periods
+	 */
 	public void groupDataPerDay() {
 		ArrayList<IWeatherData> lista = new ArrayList<IWeatherData>( currentForecast.getList());
 		dataPerDay= ForecastTransformer.groupWeatherDataFor24h(lista);		
@@ -89,7 +101,7 @@ public class ForecastKeeper {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/***
 	 * @param context
 	 * @param fileName

@@ -15,7 +15,7 @@ import karro.spike.weatherdataspike.YR.YrForecast;
 import karro.spike.weatherdataspike.YR.YrWetherData;
 import android.util.Log;
 
-/**
+/**Transforms forecastdata
  * @author Karro
  *
  */
@@ -23,6 +23,11 @@ public class ForecastTransformer {
 
 	private static final String TAG = "ForecastTransformer";
 
+	/***
+	 * gets data grouped for 24hperiods
+	 * @param fc
+	 * @return
+	 */
 	public static OneDayWeatherData getTodaysWeather(YrForecast fc){
 		Date today = new Date();
 		List<YrWetherData> dataList = fc.getList();
@@ -55,7 +60,11 @@ public class ForecastTransformer {
 
 		return odwd;
 	}
-
+	/***
+	 * groupes data for 24hperiods
+	 * @param dataList
+	 * @return
+	 */
 	public static ArrayList<OneDayWeatherData> groupWeatherDataFor24h( List<IWeatherData> dataList) {
 		Date compareDate = new Date();
 		return groupWeatherDataFor24h(compareDate,dataList);
@@ -71,7 +80,7 @@ public class ForecastTransformer {
 		ArrayList<OneDayWeatherData> resultList = new ArrayList<OneDayWeatherData>();
 		OneDayWeatherData grupp =  new OneDayWeatherData();
 		resultList.add(grupp);
-		
+
 		for (int i = 0; i < dataList.size(); i++) {
 
 			//getItem
@@ -90,7 +99,12 @@ public class ForecastTransformer {
 		}
 		return resultList;
 	}
-	
+
+	/***
+	 * adds 24 hours to a date
+	 * @param startDate
+	 * @return
+	 */
 	private static Date add24hTime(Date startDate){
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(startDate);
@@ -98,9 +112,11 @@ public class ForecastTransformer {
 		return cal.getTime();		
 	}
 
-	/**
+	/***
+	 * calculates a timediff between two dates
 	 * @param compareDate
 	 * @param fromDate
+	 * @return timedifference in milliseconds
 	 */
 	private static long calcTimeDiff(Date compareDate, Date fromDate) {
 		GregorianCalendar compareCal = new GregorianCalendar();
@@ -173,7 +189,6 @@ public class ForecastTransformer {
 		} catch (ParseException e) {  
 			Log.e(TAG,"" + e);
 			date = new Date();
-			//TODO hur hantera parse Exception better
 		}
 
 		return date;

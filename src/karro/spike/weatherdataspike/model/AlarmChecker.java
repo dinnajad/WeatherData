@@ -11,11 +11,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-/**
+/**checks alarms and issues warnings as a result.
  * @author Karro
  *
  */
@@ -23,7 +22,7 @@ public class AlarmChecker {
 	private static final String TAG = "AlarmChecker";
 
 	private Context context;
-	private int lastnotificationNumber;// make this a variable, stored in keeper? to not resend messages every time data updates?
+	private int lastnotificationNumber;
 	private int numberOfNotificationsSent;
 	private ForecastKeeper keeper;
 	private WeatherWarningKeeper warningKeeper;
@@ -41,20 +40,20 @@ public class AlarmChecker {
 	 * checks the alarms
 	 * @param dataPerDay
 	 */
-	public void verifyAlarms(ArrayList<OneDayWeatherData> dataPerDay) {
+	public void checkAlarms(ArrayList<OneDayWeatherData> dataPerDay) {
 		AlarmKeeper keeper = AlarmKeeper.readFromFile(context);
-		
+
 		ArrayList<IAlarm> alarms = keeper.getAlarms();
 		//Log.i(TAG,"Antal alarm: " + alarms.size());
-		
-		  warningKeeper = WeatherWarningKeeper.readFromFile(context);
-		  warningKeeper.clearWarnings();
+
+		warningKeeper = WeatherWarningKeeper.readFromFile(context);
+		warningKeeper.clearWarnings();
 		//för varje dag
 		for (OneDayWeatherData oneDayWeatherData : dataPerDay) {
 			//kolla varje alarm
 			Log.i(TAG, "oneDayWeatherData: " + oneDayWeatherData.toString());
 			for (IAlarm iAlarm : alarms) {	
-				
+
 				if(iAlarm.getAlarm().isActive()){//TODO add check if alarm is null
 					if(iAlarm.checkAlarm(oneDayWeatherData)){
 						//ALARM RIIIIIING
@@ -78,13 +77,13 @@ public class AlarmChecker {
 		warning.setMessage(iAlarm.getAlarmMessage());
 		warning.setOneDayWeatherData(oneDayWeatherData);
 		warningKeeper.addWarning(warning);
-		
-		/*if(!isAppActive()){
+
+		if(!ActivityTracker.isAppActive(context)){
 			SendNotification(iAlarm.getAlarmMessage());
-		}*/	
+		}	
 		//TODO byt till koden ovan och testa!!
 		SendNotification(iAlarm.getAlarmMessage());
-		}
+	}
 
 	/***
 	 * Sends a Notification with a custom message
@@ -96,8 +95,8 @@ public class AlarmChecker {
 		numberOfNotificationsSent++;
 		if(msg==null){
 			msg=context.getString(karro.spike.weatherdata.R.string.frost);
-			}
-		
+		}
+
 		NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(context);
 
 		mBuilder.setContentTitle("FrostVarning").setSmallIcon(R.drawable.thermometer_snowflake)
@@ -119,33 +118,28 @@ public class AlarmChecker {
 		manager.notify(lastnotificationNumber, mBuilder.build());		
 	}
 
+	
+	
 	/***
-	 * checks if the app is active
+	 * getter for ForcastKeeper
 	 * @return
 	 */
-	public boolean isAppActive(){
-		boolean active = false;
-
-		SharedPreferences sp = context.getSharedPreferences("OURINFO", Context.MODE_PRIVATE);
-		boolean main = sp.getBoolean("MainActive", false);
-		boolean alarm = sp.getBoolean("AlarmActive", false);
-		boolean alarmList = sp.getBoolean("AlarmlistActive", false);
-		boolean warninglist = sp.getBoolean("WeatherWarninglistActive", false);
-		if(main||alarm||alarmList||warninglist){//om någon av activity är aktiva
-			active=true;
-		}
-		return active;
-
-	}
-
 	public ForecastKeeper getKeeper() {
 		return keeper;
 	}
 
+	/****
+	 * Setter fro ForcastKeeper
+	 * @param keeper
+	 */
 	public void setKeeper(ForecastKeeper keeper) {
 		this.keeper = keeper;
 	}
 
+	/***
+	 * getter for WarningKeeper
+	 * @return
+	 */
 	public WeatherWarningKeeper getWarningKeeper() {
 		if(warningKeeper==null){
 			warningKeeper = WeatherWarningKeeper.readFromFile(context);
@@ -153,6 +147,10 @@ public class AlarmChecker {
 		return warningKeeper;
 	}
 
+	/***
+	 * Setter for WarningKeeper
+	 * @param warningKeeper
+	 */
 	public void setWarningKeeper(WeatherWarningKeeper warningKeeper) {
 		this.warningKeeper = warningKeeper;
 	}

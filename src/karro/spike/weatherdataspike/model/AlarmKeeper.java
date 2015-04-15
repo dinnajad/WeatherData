@@ -16,7 +16,7 @@ import org.simpleframework.xml.core.Persister;
 import android.content.Context;
 import android.util.Log;
 
-/**
+/**Keeps the Alarms and saves/reads from file
  * @author Karro
  *
  */
@@ -77,7 +77,7 @@ public class AlarmKeeper {
 		}
 	}
 
-	/***
+	/*** Creates a AlarmKeeper loaded with the data from file
 	 * @param context
 	 * @return an instance of forecastKeeper or null if something went wrong in reading file
 	 * @throws FileNotFoundException 

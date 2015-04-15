@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrRootWeatherData;
+import karro.spike.weatherdataspike.model.ActivityTracker;
 import karro.spike.weatherdataspike.model.AlarmChecker;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
@@ -81,9 +82,9 @@ public class PollService extends IntentService {
 		storage.groupDataPerDay();
 		
 		alarmChecker = new AlarmChecker(getApplicationContext());
-		alarmChecker.verifyAlarms(storage.getDataPerDay());
+		alarmChecker.checkAlarms(storage.getDataPerDay());
 		
-		if(alarmChecker.isAppActive()){// add check if app is active? yes Dont want to open app if its not open
+		if(ActivityTracker.isAppActive(getApplicationContext())){// add check if app is active? yes Dont want to open app if its not open
 		Log.i(TAG, "sending new MainActivityIntent");
 		
 		Intent mainActivity = new Intent(this,MainActivity.class);
