@@ -1,7 +1,8 @@
-package karro.spike.weatherdata;
+package karro.spike.weatherdataspike;
 
-import karro.spike.weatherdataspike.AlarmListFragment;
-import karro.spike.weatherdataspike.WeatherWarningFragment;
+import karro.spike.weatherdata.R;
+import karro.spike.weatherdata.R.id;
+import karro.spike.weatherdata.R.layout;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;

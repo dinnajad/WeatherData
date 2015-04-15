@@ -180,17 +180,6 @@ public class WeatherDayFragment extends Fragment {
 				mImageView.setImageResource(R.drawable.sunflowers);
 				mImageView.setVisibility(android.view.View.VISIBLE);
 			}
-			/*Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
-		int rotation = display.getRotation();*/
 		}
 	}
-
-	public OneDayWeatherData getData() {
-		return mData;
-	}
-
-	public void setData(OneDayWeatherData data) {
-		this.mData = data;
-	}
-
 }

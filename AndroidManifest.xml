@@ -62,7 +62,7 @@
             android:value="AIzaSyC62sOo_BIZzo8aissEPXFIy3sfY3mv23w" />
 
         <activity
-            android:name=".WeatherWarningActivity"
+            android:name="karro.spike.weatherdataspike.WeatherWarningActivity"
             android:label="@string/title_activity_weather_warning"
             android:parentActivityName="karro.spike.weatherdataspike.MainActivity" >
             <meta-data

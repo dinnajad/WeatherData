@@ -3,7 +3,6 @@ package karro.spike.weatherdataspike;
 import java.io.FileNotFoundException;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdata.WeatherWarningActivity;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
