@@ -14,8 +14,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
-
+/***
+ * fetches data from GeonamesDatabase
+ * @author Karro
+ *
+ */
 public class SimpleGeonameFetcher extends DataFetcher{
 	private static final String TAG = "GeonamesFetcher";
 	
@@ -25,15 +28,18 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	
 	private static final String USERNAME = "frostVakt";
 	private ArrayList<GeonamesPosition> mPositionItems; 
-	private LatLng position; 
 	
+	/***
+	 * fetches data for a hardcoded position, intended for testing
+	 * @return
+	 */
 	public ArrayList<GeonamesPosition> fetchItems(){
 		return fetchItems(64.8355f, 20.98453f); // dont use hardcoded position KÅGE		
 		//return fetchItems(605428);
 	}
 	
 	/***
-	 * 
+	 * Fetches Data based on GPS coordinate
 	 * @param latitude
 	 * @param longitude
 	 */
@@ -74,7 +80,6 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	 * @return a positionObject if there is one otherwise null
 	 */
 	public GeonamesPosition fetchItems(int geoId){
-		//ArrayList<GeonamesPosition> positions= new ArrayList<GeonamesPosition>();
 		GeonamesPosition position= null;
 		String id = Integer.toString(geoId);
 		try{
@@ -87,7 +92,6 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			Log.i(TAG,"	recieved xml:" + xmlString);
 			
 			Serializer serializer = new Persister();
-			//positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
 			position= serializer.read(GeonamesPosition.class, xmlString);
 			
 		}catch ( IOException ioe){
@@ -121,7 +125,6 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			
 			Serializer serializer = new Persister();
 			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
-			//position= serializer.read(GeonamesPosition.class, xmlString);
 			
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
@@ -133,10 +136,16 @@ public class SimpleGeonameFetcher extends DataFetcher{
 		
 		return position;
 	}
+	
 	public void fetchTextPos(String name){ 
-	//FetchPositionTask background = (FetchPositionTask) new FetchPositionTask().execute(latitude,longitude);
 	FetchTextPositionTask task = (FetchTextPositionTask) new FetchTextPositionTask().execute(name);	
 	}
+	
+	/***
+	 * Asynk class that fetches position based on a string, result is loaded into mPositionItems
+	 * @author Karro
+	 *
+	 */
 	private class FetchTextPositionTask extends AsyncTask<String,Void,Geonames>{
 
 		@Override
@@ -154,7 +163,7 @@ public class SimpleGeonameFetcher extends DataFetcher{
 	}
 	
 	/***
-	 * 
+	 * method to test methods witout internetconnection, uses hardcoded string instead. only for TESTING
 	 * @return
 	 */
 	public  ArrayList<GeonamesPosition> fetchPositions(){

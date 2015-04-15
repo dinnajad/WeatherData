@@ -8,7 +8,7 @@ import java.util.List;
 
 import org.simpleframework.xml.*;
 
-/**
+/** Dataobject
  * @author Karro
  *
  */

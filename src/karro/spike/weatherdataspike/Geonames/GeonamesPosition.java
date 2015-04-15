@@ -8,7 +8,7 @@ import karro.spike.weatherdataspike.model.IPosition;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
-/**
+/** Dataobject
  * @author Karro
  *
  */
