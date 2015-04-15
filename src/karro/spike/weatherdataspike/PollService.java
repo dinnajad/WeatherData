@@ -4,7 +4,6 @@
 package karro.spike.weatherdataspike;
 
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrRootWeatherData;
@@ -12,16 +11,14 @@ import karro.spike.weatherdataspike.model.AlarmChecker;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
 import karro.spike.weatherdataspike.model.PositionKeeper;
-import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * @author Karro
@@ -36,6 +33,7 @@ public class PollService extends IntentService {
 	
 	private String fileName = "ForeCast.xml";
 	private AlarmChecker alarmChecker;
+	
 	public PollService(){
 	 super(TAG);	
 	}
@@ -48,7 +46,8 @@ public class PollService extends IntentService {
 		Log.i(TAG, "recived an intent: "+ intent);
 		
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(!cm.getActiveNetworkInfo().isAvailable()){ 		
+		if(!cm.getActiveNetworkInfo().isAvailable()){ 	
+			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
@@ -67,14 +66,7 @@ public class PollService extends IntentService {
 		}
 		
 		IPosition pos = storedPositions.getFavouritePosition();
-		/*YrForecast prediction;
-		if( pos!=null){
-			
-			String s= pos.getRegion()+"/"+pos.getName();
-			prediction= new SimpleYrFetcher().fetchForecast(s);
-		}else{
-		prediction = new SimpleYrFetcher().fetchForecast();
-		}*/
+		
 		YrRootWeatherData prediction;
 		if( pos!=null){
 			
@@ -90,39 +82,18 @@ public class PollService extends IntentService {
 		
 		alarmChecker = new AlarmChecker(getApplicationContext());
 		alarmChecker.verifyAlarms(storage.getDataPerDay());
-		Log.v(TAG, "OnHandleIntent ended " );
-		//SendNotification();
-	}
-	/***
-	 * from http://stackoverflow.com/questions/12172092/check-if-activity-is-running-from-service
-	 * ev use shared preferences instead http://androidblog.reindustries.com/check-if-an-android-activity-is-currently-running/
-	 * @param myPackage
-	 * @return
-	 *//*
-	public boolean isForeground(String myPackage){
-		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-		 List< ActivityManager.RunningTaskInfo > runningTaskInfo = manager.getRunningTasks(1); 
-
-		     ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
-		   if(componentInfo.getPackageName().equals(myPackage)) return true;
-		return false;
+		
+		if(alarmChecker.isAppActive()){// add check if app is active? yes Dont want to open app if its not open
+		Log.i(TAG, "sending new MainActivityIntent");
+		
+		Intent mainActivity = new Intent(this,MainActivity.class);
+		mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(mainActivity);
+		Toast.makeText(getApplicationContext(), "Data hämtat", Toast.LENGTH_LONG).show();
 		}
-	*/
-	protected void SendNotification(){
-		Intent i = new Intent(getApplicationContext(), MainActivity.class);
-		PendingIntent pi= PendingIntent.getService(getApplicationContext(), 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
-		
-		int lastnotificationNumber = 001;
-		NotificationCompat.Builder mBuilder= new NotificationCompat.Builder(getApplicationContext());
-		
-		mBuilder.setContentTitle("FrostVarning").setSmallIcon(android.R.drawable.ic_lock_idle_alarm)
-			.setContentText("Inatt sjunker temperaturen under 0 grader, skydda alla känsliga växter!")
-		.setContentIntent(pi);
-		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-		
-		manager.notify(lastnotificationNumber++, mBuilder.build());
-		
+		Log.i(TAG, "OnHandleIntent ended " );
 	}
+	
 	
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 

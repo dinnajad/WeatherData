@@ -37,7 +37,7 @@ public class WeatherWarningFragment extends ListFragment{
 		//skapa adapter
 		//TODO skapa custom adapter med bättre vy
 		ArrayAdapter<WeatherWarning> adapter = new ArrayAdapter<WeatherWarning>(getActivity().getApplicationContext(), 
-				android.R.layout.simple_list_item_multiple_choice, warnings);
+				android.R.layout.simple_list_item_1, warnings);
 		setListAdapter(adapter);
 
 	}

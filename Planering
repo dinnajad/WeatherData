@@ -25,10 +25,12 @@ TODO stora grejer
 	
 	Buggar o dylikt
 	
-<<<<<<< HEAD
+
 		SharedPreferences settingen active blir fel eftersom onStop anropas i ovntad ordning.
 		möjlig lösning: sätta en variabel per activity och i servicen kolla om någon av dom är aktiva
 	impl men ej testat
+
+	Pollservice använder AlarmChecker för att kolla om någon aktivitet är aktiv... känns lite skumt men det funkar
 	
 	PRIO
 	1)Jobba bort hårdkodade alarm!- done
@@ -41,8 +43,5 @@ TODO stora grejer
 		3) skapa en onswitch för att aktivera/stänga av alarm
 		krävs ny adapter, kan bli en del jobb
 		
-=======
-	SharedPreferences settingen active blir fel eftersom onStop anropas i ovntad ordning.
-		möjlig lösning: sätta en variabel per activity och i servicen kolla om någon av dom är aktiva
->>>>>>> origin/master
+
 	

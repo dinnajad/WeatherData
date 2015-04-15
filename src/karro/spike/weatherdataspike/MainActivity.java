@@ -7,7 +7,6 @@ import karro.spike.weatherdata.WeatherWarningActivity;
 import karro.spike.weatherdataspike.model.Alarm;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
-import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -51,11 +50,6 @@ public class MainActivity extends Activity {
 			//Intent i = new Intent(getApplicationContext(), PollService.class);
 			getForecastKeeper();
 			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
-		}else{
-			OneDayWeatherData data = storage.getTodaysWeather();
-			//Ladda fragmentet med data
-			WeatherDayFragment odwd = (WeatherDayFragment)fragment;
-			odwd.setData(data);
 		}
 	}
 
@@ -93,7 +87,6 @@ public class MainActivity extends Activity {
 	 * Saves the state in shared preferences so that the services can see if the app is active
 	 */
 	@Override
-
 	protected void onStop() {
 		super.onStop();
 
@@ -179,14 +172,7 @@ public class MainActivity extends Activity {
 			String message = data.getStringExtra("message");
 			alarm.setMessage(message);
 			AlarmKeeper aKeeper;
-			/*
-			getForecastKeeper();
-
-			storage.AddAlarm(alarm);	
-			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
-			 */
-
-
+			
 			aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
 
 			aKeeper.AddAlarm(alarm);

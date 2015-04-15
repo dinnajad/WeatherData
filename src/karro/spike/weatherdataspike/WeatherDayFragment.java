@@ -71,6 +71,25 @@ public class WeatherDayFragment extends Fragment {
 			fejkData();
 		}
 
+
+		return v;
+	}
+	
+	/***
+	 * called after on Start and everytime the fragment is brought to the front 
+	 * good place to make sure that all data is up to date
+	 */
+	@Override
+	public void onResume(){
+		super.onResume();
+		updateView();
+	}
+	
+	/**
+	 * Updates all components with current data
+	 */
+	private void updateView() {
+		 mData = storage.getTodaysWeather();
 		// check that nothing is null
 		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
@@ -110,8 +129,6 @@ public class WeatherDayFragment extends Fragment {
 			mImageView.setEnabled(false);
 			mImageView.setVisibility(android.view.View.GONE);
 		}
-
-		return v;
 	}
 
 	/**
@@ -127,17 +144,17 @@ public class WeatherDayFragment extends Fragment {
 
 	private void setPicture(){
 		if(getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE){
-			
-		if(mData.getMintemperature()<=0){//TODO make limit flexible
-			mImageView.setImageResource(R.drawable.frost_pic);
-			mImageView.setVisibility(android.view.View.VISIBLE);		
-		}else {
-			mImageView.setImageResource(R.drawable.sunflowers);
-			mImageView.setVisibility(android.view.View.VISIBLE);
-		}
-		/*Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+
+			if(mData.getMintemperature()<=0){
+				mImageView.setImageResource(R.drawable.frost_pic);
+				mImageView.setVisibility(android.view.View.VISIBLE);		
+			}else {
+				mImageView.setImageResource(R.drawable.sunflowers);
+				mImageView.setVisibility(android.view.View.VISIBLE);
+			}
+			/*Display display = ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 		int rotation = display.getRotation();*/
-}
+		}
 	}
 
 	public OneDayWeatherData getData() {
