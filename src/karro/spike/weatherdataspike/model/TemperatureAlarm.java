@@ -5,7 +5,7 @@ package karro.spike.weatherdataspike.model;
 
 import android.util.Log;
 
-/**
+/** specialised alarm that deals with temperature
  * @author Karro
  *
  */

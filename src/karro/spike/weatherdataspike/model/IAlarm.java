@@ -1,5 +1,10 @@
 package karro.spike.weatherdataspike.model;
 
+/***
+ * interface that defines how an IAlarm should be.  
+ * @author Karro
+ *
+ */
 public interface IAlarm {
 
 	/***

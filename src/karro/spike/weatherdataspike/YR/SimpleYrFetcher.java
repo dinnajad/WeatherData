@@ -14,7 +14,8 @@ import org.simpleframework.xml.core.Persister;
 import android.net.Uri;
 import android.util.Log;
 
-/**bör startas i en bakgrundstråd
+/**fetches data from YR
+ * bör startas i en bakgrundstråd
  * 
  * @author Karro
  *
@@ -26,14 +27,12 @@ public class SimpleYrFetcher extends DataFetcher {
 	private static final String START = "http://www.yr.no/place/";
 	private static final String HOUR_BY_HOUR ="varsel_time_for_time.xml";
 
+	
 	/***
-	 * bör startas i en bakgrundstråd
+	 * fetches forecast for a position
+	 * @param landRegionStad
 	 * @return
 	 */
-	public YrRootWeatherData fetchForecast(){
-		return realImplementation(null);
-	}
-	
 	public YrRootWeatherData fetchForecast(String landRegionStad){
 		
 		landRegionStad = landRegionStad.replace(' ', '_');
@@ -42,56 +41,21 @@ public class SimpleYrFetcher extends DataFetcher {
 		String url = Uri.parse(START).buildUpon()
 				.appendEncodedPath(landRegionStad).appendEncodedPath(HOUR_BY_HOUR)
 				.build().toString();				
-		return realImplementation(url);
+		return getForecastFromYR(url);
 	}
 	
-	/***
+	/*** gets data for hardcodedposition warning!
 	 * bör startas i en bakgrundstråd
 	 * @return
 	 */
-	public ArrayList<YrWetherData> fetchItems(){
-		return realImplementation1();
+	public YrRootWeatherData fetchForecast(){
+		return getForecastFromYR(null);
 	}
-
-	private ArrayList<YrWetherData> realImplementation1() {
-		ArrayList<YrWetherData> items = new ArrayList<YrWetherData>();
-		items.addAll( realImplementation(null).getForeCast().getList());
-		return items;
-	}
-
-	/**
-	 * @return
+	
+	/**Gets data from YR
+	 * @return a {@link YrRootWeatherData}
 	 */
-	/*private YrForecast realImplementation(String url) {
-
-		YrRootWeatherData wdata=null;
-		//YrForecast forecast=null;
-		try{
-			if(url==null){
-			 url = Uri.parse(KÅGE).buildUpon().build().toString();
-			}
-			String xmlString =getUrl(url);
-			//Log.i(TAG,"XMLsträng från YR:"+ xmlString);
-			Log.i(TAG,"URL till yr: "+url);
-			Log.i(TAG,"XMLsträng från YR: hämtad");
-
-			Serializer serializer= new Persister();		
-			wdata =serializer.read(YrRootWeatherData.class, xmlString);
-
-		}catch ( IOException ioe){
-			Log.e(TAG, "Failed  to fetch items", ioe);
-		} catch (XmlPullParserException e) {
-			Log.e(TAG, "Failed  to parse items", e);
-		} catch (Exception e) {
-			Log.e(TAG, "Failed  to parse items", e);
-		}
-
-		return wdata.getForeCast();
-	}*/
-	/**
-	 * @return
-	 */
-	private YrRootWeatherData realImplementation(String url) {
+	private YrRootWeatherData getForecastFromYR(String url) {
 
 		YrRootWeatherData wdata=null;
 		//YrForecast forecast=null;
@@ -118,7 +82,8 @@ public class SimpleYrFetcher extends DataFetcher {
 
 		return wdata;
 	}
-	/**
+	
+	/** for testing only
 	 * @return
 	 */
 	private ArrayList<YrWetherData> fejkImplementation() {

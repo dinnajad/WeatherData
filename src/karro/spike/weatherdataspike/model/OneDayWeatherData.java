@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
+/**DataObject that holds data for a 24hour period
  * @author Karro
  *
  */
@@ -23,26 +23,30 @@ public class OneDayWeatherData {
 
 	private ArrayList<IWeatherData> mIWeatherData ;
 
+	/***
+	 * 
+	 * @param IWeatherData
+	 */
 	public void AddIWeatherData(IWeatherData IWeatherData)
 	{
 		if(mIWeatherData==null)mIWeatherData = new ArrayList<IWeatherData>();
 		mIWeatherData.add(IWeatherData);
 		CalculateData();
 	}
-	
+
 	/***
 	 * Calculated the aggregated data from the items in the List
 	 */
 	public void CalculateData(){
 		day= mIWeatherData.get(0).getTime();
-		
-		
+
+
 		for(int i = 0; i < mIWeatherData.size(); i++) {
 			IWeatherData item = mIWeatherData.get(i);
 			float temp = item.getFloatTemperature();
 			//check if temp is min or max this day
 			temp = item.getFloatTemperature();
-			
+
 			mMaxTemperature = Math.max(mMaxTemperature, temp);
 			mMinTemperature = Math.min(mMinTemperature, temp);			
 		}
@@ -58,42 +62,37 @@ public class OneDayWeatherData {
 				+ ", maxTemperature=" + mMaxTemperature + ", mintemperature="
 				+ mMinTemperature + "]";
 	}
-	
+
+	/***
+	 * userdefined equals 
+	 */
 	// Use @Override to avoid accidental overloading.
-	   @Override public boolean equals(Object o) {
-	     // Return true if the objects are identical.
-	     // (This is just an optimization, not required for correctness.)
-	     if (this == o) {
-	       return true;
-	     }
+	@Override public boolean equals(Object o) {
+		// Return true if the objects are identical.
+		// (This is just an optimization, not required for correctness.)
+		if (this == o) {
+			return true;
+		}
 
-	     // Return false if the other object has the wrong type.
-	     // This type may be an interface depending on the interface's specification.
-	     if (!(o instanceof OneDayWeatherData)) {
-	       return false;
-	     }
+		// Return false if the other object has the wrong type.
+		// This type may be an interface depending on the interface's specification.
+		if (!(o instanceof OneDayWeatherData)) {
+			return false;
+		}
 
-	     // Cast to the appropriate type.
-	     // This will succeed because of the instanceof, and lets us access private fields.
-	     OneDayWeatherData lhs = (OneDayWeatherData) o;
+		// Cast to the appropriate type.
+		// This will succeed because of the instanceof, and lets us access private fields.
+		OneDayWeatherData lhs = (OneDayWeatherData) o;
 
-	     // Check each field. Primitive fields, reference fields, and nullable reference
-	     // fields are all treated differently.
-	     boolean result = mMaxTemperature == lhs.mMaxTemperature &&
-	    		 mMinTemperature == lhs.mMinTemperature &&
-				 mIWeatherData==null ? lhs.mIWeatherData==null :  mIWeatherData.equals(lhs.mIWeatherData);
-	    		
-	     /*
-	    		 
-	    		 primitiveField == lhs.primitiveField &&
-	             referenceField.equals(lhs.referenceField) &&
-	             (nullableField == null ? lhs.nullableField == null
-	                                    : nullableField.equals(lhs.nullableField));
-	     */
-	     
-	     return result;
-	   }
-	
+		// Check each field. Primitive fields, reference fields, and nullable reference
+		// fields are all treated differently.
+		boolean result = mMaxTemperature == lhs.mMaxTemperature &&
+				mMinTemperature == lhs.mMinTemperature &&
+				mIWeatherData==null ? lhs.mIWeatherData==null :  mIWeatherData.equals(lhs.mIWeatherData);	    		
+
+		return result;
+	}
+
 	/**
 	 * @return the place
 	 */
@@ -155,18 +154,22 @@ public class OneDayWeatherData {
 		this.mMinTemperature = mintemperature;
 	}
 
+	/***
+	 * 
+	 * @return a string representing the date
+	 */
 	public String getDayString() {
 		if(mIWeatherData!=null){
-		int size = mIWeatherData.size();
-		
-		Date enddate =mIWeatherData.get(size-1).getEndTime();
-		
-		if(day==null)return " ";
-		Calendar cal = new GregorianCalendar();
-		cal.setTime(day);
-		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		
-		return (formater.format(day)+" - "+formater.format(enddate));
+			int size = mIWeatherData.size();
+
+			Date enddate =mIWeatherData.get(size-1).getEndTime();
+
+			if(day==null)return " ";
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(day);
+			SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+			return (formater.format(day)+" - "+formater.format(enddate));
 		}
 		return " ";
 	}

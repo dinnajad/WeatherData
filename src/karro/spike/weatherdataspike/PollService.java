@@ -74,7 +74,7 @@ public class PollService extends IntentService {
 			String s=pos.getCountryName()+"/"+ pos.getRegion()+"/"+pos.getName();
 			prediction= new SimpleYrFetcher().fetchForecast(s);
 		}else{
-		prediction = new SimpleYrFetcher().fetchForecast();
+		prediction = new SimpleYrFetcher().fetchForecast();//gets fallback on hardcoded position
 		}
 		storage.saveRootData(prediction);
 		storage.saveForecast(prediction.getForeCast());

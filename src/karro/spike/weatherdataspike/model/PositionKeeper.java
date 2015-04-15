@@ -18,7 +18,7 @@ import org.simpleframework.xml.core.Persister;
 import android.content.Context;
 import android.util.Log;
 
-/**
+/** Keeps all positions and saves to file/reads from file
  * @author Karro
  *
  */
