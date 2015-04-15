@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <TextView android:id="@+id/message_textView_li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:padding="4dp"
+        android:hint="message"
+        />
+    <TextView android:id="@+id/alarm_textView_li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_textView_li"
+        android:padding="4dp"
+        android:hint="alarm"
+        />
+     <TextView android:id="@+id/time_textView_li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alarm_textView_li"
+        android:padding="4dp"
+        android:hint="tidpunkt"
+        />
+    
+
+</RelativeLayout>
