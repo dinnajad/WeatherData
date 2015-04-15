@@ -13,7 +13,11 @@ import org.simpleframework.xml.Root;
 import android.util.Log;
 
 
-
+/***
+ * DataObject
+ * @author Karro
+ *
+ */
 @Root(strict=false, name="time")
 public class YrWetherData implements IWeatherData {
 	
