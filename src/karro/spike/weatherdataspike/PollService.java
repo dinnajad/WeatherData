@@ -52,7 +52,7 @@ public class PollService extends IntentService {
 		}
 		
 		try {
-			storage = ForecastKeeper.readFromFile(getApplicationContext(), fileName);
+			storage = ForecastKeeper.readFromFile(getApplicationContext());
 			storedPositions = PositionKeeper.readFromFile(getApplicationContext());
 		} catch (FileNotFoundException e) {
 			//ignore but handle later by creating new Forecastkeeper
@@ -77,7 +77,7 @@ public class PollService extends IntentService {
 		}
 		storage.saveRootData(prediction);
 		storage.saveForecast(prediction.getForeCast());
-		storage.saveToPersistanse(getApplicationContext(), fileName);
+		storage.saveToPersistanse(getApplicationContext());
 		storage.groupDataPerDay();
 		
 		alarmChecker = new AlarmChecker(getApplicationContext());

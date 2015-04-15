@@ -38,24 +38,19 @@ public class WeatherWarningFragment extends ListFragment{
 			keeper= new WeatherWarningKeeper();
 		}
 		//hämta dataItems listan
-		warnings = keeper.getWarnings();// varför är den tom?
+		warnings = keeper.getWarnings();
 		//skapa adapter
-		//TODO skapa custom adapter med bättre vy
-//		ArrayAdapter<WeatherWarning> adapter = new ArrayAdapter<WeatherWarning>(getActivity().getApplicationContext(), 
-//				android.R.layout.simple_list_item_1, warnings);
 		WeatherWarningAdapter adapter = new WeatherWarningAdapter(warnings);
 		setListAdapter(adapter);
 
 	}
 
+
 	/***
-	 * creates the view, connect listeners
-	 *//*
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-		View v= inflater.inflate(R.layout.fragment_alarm_list, container,false);
-		return v;
-		}*/
+	 * adapter for {@link WeatherWarning}
+	 * @author Karro
+	 *
+	 */
 	private class WeatherWarningAdapter extends ArrayAdapter<WeatherWarning>{
 
 		public WeatherWarningAdapter(List<WeatherWarning> warnings) {

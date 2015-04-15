@@ -21,9 +21,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	protected static final String TAG = "MainActivity";
-	protected static final String FORE_CAST_XML = "ForeCast.xml";
-	private ForecastKeeper storage;
-
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,34 +37,8 @@ public class MainActivity extends Activity {
 			.add(R.id.fragmentContainer, fragment)
 			.commit();
 		}
-		//Läs in data från fil
-		try {
-			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
-		} catch (FileNotFoundException e) {
-
-		}
-		if(storage==null){
-			//starta Pollservice och låt den köra hämtningen en gång till
-			//Intent i = new Intent(getApplicationContext(), PollService.class);
-			getForecastKeeper();
-			storage.saveToPersistanse(getApplicationContext(), FORE_CAST_XML);
-		}
 	}
 
-
-	/**
-	 * 
-	 */
-	private void getForecastKeeper() {
-		try {
-			setStorage(ForecastKeeper.readFromFile(getApplicationContext(), FORE_CAST_XML));
-		} catch (FileNotFoundException fe) {
-			Log.e(FORE_CAST_XML, "hittar ingen fil andra försöket, skapar ny keeper istället");
-		}
-		if(storage==null){
-			storage = new ForecastKeeper();
-		}
-	}
 	
 	/***
 	 * Saves the state in shared preferences so that the services can see if the app is active
@@ -78,7 +50,7 @@ public class MainActivity extends Activity {
 		// Store our shared preference
 		SharedPreferences sp = getSharedPreferences("OURINFO", MODE_PRIVATE);
 		Editor ed = sp.edit();
-		ed.putBoolean("active", true);
+		ed.putBoolean("MainActive", true);
 		ed.commit();
 		Log.v(TAG, "Main Active" );
 	}
@@ -125,7 +97,6 @@ public class MainActivity extends Activity {
 			//skapa ny aktivitet
 
 			Intent alarms = new Intent(this,AlarmListActivity.class);
-			alarms.putExtra("filename", FORE_CAST_XML);
 			startActivity(alarms);
 		}else if(id==R.id.action_toggle_poll){
 
@@ -179,7 +150,7 @@ public class MainActivity extends Activity {
 			aKeeper.saveToPersistence(getApplicationContext());
 
 			Intent alarms = new Intent(this,AlarmListActivity.class);
-			alarms.putExtra("filename", FORE_CAST_XML);
+			
 			startActivity(alarms);
 		}
 
@@ -196,23 +167,6 @@ public class MainActivity extends Activity {
 		}
 
 		return true;
-
-
-	}
-	/***
-	 * gets the ForecastKeeper that stores the data
-	 * @return
-	 */
-	public ForecastKeeper getStorage() {
-		return storage;
-	}
-
-	/***
-	 * Sets the ForecastKeeper that will store data
-	 * @param storage
-	 */
-	public void setStorage(ForecastKeeper storage) {
-		this.storage = storage;
-	}
+	}	
 }	
 

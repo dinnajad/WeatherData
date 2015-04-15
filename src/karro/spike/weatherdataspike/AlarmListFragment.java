@@ -4,10 +4,12 @@
 package karro.spike.weatherdataspike;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.IAlarm;
+import karro.spike.weatherdataspike.model.WeatherWarning;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -50,21 +53,45 @@ public class AlarmListFragment extends ListFragment  {
 		//hämta dataItems listan
 		mAlarms = keeper.getAlarms();
 		//skapa adapter
-		//TODO skapa custom adapter med bättre vy
+		//TODO skapa custom adapter med bättre vy och aktivera switch
 		ArrayAdapter<IAlarm> adapter = new ArrayAdapter<IAlarm>(getActivity(), android.R.layout.simple_list_item_multiple_choice,mAlarms);
 		setListAdapter(adapter);
 
 	}
 	
-	/*
-	private Alarm[] fejkDataItems() {
+	/***
+	 * adapter for {@link WeatherWarning} change to match Alarms instead
+	 * @author Karro
+	 *
+	 *//*
+	private class WeatherWarningAdapter extends ArrayAdapter<WeatherWarning>{
 
-		Alarm ett= new Alarm("temperature","under","3");
-		Alarm[] alarms = new Alarm[3];
-		alarms[0] =ett;
-		alarms[1] =ett;
-		alarms[2] = ett;
-		return alarms;
+		public WeatherWarningAdapter(List<WeatherWarning> warnings) {
+			super(getActivity(), 0, warnings);
+			
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent){
+			if(convertView == null){
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_weather_warnings, null);
+			}
+			WeatherWarning warning = getItem(position);
+			
+			TextView messageTextView = (TextView)convertView.findViewById(R.id.message_textView_li);
+			messageTextView.setText(warning.getMessage());
+			
+			TextView alarmTextView = (TextView)convertView.findViewById(R.id.alarm_textView_li);
+			alarmTextView.setText(warning.getAlarm().toString());
+			
+			TextView time = (TextView)convertView.findViewById(R.id.time_textView_li);
+			time.setText(warning.getOneDayWeatherData().getDayString());
+			
+			
+			return convertView;
+			
+		}
+		
 	}*/
 
 	/***

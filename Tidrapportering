@@ -118,5 +118,5 @@ Fredag
 15/4 10-11,07			Uppdatera Mainactivity efter avslutad hämtninga av data
 11,08-	11,40			VäderVarning vitt på vitt
 11,40-	11,46				Vädervarningar läggs till på nytt vid varjr hämtning
-
+11,46-12,20				Refactorering, städning
 

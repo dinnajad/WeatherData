@@ -43,28 +43,10 @@ public class AlarmChecker {
 	 */
 	public void verifyAlarms(ArrayList<OneDayWeatherData> dataPerDay) {
 		AlarmKeeper keeper = AlarmKeeper.readFromFile(context);
-		//ArrayList<IAlarm> alarms = new ArrayList<IAlarm>();
-		ArrayList<IAlarm> alarms = keeper.getAlarms();
-		//Log.i(TAG,"Antal alarm utöver de två hårdkodade: " + alarms.size());
-		//börjar med hårdkodat alarm: om temperaturen är under 0 grader
 		
-		/*TemperatureAlarm tempAlarm = new TemperatureAlarm();
-		Alarm alarm = new Alarm();
-		alarm.setLimit("-10");
-		alarm.setLogicOperator("Över");
-		alarm.setParameter("Temperaturen");
-		alarm.setMessage("EttKalltMeddelande");
-		tempAlarm.setAlarm(alarm);
-		alarms.add(tempAlarm);
-		TemperatureAlarm tempAlarm2 = new TemperatureAlarm();
-		Alarm alarm2 = new Alarm();
-		alarm2.setLimit("10");
-		alarm2.setLogicOperator("Under");
-		alarm2.setParameter("Temperaturen");
-		alarm2.setMessage("kolla ett meddelande!");
-		tempAlarm2.setAlarm(alarm2);
-
-		alarms.add(tempAlarm2);*/
+		ArrayList<IAlarm> alarms = keeper.getAlarms();
+		//Log.i(TAG,"Antal alarm: " + alarms.size());
+		
 		  warningKeeper = WeatherWarningKeeper.readFromFile(context);
 		  warningKeeper.clearWarnings();
 		//för varje dag
@@ -80,11 +62,9 @@ public class AlarmChecker {
 					}
 				}
 			}
-
 		}
 		warningKeeper.saveToPersistence(context);
-		Log.i(TAG, "returning from verifyAlarms");
-		
+		Log.i(TAG, "returning from verifyAlarms");		
 	}
 
 	/***

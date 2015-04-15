@@ -72,13 +72,13 @@ public class ForecastKeeper {
 	 * @param context
 	 * @param fileName
 	 */
-	public void saveToPersistanse(Context context, String fileName){
+	public void saveToPersistanse(Context context){
 		//think about using http://stackoverflow.com/questions/4118751/how-do-i-serialize-an-object-and-save-it-to-a-file-in-android instead
 		//https://androidresearch.wordpress.com/2013/04/07/caching-objects-in-android-internal-storage/
 		Serializer serializer= new Persister();
 		FileOutputStream fileOut;
 		try {
-			fileOut = context.openFileOutput(fileName, Context.MODE_PRIVATE);	
+			fileOut = context.openFileOutput(FORE_CAST_XML, Context.MODE_PRIVATE);	
 			serializer.write(this, fileOut);
 			Log.v(TAG, "save complete");
 		} catch (FileNotFoundException e) {
@@ -96,16 +96,15 @@ public class ForecastKeeper {
 	 * @return an instance of forecastKeeper or null if something went wrong in reading file
 	 * @throws FileNotFoundException 
 	 */
-	public static ForecastKeeper readFromFile(Context context, String fileName) throws FileNotFoundException{
+	public static ForecastKeeper readFromFile(Context context) throws FileNotFoundException{
 		Serializer serializer= new Persister();
 		FileInputStream fileIn;
 		ForecastKeeper keeper =null;
 		try {
-			fileIn = context.openFileInput(fileName);
+			fileIn = context.openFileInput(FORE_CAST_XML);
 			keeper = serializer.read(ForecastKeeper.class, fileIn);
 		} catch (FileNotFoundException fnfe) {
 			Log.e(TAG, "Reading defaultFile instead"+fnfe.getMessage());
-			//return readFromFile(context, "/WeatherData/files/ForeCast.xml"); ingen bra lösning får skapa en fejk i kod istället
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}	
@@ -128,38 +127,6 @@ public class ForecastKeeper {
 		this.currentForecast = currentForecast;
 	}
 
-
-	/**
-	 * @return the alarms
-	 *//*
-	public ArrayList<IAlarm> getAlarms() {
-		ArrayList<IAlarm> iAlarms = new ArrayList<IAlarm>();
-		for (Alarm alarm : alarms) {
-			if(alarm.getParameter().equals("Temperaturen")){
-				TemperatureAlarm temp= new TemperatureAlarm();
-				temp.setAlarm(alarm);
-				iAlarms.add(temp);
-			}
-		}
-		return iAlarms;
-	}*/
-
-
-	/**
-	 * @param alarms the alarms to set
-	 */
-	public void setAlarms(ArrayList<Alarm> alarms) {
-		this.alarms = alarms;
-	}
-
-	private ArrayList< Alarm> fejkDataItems() {
-
-		Alarm ett= new Alarm("temperature","under","3");
-		ArrayList<Alarm> alarms = new ArrayList<Alarm>();
-		alarms.add(ett);
-
-		return alarms;
-	}
 
 	public ArrayList<OneDayWeatherData> getDataPerDay() {
 		return dataPerDay;

@@ -11,37 +11,38 @@ TODO stora grejer
 		*Sätta tidsintervall automatisk Hämtning- kör automatiskt 4 ggr per dygn , får duga för nu
 	
 	
-	(B Implementera möjlighet till flera Positioner)
-	
-	D Impl positionssök- via text
 	
 	E Impl Meny på övriga Aktiviteter- Tar bort alla menyItems. just nu behövs de inte men menyn finns och är förberedd om behov uppstår
-	
-	(f Impl vy för Notifieringar inne i Appen)
-	
 	
 	Viktigt att testa hur funkar den första körningen på ny telefon när sparfilen inte existerar
 	
 	
-	Buggar o dylikt
+	Buggar, Brister o dylikt
 	
 
 		SharedPreferences settingen active blir fel eftersom onStop anropas i ovntad ordning.
 		möjlig lösning: sätta en variabel per activity och i servicen kolla om någon av dom är aktiva
-	impl men ej testat
+		impl men ej testat
 
-	Pollservice använder AlarmChecker för att kolla om någon aktivitet är aktiv... känns lite skumt men det funkar
+		Pollservice använder AlarmChecker för att kolla om någon aktivitet är aktiv... känns lite skumt men det funkar
 	
 	PRIO
 	1)Jobba bort hårdkodade alarm!- done
 	
 	2)Notifieringar i appen
 		Skapa en WeatherWarningKeeper -done
-		fyll ut WeatherWarning
-		skapa ett GUI
+		fyll ut WeatherWarning -done
+		skapa ett GUI- done
+	
+		Notifiering på main att det finns nya varningar
+		stänga av notifieringar om appen är aktiv
+	
 		
-		3) skapa en onswitch för att aktivera/stänga av alarm
-		krävs ny adapter, kan bli en del jobb
+	3) skapa en onswitch för att aktivera/stänga av alarm
+		krävs ny adapter, kan bli en del jobb eftersom man måste se till att delete fortsätter att funka 
 		
-
+	4)Positions GUI
+		B Implementera möjlighet till flera Positioner
+	
+		D Impl positionssök- via text
 	

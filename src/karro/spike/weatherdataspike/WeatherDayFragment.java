@@ -3,6 +3,7 @@
  */
 package karro.spike.weatherdataspike;
 
+import java.io.FileNotFoundException;
 import java.util.Date;
 
 import karro.spike.weatherdata.R;
@@ -13,6 +14,7 @@ import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,19 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		storage=((MainActivity) getActivity()).getStorage();
+		
+		//Läs in data från fil
+		try {
+			storage= ForecastKeeper.readFromFile(getActivity());
+		} catch (FileNotFoundException e) {
+
+		}
+		if(storage==null){
+			//starta Pollservice och låt den köra hämtningen en gång till
+			//Intent i = new Intent(getApplicationContext(), PollService.class);
+			getForecastKeeper();
+			storage.saveToPersistanse(getActivity());
+		}
 	}
 
 	/***
@@ -65,13 +79,7 @@ public class WeatherDayFragment extends Fragment {
 		mMinTextView = (TextView) v.findViewById(R.id.minTempTextView);
 		mCreditsTextView = (TextView) v.findViewById(R.id.yr);
 
-		storage=((MainActivity) getActivity()).getStorage();
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
-		if(mData == null){
-			fejkData();
-		}
-
-
 		return v;
 	}
 	
@@ -82,14 +90,34 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onResume(){
 		super.onResume();
+		getForecastKeeper();//för att datat ska vara aktuellt
 		updateView();
 	}
 	
+	/**
+	 * 
+	 */
+	private void getForecastKeeper() {
+		try {
+			storage =ForecastKeeper.readFromFile(getActivity());
+		} catch (FileNotFoundException fe) {
+			Log.e(TAG, "hittar ingen fil , skapar ny keeper istället");
+		}
+		if(storage==null){
+			storage = new ForecastKeeper();
+		}
+	}
 	/**
 	 * Updates all components with current data
 	 */
 	private void updateView() {
 		 mData = storage.getTodaysWeather();
+		 
+		 if(mData == null){
+				fejkData();//just to show something
+				//TODO create alternative view for cases when No Data is Avaliable ie first Start
+			}
+
 		// check that nothing is null
 		String date= mData.getDayString();			
 		String max= mData.getMaxTemperatureString();
