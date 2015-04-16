@@ -2,6 +2,10 @@
 <resources>
 
     <string name="app_name">FrostVakt</string>
+    <string name="title_activity_alarm_list">Mina Alarm</string>
+    <string name="title_Alarm">Alarm</string>
+    <string name="title_weatherwarnings">Vädervarningar</string>
+    
     <string name="yr">Værvarsel fra yr.no, levert av NRK og Meteorologisk institutt" url="http://www.yr.no/sted/Sverige/Västerbotten/Umeå/</string>
     <string name="action_settings">Inställningar</string>
     <string name="action_alarm">Alarm</string>
@@ -26,7 +30,6 @@
     <string name="Warn">Varna när</string>
     <string name="is">är</string>
     <string name="and">och</string>
-    <string name="title_activity_alarm_list">AlarmListActivity</string>
     <string name="editText_number_hint">Skriv in siffran här</string>
     <string name="editText_message_hint">Skriv in ett kort meddelande här</string>
     <string name="textView_message">Meddelande:</string>
@@ -41,7 +44,6 @@
         <!-- <item name="between">Mellan</item> begränsar omfattningen -->
     </string-array>
 
-    <string name="title_activity_weather_warning">WeatherWarningActivity</string>
-    <string name="hello_world">Hello world!</string>
+   
 
 </resources>

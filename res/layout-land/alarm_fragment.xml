@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Warn"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:padding="8dp" />
+
+    <Spinner
+        android:id="@+id/parameterSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp" 
+        android:layout_toRightOf="@id/textView1"
+        android:layout_alignBottom="@id/textView1"
+    	android:padding="8dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/is"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_below="@id/textView1"
+        android:padding="8dp"/>
+
+    <Spinner
+        android:id="@+id/logicOperatorSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:minHeight="48dp" 
+        android:layout_below="@id/parameterSpinner"
+        android:layout_toRightOf="@id/textView2"        
+        android:layout_alignBottom="@id/textView2"
+        android:layout_alignLeft="@id/parameterSpinner"
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="4"
+        android:hint="@string/editText_number_hint"
+        android:inputType="numberSigned"
+        android:layout_toRightOf="@id/logicOperatorSpinner"
+        android:layout_alignBottom="@id/logicOperatorSpinner"
+        android:padding="8dp">
+    </EditText>
+
+  
+
+    <TextView
+        android:id="@+id/textView_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textView_message"
+        android:layout_below="@id/editText1" 
+        android:padding="8dp"/>
+
+    <EditText
+        android:id="@+id/editText_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/editText_message_hint"
+        android:maxLength="60" 
+        android:layout_toRightOf="@id/textView_message"
+        android:layout_below="@id/logicOperatorSpinner"
+        android:layout_alignBottom="@id/textView_message"
+        android:padding="8dp">
+    </EditText>
+
+    <Button
+        android:id="@+id/OKbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_createAlarm" 
+        android:layout_alignParentBottom="true"
+        >
+    </Button>
+
+</RelativeLayout>
