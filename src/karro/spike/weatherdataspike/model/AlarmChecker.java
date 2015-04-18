@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.MainActivity;
+import karro.spike.weatherdataspike.MyLifecycleHandler;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -78,11 +79,11 @@ public class AlarmChecker {
 		warning.setOneDayWeatherData(oneDayWeatherData);
 		warningKeeper.addWarning(warning);
 
-		if(!ActivityTracker.isAppActive(context)){
-			SendNotification(iAlarm.getAlarmMessage());
-		}	
-		//TODO byt till koden ovan och testa!!
-		SendNotification(iAlarm.getAlarmMessage());
+//		if(!ActivityTracker.isAppActive(context)){
+//			SendNotification(iAlarm.getAlarmMessage());
+//		}	
+		if(!MyLifecycleHandler.isApplicationVisible()){
+			SendNotification(iAlarm.getAlarmMessage());}
 	}
 
 	/***
@@ -109,8 +110,7 @@ public class AlarmChecker {
 		 * pre-4.1 devices.
 		 */
 		.setStyle(new NotificationCompat.BigTextStyle()
-		.bigText(msg+" .."+ context.getString(karro.spike.weatherdata.R.string.frost_warning_big)
-				+ " Du har "+ numberOfNotificationsSent + " vädervarningar"))
+		.bigText(" Du har "+ numberOfNotificationsSent + " vädervarningar"+ msg))
 				.setAutoCancel(true)
 				.setContentIntent(pi);
 		NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

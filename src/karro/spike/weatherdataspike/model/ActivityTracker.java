@@ -5,6 +5,7 @@ package karro.spike.weatherdataspike.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 /** Tracks if any activity in this app is active
  * @author Karro
@@ -24,6 +25,7 @@ public class ActivityTracker {
 		boolean alarm = sp.getBoolean("AlarmActive", false);
 		boolean alarmList = sp.getBoolean("AlarmlistActive", false);
 		boolean warninglist = sp.getBoolean("WeatherWarninglistActive", false);
+		Log.i("Activitytracker", main+": "+alarm+": "+ alarmList+": "+warninglist);
 		if(main||alarm||alarmList||warninglist){//om någon av activity är aktiva
 			active=true;
 		}

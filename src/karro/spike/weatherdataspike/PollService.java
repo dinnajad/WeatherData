@@ -84,7 +84,8 @@ public class PollService extends IntentService {
 		alarmChecker = new AlarmChecker(getApplicationContext());
 		alarmChecker.checkAlarms(storage.getDataPerDay());
 		
-		if(ActivityTracker.isAppActive(getApplicationContext())){// add check if app is active? yes Dont want to open app if its not open
+		//if(!ActivityTracker.isAppActive(getApplicationContext())){// add check if app is active? yes Dont want to open app if its not open
+		if(MyLifecycleHandler.isApplicationVisible()){
 		Log.i(TAG, "sending new MainActivityIntent");
 		
 		Intent mainActivity = new Intent(this,MainActivity.class);
