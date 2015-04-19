@@ -94,7 +94,7 @@ public class AlarmKeeper {
 			keeper = new AlarmKeeper();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
-			keeper = new AlarmKeeper(); //TODO jag vet inte vad som skulle kunna orsaka det här så jag skapar en ny för att slippa tänka just nu
+			keeper = new AlarmKeeper(); // jag vet inte vad som skulle kunna orsaka det här så jag skapar en ny
 		}	
 
 		return keeper;			

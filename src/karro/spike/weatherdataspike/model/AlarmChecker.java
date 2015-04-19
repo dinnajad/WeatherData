@@ -55,12 +55,14 @@ public class AlarmChecker {
 		for (OneDayWeatherData oneDayWeatherData : dataPerDay) {
 			//kolla varje alarm
 			Log.i(TAG, "oneDayWeatherData: " + oneDayWeatherData.toString());
-			for (IAlarm iAlarm : alarms) {	
-
-				if(iAlarm.getAlarm().isActive()){//TODO add check if alarm is null
-					if(iAlarm.checkAlarm(oneDayWeatherData)){
-						//ALARM RIIIIIING
-						createWarning(iAlarm, oneDayWeatherData);
+			for (IAlarm iAlarm : alarms) {
+				Alarm alarm = iAlarm.getAlarm();
+				if(alarm!=null){
+					if(alarm.isActive()){
+						if(iAlarm.checkAlarm(oneDayWeatherData)){
+							//ALARM RIIIIIING
+							createWarning(iAlarm, oneDayWeatherData);
+						}
 					}
 				}
 			}
@@ -81,9 +83,9 @@ public class AlarmChecker {
 		warning.setOneDayWeatherData(oneDayWeatherData);
 		warningKeeper.addWarning(warning);
 
-//		if(!ActivityTracker.isAppActive(context)){
-//			SendNotification(iAlarm.getAlarmMessage());
-//		}	
+		//		if(!ActivityTracker.isAppActive(context)){
+		//			SendNotification(iAlarm.getAlarmMessage());
+		//		}	
 		if(!MyLifecycleHandler.isApplicationVisible()){
 			SendNotification(iAlarm.getAlarmMessage());}
 	}
@@ -95,14 +97,14 @@ public class AlarmChecker {
 	protected void SendNotification(String msg){
 		Intent i = new Intent(context, WeatherWarningActivity.class);
 		//Intent i = new Intent(context, MainActivity.class);
-//		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-//		// Adds the back stack
-//		stackBuilder.addParentStack(MainActivity.class);
-//		// Adds the Intent to the top of the stack
-//		stackBuilder.addNextIntent(i);
-//		// Gets a PendingIntent containing the entire back stack
-//		PendingIntent pi =
-//		        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+		//		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		//		// Adds the back stack
+		//		stackBuilder.addParentStack(MainActivity.class);
+		//		// Adds the Intent to the top of the stack
+		//		stackBuilder.addNextIntent(i);
+		//		// Gets a PendingIntent containing the entire back stack
+		//		PendingIntent pi =
+		//		        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		PendingIntent pi= PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
 		numberOfNotificationsSent++;
 		if(msg==null){
@@ -122,15 +124,15 @@ public class AlarmChecker {
 		 */
 		.setStyle(new NotificationCompat.BigTextStyle()
 		.bigText(" Du har "+ numberOfNotificationsSent + " vädervarningar"+ msg))
-				.setAutoCancel(true)
-				.setContentIntent(pi);
+		.setAutoCancel(true)
+		.setContentIntent(pi);
 		NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
 		manager.notify(lastnotificationNumber, mBuilder.build());		
 	}
 
-	
-	
+
+
 	/***
 	 * getter for ForcastKeeper
 	 * @return

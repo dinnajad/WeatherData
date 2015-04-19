@@ -69,6 +69,7 @@
         android:id="@+id/editText_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions"
         android:ems="10"
         android:hint="@string/editText_message_hint"
         android:maxLength="60" >

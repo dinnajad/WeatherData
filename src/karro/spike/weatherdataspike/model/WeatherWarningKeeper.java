@@ -54,7 +54,7 @@ public class WeatherWarningKeeper {
 			keeper = new WeatherWarningKeeper();
 		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
-			keeper = new WeatherWarningKeeper(); //TODO jag vet inte vad som skulle kunna orsaka det här så jag skapar en ny för att slippa tänka just nu
+			keeper = new WeatherWarningKeeper(); // jag vet inte vad som skulle kunna orsaka det här så jag skapar en ny
 		}	
 
 		return keeper;			

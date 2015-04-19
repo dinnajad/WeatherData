@@ -71,7 +71,7 @@ public class PositionKeeper {
 	 * @param fileName
 	 */
 	public void saveToPersistanse(Context context){
-		//TODO think about using http://stackoverflow.com/questions/4118751/how-do-i-serialize-an-object-and-save-it-to-a-file-in-android instead
+		// think about using http://stackoverflow.com/questions/4118751/how-do-i-serialize-an-object-and-save-it-to-a-file-in-android instead
 		//https://androidresearch.wordpress.com/2013/04/07/caching-objects-in-android-internal-storage/
 		Serializer serializer= new Persister();
 		FileOutputStream fileOut;
@@ -113,6 +113,7 @@ public class PositionKeeper {
 		}
 		return keeper;			
 	}
+	
 	/**
 	 * @return the savedPositions
 	 */

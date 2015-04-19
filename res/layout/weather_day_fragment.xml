@@ -14,13 +14,21 @@
     	android:layout_alignParentBottom="true"
     	android:layout_alignParentRight="true"
     	/>
+     <TextView
+        android:id="@+id/MessageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meddelande"
+        android:textAppearance="?android:attr/textAppearanceLarge" 
+        android:layout_alignParentTop="true"/>
+   
     <TextView
         android:id="@+id/placeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Kåge"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:layout_alignParentTop="true"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:layout_below="@id/MessageTextView"/>
 
     <TextView
         android:id="@+id/dayTextView"

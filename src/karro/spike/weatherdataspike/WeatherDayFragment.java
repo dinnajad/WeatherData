@@ -13,6 +13,7 @@ import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.OneDayWeatherData;
 import android.app.Fragment;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,12 +36,14 @@ public class WeatherDayFragment extends Fragment {
 	private TextView mMaxTempTextview;
 	private TextView mMinTextView;
 	private TextView mCreditsTextView;
+	private TextView mMessageTextview;
 
 	private ImageView mImageView;
 
 	private OneDayWeatherData mData; 
 	private Boolean isExtended = true;
 
+	private String mMessage;
 
 
 	/***
@@ -50,7 +53,8 @@ public class WeatherDayFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-
+		mMessage = getActivity().getIntent().getStringExtra("MESSAGE");
+		
 		//Läs in data från fil
 		try {
 			storage= ForecastKeeper.readFromFile(getActivity());
@@ -78,7 +82,8 @@ public class WeatherDayFragment extends Fragment {
 		mMaxTempTextview = (TextView) v.findViewById(R.id.maxTempTextView);
 		mMinTextView = (TextView) v.findViewById(R.id.minTempTextView);
 		mCreditsTextView = (TextView) v.findViewById(R.id.yr);
-
+		mMessageTextview = (TextView) v.findViewById(R.id.MessageTextView);
+		
 		mImageView = (ImageView) v.findViewById(R.id.imageView);
 		return v;
 	}
@@ -116,7 +121,8 @@ public class WeatherDayFragment extends Fragment {
 
 		if(mData == null){
 			fejkData();//just to show something
-			//TODO create alternative view for cases when No Data is Avaliable ie first Start
+			mMessageTextview.setText("Ingen  prognos tillgänglig");
+			
 		}
 
 		// check that nothing is null
@@ -141,12 +147,24 @@ public class WeatherDayFragment extends Fragment {
 		if(min==null)min="";
 		if(yr==null)yr="";
 		if(place==null)place="";
+		
 
 		mDayTextView.setText(date);
 		mMinTextView.setText(min);
 		mMaxTempTextview.setText(max);
 		mCreditsTextView.setText(yr);
 
+		
+		if(mMessage!= null){
+			mMessageTextview.setBackgroundColor(Color.LTGRAY);
+			mMessageTextview.setText(mMessage);
+			mMessageTextview.setEnabled(true);
+			mMessageTextview.setVisibility(View.VISIBLE);
+		}else{
+			mMessageTextview.setVisibility(View.GONE);
+			mMessageTextview.setEnabled(false);
+		}
+		
 		if(isExtended){
 			mPlaceTextview.setText(place);
 			mPlaceTextview.setEnabled(true);

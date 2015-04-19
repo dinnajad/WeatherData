@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 
 import karro.spike.weatherdataspike.YR.SimpleYrFetcher;
 import karro.spike.weatherdataspike.YR.YrRootWeatherData;
-import karro.spike.weatherdataspike.model.ActivityTracker;
 import karro.spike.weatherdataspike.model.AlarmChecker;
 import karro.spike.weatherdataspike.model.ForecastKeeper;
 import karro.spike.weatherdataspike.model.IPosition;
@@ -20,7 +19,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.Toast;
 
 /**Pollservice that handles getting data from YR
  * @author Karro
@@ -46,23 +44,31 @@ public class PollService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.i(TAG, "recived an intent: "+ intent);
+		boolean networkAvaliable = true;
 
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		if(cm==null){
-			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
-			return;
+			networkAvaliable = false;
+		}else{
+			NetworkInfo info = cm.getActiveNetworkInfo();
+			if(info==null){// case flightmode
+				networkAvaliable = false;
+			}else{
+				if(!info.isAvailable()){ 	
+					networkAvaliable = false;
+				}
 			}
-		NetworkInfo info = cm.getActiveNetworkInfo();
-		if(info==null){// case flightmode
-			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
-			return;
-			}
-
-		if(!info.isAvailable()){ 	
-			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
-			return;
 		}
 
+		if(!networkAvaliable){
+			if(MyLifecycleHandler.isApplicationVisible()){
+				Intent mainActivity = new Intent(this,MainActivity.class);
+				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mainActivity.putExtra("MESSAGE", "Inget nätverk tillgängligt");
+				startActivity(mainActivity);
+			}
+			return;
+		}
 
 		try {
 			storage = ForecastKeeper.readFromFile(getApplicationContext());
@@ -102,10 +108,11 @@ public class PollService extends IntentService {
 
 		Intent mainActivity = new Intent(this,MainActivity.class);
 		mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		mainActivity.putExtra("MESSAGE", "Data hämtat");
 		startActivity(mainActivity);*/
 			Log.i(TAG, "Sending warnings Intent");
 			Intent mainActivity = new Intent(this,WeatherWarningActivity.class);
-			mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);			
 			startActivity(mainActivity);
 			//Toast.makeText(getApplicationContext(), "Data hämtat", Toast.LENGTH_LONG).show(); //av nån anledning kan den här Toasten fastna på skärmen så att den lever kvar långt efter attt servicen är död
 		}

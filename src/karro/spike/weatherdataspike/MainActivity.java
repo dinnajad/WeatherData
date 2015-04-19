@@ -112,17 +112,15 @@ public class MainActivity extends Activity {
 
 			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
 			PollService.setServiceAlarm(this, shouldStartAlarm);
-			Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
 			invalidateOptionsMenu();
 
 		}else if(id==R.id.action_refresh_data){			
 			boolean shouldStartAlarm = PollService.isServiceAlarmOn(this);//differs from set repeting one above here we want to restart it if it should be on 
 			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
-
-			//TODO better update of view
 		}else if(id==R.id.action_position){
-			Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(this,true);
 			
 		}else if(id==R.id.action_weatherWarnings){
