@@ -8,7 +8,7 @@
     
     <string name="yr">Værvarsel fra yr.no, levert av NRK og Meteorologisk institutt" url="http://www.yr.no/sted/Sverige/Västerbotten/Umeå/</string>
     <string name="action_settings">Inställningar</string>
-    <string name="action_alarm">Alarm</string>
+    <string name="action_alarm"> Skapa Alarm</string>
     <string name="action_myAlarms">Mina Alarm</string>
     <string name="action_main">Förstasidan</string>
     <string name="action_search">Sök</string>
@@ -19,6 +19,8 @@
     <string name="action_toggle_poll_turn_off">Slå av automatisk hämtning</string>
     <string name="action_refresh_data">Hämta data nu</string>
     <string name="action_warnings">Mina vädervarningar</string>
+    
+    <string name="first_time_instruction">Ingen  prognos tillgänglig, ställ in position och välj sedan Hämta data i menyn</string>
     
     <string name="button_createAlarm">Skapa Alarm</string>
     <string name="frost">Inatt sjunker temperaturen under 0 grader</string>

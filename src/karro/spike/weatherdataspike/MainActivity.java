@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 			PositionPollService.setOneTimeServiceAlarm(this,true);
 			
 		}else if(id==R.id.action_weatherWarnings){
-			Toast.makeText(getApplicationContext(), "Warnings", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "Warnings", Toast.LENGTH_SHORT).show();
 			Intent warnings = new Intent(this,WeatherWarningActivity.class);			
 			startActivity(warnings);
 		

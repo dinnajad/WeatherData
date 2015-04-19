@@ -121,8 +121,11 @@ public class WeatherDayFragment extends Fragment {
 
 		if(mData == null){
 			fejkData();//just to show something
-			mMessageTextview.setText("Ingen  prognos tillgänglig");
-			
+			mMessageTextview.setText(getActivity().getString(R.string.first_time_instruction));
+			mMessageTextview.setVisibility(View.VISIBLE);
+			mMessageTextview.setEnabled(true);
+			mMessageTextview.setBackgroundColor(Color.LTGRAY);
+			return;
 		}
 
 		// check that nothing is null

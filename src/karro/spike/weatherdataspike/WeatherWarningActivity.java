@@ -72,24 +72,17 @@ public class WeatherWarningActivity extends Activity {
 
 			Intent alarms = new Intent(context,AlarmListActivity.class);
 			startActivity(alarms);
-		}else if(id==R.id.action_toggle_poll){
-
-			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(context);
-			PollService.setServiceAlarm(context, shouldStartAlarm);
-			Toast.makeText(context, "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
-			invalidateOptionsMenu();
-
 		}else if(id==R.id.action_refresh_data){			
 			boolean shouldStartAlarm = PollService.isServiceAlarmOn(context);//differs from set repeting one above here we want to restart it if it should be on 
 			PollService.setOneTimeServiceAlarm(context, shouldStartAlarm);
 			Toast.makeText(context, "hämtar data nu", Toast.LENGTH_LONG).show();
 
 		}else if(id==R.id.action_position){
-			Toast.makeText(context, "Min position", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(context,true);
 			
 		}else if(id==R.id.action_clear){
-			Toast.makeText(context, "Clear", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "Clear", Toast.LENGTH_SHORT).show();
 			WeatherWarningFragment fragment = (WeatherWarningFragment) mFragment;
 			fragment.clearWarings();	
 		}else if(id==R.id.action_main){

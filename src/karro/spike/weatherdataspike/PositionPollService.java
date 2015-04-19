@@ -150,6 +150,14 @@ public class PositionPollService extends IntentService implements ConnectionCall
 			storage.SetFavouritePosition(mPosition);
 			storage.AddPosition(mPosition);
 			Log.v(TAG, "adminName1:"+(mPosition).getRegion());
+			
+				if(MyLifecycleHandler.isApplicationVisible()){
+					Intent mainActivity = new Intent(this,MainActivity.class);
+					mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					mainActivity.putExtra("MESSAGE", "Din position är :" + mPosition.toString());
+					startActivity(mainActivity);
+				}
+			
 		}else
 			Log.e(TAG, "No Position found");
 		storage.saveToPersistanse(getApplicationContext());// spara positioner (skapar en ny fil om den saknas)
@@ -164,17 +172,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		.addConnectionCallbacks(this)
 		.addOnConnectionFailedListener(this)
 		.addApi(LocationServices.API)
-		.build();
-		if(!mGoogleApiClient.isConnected()){
-			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
-			if(MyLifecycleHandler.isApplicationVisible()){
-				Intent mainActivity = new Intent(this,MainActivity.class);
-				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				mainActivity.putExtra("MESSAGE", "Hittade ingen Positionsservice");
-				startActivity(mainActivity);
-			}
-			return;
-		}
+		.build();		
 	}
 
 	@Override
@@ -201,6 +199,17 @@ public class PositionPollService extends IntentService implements ConnectionCall
 
 
 	}
+	
+	/*if(!mGoogleApiClient.isConnected()){
+			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
+			if(MyLifecycleHandler.isApplicationVisible()){
+				Intent mainActivity = new Intent(this,MainActivity.class);
+				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mainActivity.putExtra("MESSAGE", "Hittade ingen Positionsservice");
+				startActivity(mainActivity);
+			}
+			return;
+		}*/
 
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 

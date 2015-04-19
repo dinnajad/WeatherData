@@ -16,10 +16,10 @@
           android:showAsAction="ifRoom|withText" />
     
     
-    <!-- Alarmlist, should always be in the overflow -->
-    <item android:id="@+id/action_my_alarms"
+    <!-- warnings, should always be in the overflow -->
+    <item android:id="@+id/action_weatherWarnings"
           android:icon="@drawable/ic_action_alarms"
-          android:title="@string/action_myAlarms"
+          android:title="@string/action_warnings"
           android:showAsAction="never" />
     
         <!-- Main, should always be in the overflow -->
@@ -27,11 +27,7 @@
           android:title="@string/action_main"
           android:showAsAction="never" />
     
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_toggle_poll"
-          android:title="@string/action_toggle_poll"
-          android:showAsAction="never" />
-   
+    
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_refresh_data"
           android:title="@string/action_refresh_data"

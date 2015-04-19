@@ -26,6 +26,7 @@ import android.util.Log;
  */
 public class PollService extends IntentService {
 
+	private static boolean isRepeatingAlarmActive = false;
 	private static final String TAG = "PollService";
 	private static final long POLL_INTERVAL = 1000 * 60 * 60 * 24/4 ;// 4 ggr per dygn
 	private ForecastKeeper storage; 
@@ -123,18 +124,19 @@ public class PollService extends IntentService {
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 
 	 * @param context
-	 * @param isOn
+	 * @param shouldStartRepeatingAgain
 	 */
-	public static void setOneTimeServiceAlarm(Context context, boolean isOn){
+	public static void setOneTimeServiceAlarm(Context context, boolean shouldStartRepeatingAgain){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
-		Log.v(TAG,"I setOneTimeServiceAlarm "+ isOn);
-		if(isOn){
+		Log.v(TAG,"I setOneTimeServiceAlarm plus repeterar "+ shouldStartRepeatingAgain);
+		if(shouldStartRepeatingAgain){
 
 			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
+			isRepeatingAlarmActive = true;
 		}
 	}
 
@@ -151,9 +153,11 @@ public class PollService extends IntentService {
 
 		if(isOn){
 			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
+			isRepeatingAlarmActive = true;
 		}else{
 			manager.cancel(pi);
 			pi.cancel();
+			isRepeatingAlarmActive = false;
 		}
 	}
 
@@ -163,9 +167,12 @@ public class PollService extends IntentService {
 	 * @return
 	 */
 	public static boolean isServiceAlarmOn(Context context){
+		return isRepeatingAlarmActive;
+		/*
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_NO_CREATE);
-		return pi !=null;		 
+		return pi !=null;
+		*/		 
 	}
 
 }

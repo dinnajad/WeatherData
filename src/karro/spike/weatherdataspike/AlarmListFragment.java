@@ -4,14 +4,12 @@
 package karro.spike.weatherdataspike;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.model.AlarmKeeper;
 import karro.spike.weatherdataspike.model.IAlarm;
 import karro.spike.weatherdataspike.model.WeatherWarning;
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -25,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**Fragment that shows a list of the Alarms
@@ -36,7 +33,7 @@ public class AlarmListFragment extends ListFragment  {
 	private ListView list;
 	private ArrayList<IAlarm> mAlarms;//remember to save list to persistence if changes are made
 	AlarmKeeper keeper;
-	
+
 	/***
 	 * called from the OS when creating the fragment. 
 	 * Initialise essentials here
@@ -44,7 +41,7 @@ public class AlarmListFragment extends ListFragment  {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
+
 		keeper = AlarmKeeper.readFromFile(getActivity().getApplicationContext());
 
 		if(keeper==null){
@@ -56,9 +53,8 @@ public class AlarmListFragment extends ListFragment  {
 		//TODO skapa custom adapter med bättre vy och aktivera switch
 		ArrayAdapter<IAlarm> adapter = new ArrayAdapter<IAlarm>(getActivity(), android.R.layout.simple_list_item_multiple_choice,mAlarms);
 		setListAdapter(adapter);
-
 	}
-	
+
 	/***
 	 * adapter for {@link WeatherWarning} change to match Alarms instead
 	 * @author Karro
@@ -68,32 +64,49 @@ public class AlarmListFragment extends ListFragment  {
 
 		public WeatherWarningAdapter(List<WeatherWarning> warnings) {
 			super(getActivity(), 0, warnings);
-			
+
 		}
-		
+
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent){
 			if(convertView == null){
 				convertView = getActivity().getLayoutInflater().inflate(R.layout.list_item_weather_warnings, null);
 			}
 			WeatherWarning warning = getItem(position);
-			
+
 			TextView messageTextView = (TextView)convertView.findViewById(R.id.message_textView_li);
 			messageTextView.setText(warning.getMessage());
-			
+
 			TextView alarmTextView = (TextView)convertView.findViewById(R.id.alarm_textView_li);
 			alarmTextView.setText(warning.getAlarm().toString());
-			
+
 			TextView time = (TextView)convertView.findViewById(R.id.time_textView_li);
 			time.setText(warning.getOneDayWeatherData().getDayString());
-			
-			
-			return convertView;
-			
-		}
-		
-	}*/
 
+
+			return convertView;
+
+		}
+
+	}*/
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+
+		keeper = AlarmKeeper.readFromFile(getActivity().getApplicationContext());
+
+		if(keeper==null){
+			keeper= new AlarmKeeper();
+		}
+		//hämta dataItems listan
+		mAlarms = keeper.getAlarms();
+		//skapa adapter
+		//TODO skapa custom adapter med bättre vy och aktivera switch
+		ArrayAdapter<IAlarm> adapter = new ArrayAdapter<IAlarm>(getActivity(), android.R.layout.simple_list_item_multiple_choice,mAlarms);
+		setListAdapter(adapter);
+	}
+	
 	/***
 	 * creates the view, connect listeners
 	 */

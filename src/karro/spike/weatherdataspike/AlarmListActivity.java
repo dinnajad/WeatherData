@@ -30,17 +30,17 @@ public class AlarmListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		FragmentManager manager = getFragmentManager();
 		Fragment fragment = manager.findFragmentById(R.id.fragmentContainer);
 		if (fragment == null) {
-		fragment = new AlarmListFragment();
-		manager.beginTransaction()
-		.add(R.id.fragmentContainer, fragment)
-		.commit();
+			fragment = new AlarmListFragment();
+			manager.beginTransaction()
+			.add(R.id.fragmentContainer, fragment)
+			.commit();
 		}
 	}
-	
+
 	/**
 	 * @param item
 	 */
@@ -57,32 +57,24 @@ public class AlarmListActivity extends Activity {
 			startActivityForResult(alarm, 0);
 			//startActivity(alarm);
 
-		}else if(id==R.id.action_my_alarms){
-			//Toast.makeText(getApplicationContext(), "Mina Alarm", Toast.LENGTH_LONG).show();
-			//skapa ny aktivitet
-
-			Intent alarms = new Intent(context,AlarmListActivity.class);
-			startActivity(alarms);
-		}else if(id==R.id.action_toggle_poll){
-
-			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(context);
-			PollService.setServiceAlarm(context, shouldStartAlarm);
-			Toast.makeText(context, "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
-			invalidateOptionsMenu();
-
 		}else if(id==R.id.action_refresh_data){			
 			boolean shouldStartAlarm = PollService.isServiceAlarmOn(context);//differs from set repeting one above here we want to restart it if it should be on 
 			PollService.setOneTimeServiceAlarm(context, shouldStartAlarm);
 			Toast.makeText(context, "hämtar data nu", Toast.LENGTH_LONG).show();
 
 		}else if(id==R.id.action_position){
-			Toast.makeText(context, "Min position", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "Min position", Toast.LENGTH_SHORT).show();
 			PositionPollService.setOneTimeServiceAlarm(context,true);
-			
+
 		}else if(id==R.id.action_main){
 			Intent main = new Intent(context,MainActivity.class);
 			startActivity(main);
-			}
+		}else if(id==R.id.action_weatherWarnings){
+			//Toast.makeText(getApplicationContext(), "Warnings", Toast.LENGTH_SHORT).show();
+			Intent warnings = new Intent(this,WeatherWarningActivity.class);			
+			startActivity(warnings);
+
+		}
 		/*if (id == R.id.action_settings) {
 		// proper settings Implementation
 		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
@@ -90,7 +82,7 @@ public class AlarmListActivity extends Activity {
 
 	}else*/
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode,int resultCode, Intent data){
 		if(data!=null){
@@ -104,19 +96,19 @@ public class AlarmListActivity extends Activity {
 			String message = data.getStringExtra("message");
 			alarm.setMessage(message);
 			AlarmKeeper aKeeper;
-			
+
 			aKeeper = AlarmKeeper.readFromFile(getApplicationContext());
 
 			aKeeper.AddAlarm(alarm);
 			aKeeper.saveToPersistence(getApplicationContext());
 
 			Intent alarms = new Intent(this,AlarmListActivity.class);
-			
+			alarms.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			startActivity(alarms);
 		}
 
 	}
-	
+
 	/***
 	 * Saves the state in shared preferences so that the services can see if the app is active
 	 */
@@ -162,7 +154,7 @@ public class AlarmListActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		handleMenuClick(item, getApplicationContext());
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 }
