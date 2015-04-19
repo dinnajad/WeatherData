@@ -59,19 +59,28 @@ public class PositionPollService extends IntentService implements ConnectionCall
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.i(TAG, "recived the intent: "+ intent);
-
+		boolean networkAcsess= true;
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 		if(networkInfo == null){ // kolla null undvik nullpointerexception
 			Log.e(TAG, "No network access, networkInfo object was null");
+			networkAcsess = false;
+		}else{
+			if(!networkInfo.isAvailable()){
+				Log.e(TAG, "No network access");
+				networkAcsess = false;
+			}
+		}
+		if(!networkAcsess){
+			if(MyLifecycleHandler.isApplicationVisible()){
+				Intent mainActivity = new Intent(this,MainActivity.class);
+				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mainActivity.putExtra("MESSAGE", "Inget nätverk tillgängligt");
+				startActivity(mainActivity);
+			}
 			return;
 		}
-
-		if(!networkInfo.isAvailable()){
-			Log.e(TAG, "No network access");
-			return;
-		}
-		Log.v(TAG, "Network access ready");
+		Log.v(TAG, "Network access ready"+ networkAcsess);
 
 		buildGoogleApiClient();
 		mGoogleApiClient.connect();
@@ -146,7 +155,7 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		storage.saveToPersistanse(getApplicationContext());// spara positioner (skapar en ny fil om den saknas)
 		//Log.i(TAG, "hittade inte filen, skapar en ny!");
 	}
-	
+
 	/***
 	 * builds googleAPIclient to be able to get position
 	 */
@@ -156,6 +165,16 @@ public class PositionPollService extends IntentService implements ConnectionCall
 		.addOnConnectionFailedListener(this)
 		.addApi(LocationServices.API)
 		.build();
+		if(!mGoogleApiClient.isConnected()){
+			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
+			if(MyLifecycleHandler.isApplicationVisible()){
+				Intent mainActivity = new Intent(this,MainActivity.class);
+				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mainActivity.putExtra("MESSAGE", "Hittade ingen Positionsservice");
+				startActivity(mainActivity);
+			}
+			return;
+		}
 	}
 
 	@Override
@@ -165,13 +184,19 @@ public class PositionPollService extends IntentService implements ConnectionCall
 				mGoogleApiClient);
 		if (mLastLocation != null) {
 			//DO something with the location
-			Toast.makeText(getApplicationContext()	, "Latitude" + mLastLocation.getLatitude(), Toast.LENGTH_LONG).show();
+			//Toast.makeText(getApplicationContext()	, "Latitude" + mLastLocation.getLatitude(), Toast.LENGTH_LONG).show();
 			Log.i(TAG,"Latitude" + mLastLocation.getLatitude());
 			getPositionData(mLastLocation.getLatitude(),mLastLocation.getLongitude()); //hit verkar den komma 
 		}else{
 			Log.e(TAG,"Hittade ingen Location");
 			Toast.makeText(getApplicationContext(), "Hittade ingen Positionsservice", Toast.LENGTH_SHORT).show();
-
+			if(MyLifecycleHandler.isApplicationVisible()){
+				Intent mainActivity = new Intent(this,MainActivity.class);
+				mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mainActivity.putExtra("MESSAGE", "Hittade ingen Positionsservice");
+				startActivity(mainActivity);
+			}
+			return;
 		}
 
 

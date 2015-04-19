@@ -124,7 +124,8 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			Log.i(TAG,"	recieved xml:" + xmlString);
 			
 			Serializer serializer = new Persister();
-			positions =((Geonames) serializer.read(Geonames.class, xmlString)).toArrayList();
+			Geonames pos = (Geonames) serializer.read(Geonames.class, xmlString);
+			positions =pos.toArrayList();
 			
 		}catch ( IOException ioe){
 			Log.e(TAG, "Failed  to fetch items", ioe);
@@ -134,7 +135,7 @@ public class SimpleGeonameFetcher extends DataFetcher{
 			Log.e(TAG, "Failed  to parse items, general exception", e);
 		}
 		
-		return position;
+		return position; //allways returns null , code not finished
 	}
 	
 	public void fetchTextPos(String name){ 
