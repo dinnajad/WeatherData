@@ -81,6 +81,15 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		handleMenuClick(item);	
+		return super.onOptionsItemSelected(item);
+	}
+
+
+	/**
+	 * @param item
+	 */
+	private void handleMenuClick(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
@@ -127,8 +136,7 @@ public class MainActivity extends Activity {
 		Toast.makeText(getApplicationContext(), "Inställningar", Toast.LENGTH_LONG).show();
 		return true;
 
-	}else*/	
-		return super.onOptionsItemSelected(item);
+	}else*/
 	}
 
 	@Override

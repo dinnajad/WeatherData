@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import karro.spike.weatherdata.R;
 import karro.spike.weatherdataspike.MainActivity;
 import karro.spike.weatherdataspike.MyLifecycleHandler;
+import karro.spike.weatherdataspike.WeatherWarningActivity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 /**checks alarms and issues warnings as a result.
@@ -91,7 +93,16 @@ public class AlarmChecker {
 	 * @param msg
 	 */
 	protected void SendNotification(String msg){
-		Intent i = new Intent(context, MainActivity.class);
+		Intent i = new Intent(context, WeatherWarningActivity.class);
+		//Intent i = new Intent(context, MainActivity.class);
+//		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+//		// Adds the back stack
+//		stackBuilder.addParentStack(MainActivity.class);
+//		// Adds the Intent to the top of the stack
+//		stackBuilder.addNextIntent(i);
+//		// Gets a PendingIntent containing the entire back stack
+//		PendingIntent pi =
+//		        stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 		PendingIntent pi= PendingIntent.getActivity(context, 0, i,PendingIntent.FLAG_UPDATE_CURRENT);
 		numberOfNotificationsSent++;
 		if(msg==null){

@@ -18,6 +18,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,72 +32,87 @@ public class PollService extends IntentService {
 	private static final long POLL_INTERVAL = 1000 * 60 * 60 * 24/4 ;// 4 ggr per dygn
 	private ForecastKeeper storage; 
 	private PositionKeeper storedPositions;
-	
+
 	private String fileName = "ForeCast.xml";
 	private AlarmChecker alarmChecker;
-	
+
 	public PollService(){
-	 super(TAG);	
+		super(TAG);	
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see android.app.IntentService#onHandleIntent(android.content.Intent)
 	 */
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Log.i(TAG, "recived an intent: "+ intent);
-		
+
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(!cm.getActiveNetworkInfo().isAvailable()){ 	
+		if(cm==null){
+			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
+			return;
+			}
+		NetworkInfo info = cm.getActiveNetworkInfo();
+		if(info==null){// case flightmode
+			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
+			return;
+			}
+
+		if(!info.isAvailable()){ 	
 			Toast.makeText(getApplicationContext(), "No Network Avaliable", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		
+
+
 		try {
 			storage = ForecastKeeper.readFromFile(getApplicationContext());
 			storedPositions = PositionKeeper.readFromFile(getApplicationContext());
 		} catch (FileNotFoundException e) {
 			//ignore but handle later by creating new Forecastkeeper
 		}	
-		
+
 		if(storage==null){
 			storage = new ForecastKeeper();
 		}
 		if(storedPositions == null){
 			storedPositions = new PositionKeeper();
 		}
-		
+
 		IPosition pos = storedPositions.getFavouritePosition();
-		
+
 		YrRootWeatherData prediction;
 		if( pos!=null){
-			
+
 			String s=pos.getCountryName()+"/"+ pos.getRegion()+"/"+pos.getName();
 			prediction= new SimpleYrFetcher().fetchForecast(s);
 		}else{
-		prediction = new SimpleYrFetcher().fetchForecast();//gets fallback on hardcoded position
+			prediction = new SimpleYrFetcher().fetchForecast();//gets fallback on hardcoded position
 		}
 		storage.saveRootData(prediction);
 		storage.saveForecast(prediction.getForeCast());
 		storage.saveToPersistanse(getApplicationContext());
 		storage.groupDataPerDay();
-		
+
 		alarmChecker = new AlarmChecker(getApplicationContext());
 		alarmChecker.checkAlarms(storage.getDataPerDay());
-		
+
 		//if(!ActivityTracker.isAppActive(getApplicationContext())){// add check if app is active? yes Dont want to open app if its not open
 		if(MyLifecycleHandler.isApplicationVisible()){
-		Log.i(TAG, "sending new MainActivityIntent");
-		
+			/*Log.i(TAG, "sending new MainActivityIntent"); // egentligen den kod jag vill använda men eftersom det ännu inte finns nån indikator på hur många varningar jag har på förstasidan skickar jag till warningarna istället
+
 		Intent mainActivity = new Intent(this,MainActivity.class);
 		mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		startActivity(mainActivity);
-		Toast.makeText(getApplicationContext(), "Data hämtat", Toast.LENGTH_LONG).show();
+		startActivity(mainActivity);*/
+			Log.i(TAG, "Sending warnings Intent");
+			Intent mainActivity = new Intent(this,WeatherWarningActivity.class);
+			mainActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(mainActivity);
+			//Toast.makeText(getApplicationContext(), "Data hämtat", Toast.LENGTH_LONG).show(); //av nån anledning kan den här Toasten fastna på skärmen så att den lever kvar långt efter attt servicen är död
 		}
 		Log.i(TAG, "OnHandleIntent ended " );
 	}
-	
-	
+
+
 	/***
 	 * Method to start the pollservice once, at once.  eg to get data now. a refresh 
 	 * @param context
@@ -105,16 +121,16 @@ public class PollService extends IntentService {
 	public static void setOneTimeServiceAlarm(Context context, boolean isOn){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
-		
+
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
 		Log.v(TAG,"I setOneTimeServiceAlarm "+ isOn);
 		if(isOn){
-			
+
 			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
 		}
 	}
-	
+
 	/***
 	 *  Method to start the pollservice reguraly
 	 * @param context
@@ -123,9 +139,9 @@ public class PollService extends IntentService {
 	public static void setServiceAlarm(Context context, boolean isOn){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
-		
+
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		
+
 		if(isOn){
 			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
 		}else{
@@ -133,16 +149,16 @@ public class PollService extends IntentService {
 			pi.cancel();
 		}
 	}
-	
+
 	/***
 	 * returns true if an alarm exists 
 	 * @param context
 	 * @return
 	 */
-	 public static boolean isServiceAlarmOn(Context context){
+	public static boolean isServiceAlarmOn(Context context){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_NO_CREATE);
 		return pi !=null;		 
-	 }
+	}
 
 }

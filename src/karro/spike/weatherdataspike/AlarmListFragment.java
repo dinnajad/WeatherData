@@ -169,11 +169,15 @@ public class AlarmListFragment extends ListFragment  {
 	 * Helper function that deletes items that is selected
 	 */
 	private void deleteSelectedItems() {
+		// Raderingen fungerade inte som den ska. Om jag har 3 alarm som "heter" 0, 1, 2 så ligger de på plats 0, 1, 2 i arrayen. 
+		//Om jag markerar att radera 0, 1 så raderas först nr 0 och sedan raderas nr 1 i den nya array som uppstår när nr 0 har raderats. 
+		//Jag raderar alltså fel position eftersom positionerna gäller ursprungsarrayen. Om jag markerar alla i listan kommer jag börja radera utanför arrayen efter ett tag. //
+		//Börja med att radera högsta positionen istället för lägsta positionen så bör det inte vara något problem längre.
 		Log.v("DELETE","entered deletefkn");
 
 		int listCount = list.getCount();
 		SparseBooleanArray sparseBooleanArray = list.getCheckedItemPositions();
-		for(int i=0; i<listCount;i++)
+		for(int i=listCount-1; i>=0; i--)
 		{
 			if(sparseBooleanArray.get(i)) 
 			{

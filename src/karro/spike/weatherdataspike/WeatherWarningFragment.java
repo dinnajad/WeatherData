@@ -45,6 +45,17 @@ public class WeatherWarningFragment extends ListFragment{
 
 	}
 
+	/***
+	 * Clears all warnings, permanently.
+	 */
+	public void clearWarings(){
+		warnings.clear();//okej lokalt fixat
+		keeper.clearWarnings();//globalt fixat?
+		keeper.saveToPersistence(getActivity());
+		//skapa adapter
+		WeatherWarningAdapter adapter = new WeatherWarningAdapter(warnings);
+		setListAdapter(adapter);
+	}
 
 	/***
 	 * adapter for {@link WeatherWarning}
