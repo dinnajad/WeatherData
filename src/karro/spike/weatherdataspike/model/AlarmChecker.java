@@ -6,7 +6,6 @@ package karro.spike.weatherdataspike.model;
 import java.util.ArrayList;
 
 import karro.spike.weatherdata.R;
-import karro.spike.weatherdataspike.MainActivity;
 import karro.spike.weatherdataspike.MyLifecycleHandler;
 import karro.spike.weatherdataspike.WeatherWarningActivity;
 import android.app.NotificationManager;
@@ -14,7 +13,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 /**checks alarms and issues warnings as a result.

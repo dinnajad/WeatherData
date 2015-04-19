@@ -110,14 +110,13 @@ public class MainActivity extends Activity {
 			startActivity(alarms);
 		}else if(id==R.id.action_toggle_poll){
 
-			boolean shouldStartAlarm = !PollService.isServiceAlarmOn(this);
-			PollService.setServiceAlarm(this, shouldStartAlarm);
+			boolean shouldStartAlarm = !RepeatingPollService.isServiceAlarmOn(this);
+			RepeatingPollService.setServiceAlarm(this, shouldStartAlarm);
 			//Toast.makeText(getApplicationContext(), "toggle poll " +shouldStartAlarm, Toast.LENGTH_LONG).show();
 			invalidateOptionsMenu();
 
 		}else if(id==R.id.action_refresh_data){			
-			boolean shouldStartAlarm = PollService.isServiceAlarmOn(this);//differs from set repeting one above here we want to restart it if it should be on 
-			PollService.setOneTimeServiceAlarm(this, shouldStartAlarm);
+			PollService.setOneTimeServiceAlarm(this);
 			Toast.makeText(getApplicationContext(), "hämtar data nu", Toast.LENGTH_LONG).show();
 		}else if(id==R.id.action_position){
 			//Toast.makeText(getApplicationContext(), "Min position", Toast.LENGTH_SHORT).show();
@@ -167,7 +166,7 @@ public class MainActivity extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu){
 		super.onPrepareOptionsMenu(menu);
 		MenuItem toggleItem = menu.findItem(R.id.action_toggle_poll);
-		if(PollService.isServiceAlarmOn(getApplicationContext())){
+		if(RepeatingPollService.isServiceAlarmOn(getApplicationContext())){
 			toggleItem.setTitle(R.string.action_toggle_poll_turn_off);
 		}else{
 			toggleItem.setTitle(R.string.action_toggle_poll);

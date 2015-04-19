@@ -73,8 +73,7 @@ public class WeatherWarningActivity extends Activity {
 			Intent alarms = new Intent(context,AlarmListActivity.class);
 			startActivity(alarms);
 		}else if(id==R.id.action_refresh_data){			
-			boolean shouldStartAlarm = PollService.isServiceAlarmOn(context);//differs from set repeting one above here we want to restart it if it should be on 
-			PollService.setOneTimeServiceAlarm(context, shouldStartAlarm);
+			PollService.setOneTimeServiceAlarm(context);
 			Toast.makeText(context, "hämtar data nu", Toast.LENGTH_LONG).show();
 
 		}else if(id==R.id.action_position){

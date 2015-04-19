@@ -26,17 +26,19 @@ import android.util.Log;
  */
 public class PollService extends IntentService {
 
-	private static boolean isRepeatingAlarmActive = false;
 	private static final String TAG = "PollService";
-	private static final long POLL_INTERVAL = 1000 * 60 * 60 * 24/4 ;// 4 ggr per dygn
 	private ForecastKeeper storage; 
 	private PositionKeeper storedPositions;
 
-	private String fileName = "ForeCast.xml";
 	private AlarmChecker alarmChecker;
 
 	public PollService(){
-		super(TAG);	
+		this(TAG);	
+	}
+	
+	public PollService(String tag)
+	{
+		super(tag);
 	}
 
 	/* (non-Javadoc)
@@ -126,53 +128,11 @@ public class PollService extends IntentService {
 	 * @param context
 	 * @param shouldStartRepeatingAgain
 	 */
-	public static void setOneTimeServiceAlarm(Context context, boolean shouldStartRepeatingAgain){
+	public static void setOneTimeServiceAlarm(Context context){
 		Intent i = new Intent(context, PollService.class);
 		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
 
 		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		manager.set(AlarmManager.RTC, System.currentTimeMillis(), pi);
-		Log.v(TAG,"I setOneTimeServiceAlarm plus repeterar "+ shouldStartRepeatingAgain);
-		if(shouldStartRepeatingAgain){
-
-			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
-			isRepeatingAlarmActive = true;
-		}
 	}
-
-	/***
-	 *  Method to start the pollservice reguraly
-	 * @param context
-	 * @param isOn
-	 */
-	public static void setServiceAlarm(Context context, boolean isOn){
-		Intent i = new Intent(context, PollService.class);
-		PendingIntent pi= PendingIntent.getService(context, 0, i, 0);
-
-		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-
-		if(isOn){
-			manager.setRepeating(AlarmManager.RTC, System.currentTimeMillis(), POLL_INTERVAL, pi);
-			isRepeatingAlarmActive = true;
-		}else{
-			manager.cancel(pi);
-			pi.cancel();
-			isRepeatingAlarmActive = false;
-		}
-	}
-
-	/***
-	 * returns true if an alarm exists 
-	 * @param context
-	 * @return
-	 */
-	public static boolean isServiceAlarmOn(Context context){
-		return isRepeatingAlarmActive;
-		/*
-		Intent i = new Intent(context, PollService.class);
-		PendingIntent pi = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_NO_CREATE);
-		return pi !=null;
-		*/		 
-	}
-
 }

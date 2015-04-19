@@ -60,6 +60,8 @@
 
         <service android:name="karro.spike.weatherdataspike.PollService" >
         </service>
+        <service android:name="karro.spike.weatherdataspike.RepeatingPollService" >
+        </service>
         <service android:name="karro.spike.weatherdataspike.PositionPollService" >
         </service>
 

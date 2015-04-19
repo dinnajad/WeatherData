@@ -190,17 +190,23 @@ public class AlarmListFragment extends ListFragment  {
 
 		int listCount = list.getCount();
 		SparseBooleanArray sparseBooleanArray = list.getCheckedItemPositions();
+		int alarmsRemoved = 0;
 		for(int i=listCount-1; i>=0; i--)
 		{
 			if(sparseBooleanArray.get(i)) 
 			{
 				Log.v("DELETE","deleting: " +mAlarms.get(i).toString());
-				Toast.makeText(getActivity(),"removed" +i, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(getActivity(),"removed" +i, Toast.LENGTH_SHORT).show();
 				IAlarm alarm = mAlarms.remove(i);
 				keeper.RemoveAlarm(alarm);// måste be keepern ta bort alarmet för att det ska märkas nästa gång vi öppnar appen
+				alarmsRemoved++;
 				Log.v("DELETE","deleted"+i);
 			}
-		}	
+		}
+		
+		if(alarmsRemoved > 0){
+			Toast.makeText(getActivity(),"removed " + alarmsRemoved + " alarms", Toast.LENGTH_SHORT).show();
+		}
 
 		keeper.saveToPersistence(getActivity().getApplicationContext());
 	}
